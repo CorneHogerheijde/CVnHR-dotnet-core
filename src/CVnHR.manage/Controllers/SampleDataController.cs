@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
@@ -25,23 +24,6 @@ namespace CVnHR.manage.Controllers
                 TemperatureC = rng.Next(-20, 55),
                 Summary = Summaries[rng.Next(Summaries.Length)]
             });
-        }
-
-        private static int RequestCount = 0;
-
-        [HttpGet("[action]")]
-        public async Task<string> TestReturningTasks()
-        {
-            var currentCount = RequestCount++;
-            var rnd = new Random();
-            new Thread(() =>
-            {
-                var bla = rnd.Next(40000, 100000);
-                Thread.Sleep(bla);
-                Console.WriteLine($"Request {currentCount}. Code executed after {bla} ms thread sleep. Thread not terminated.");
-                GC.Collect();
-            }).Start();
-            return $"Return value Request {currentCount}.";
         }
 
         public class WeatherForecast

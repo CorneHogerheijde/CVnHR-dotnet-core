@@ -1,20 +1,24 @@
 # CVnHR dotnet core
 
 
+First attempt to rewrite to Dotnet core of this repo: https://github.com/B3Partners/CVnHR-Open-Source
+
+TODO: add more documentation!
+
 
 ## Git conventions
 * We use Conventional Changelog, a commit standard pioneered by the Angular project which infers a structure in commit messages. Metadata in these commit messages are used to infer the version number for new releases and to generate a changelog. You can manually type the commit message in the format explained by the linked document.
 * Naming convention of development branches:
-  * Feature: feature/FMP-####-name-of-userstory
-  * Bugfix: bugfix/FMP-####-name-of-bug
-  * Chore: chore/FMP-####-name-of-chore
-  * Refactor: refactor/FMP-####-name-of-refactor
-  * Style: style/FMP-####-name-of-style (formatting, missing semi colons, …)
-  * Test: test/FMP-####-name-of-test (when adding missing tests)
-  * Docs: docs/FMP-####-name-of-docs (documentation)
+  * Feature: feature/#[number-of-issue]-name-of-userstory
+  * Bugfix: bugfix/#[number-of-issue]-name-of-bug
+  * Chore: chore/#[number-of-issue]-name-of-chore
+  * Refactor: refactor/#[number-of-issue]-name-of-refactor
+  * Style: style/#[number-of-issue]-name-of-style (formatting, missing semi colons, …)
+  * Test: test/#[number-of-issue]-name-of-test (when adding missing tests)
+  * Docs: docs/#[number-of-issue]-name-of-docs (documentation)
 
 ## Git workflow
-The master branch is the main branch where all code lives. Changes cannot be done directly on master, but per userstory a development branch can be created. We aim to have only one commit per branch having all changes to add the feature to keep master as clean as possible.
+The master branch is the main branch where all production ready code lives. Changes cannot be done directly on master, but per userstory a development branch can be created. We aim to have only one commit per branch having all changes to add the feature to keep master as clean as possible.
 
 In order to have one commit per branch you can squash all commits on a branch to a single commit.
 
@@ -43,5 +47,6 @@ In order to have one commit per branch you can squash all commits on a branch to
     * `i` + comment out (#) all unwanted commit messages + `esc` + `:wq` => here you choose the final commit message. You can rewrite the commit message completely if needed. (Mind the Conventional Changelog!)
   2. force push your changes. Terminal commands:
     * `git push -f`
-Git Documentation
-https://git-scm.com/doc
+
+# Git Documentation
+* https://git-scm.com/doc

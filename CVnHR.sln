@@ -7,12 +7,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{0A63A2F5-C59
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CVnHR.manage", "src\CVnHR.manage\CVnHR.manage.csproj", "{E6DB723F-4FAB-4723-9EC5-CD0E94751B01}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CVnHR.Business.Kvk", "CVnHR.Business.Kvk\CVnHR.Business.Kvk.csproj", "{6D0837C4-086C-465D-92A9-7BBA77E94914}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CVnHR.Business.Kvk", "src\CVnHR.Business.Kvk\CVnHR.Business.Kvk.csproj", "{6D0837C4-086C-465D-92A9-7BBA77E94914}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{18EA281A-6B53-4A26-928B-2A01E35A007C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{39B95541-D3C7-433E-8A46-07CE6B2668F7}"
 	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
 		Readme.md = Readme.md
 	EndProjectSection
 EndProject

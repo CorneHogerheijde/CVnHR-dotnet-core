@@ -260,6 +260,7 @@ paket-files/
 __pycache__/
 *.pyc
 
-# custom ignores
+# Custom ignores
 
-src/CVnHR.manage/Certificates
+src/CVnHR.manage/Certificates/*.txt
+!src/CVnHR.manage/Certificates/dummy.txt

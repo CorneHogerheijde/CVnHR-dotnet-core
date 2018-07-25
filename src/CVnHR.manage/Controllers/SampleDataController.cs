@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CVnHR.Business.Kvk;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CVnHR.manage.Controllers
@@ -24,6 +25,13 @@ namespace CVnHR.manage.Controllers
                 TemperatureC = rng.Next(-20, 55),
                 Summary = Summaries[rng.Next(Summaries.Length)]
             });
+        }
+
+        [HttpGet("[action]")]
+        public async Task<object> HrDataservice(string kvknummer = "53352009")
+        {
+            var x = await new HRDataservice("ACC_I_002", null).GetInschrijvingFromKvK(kvknummer);
+            return x;
         }
 
         public class WeatherForecast

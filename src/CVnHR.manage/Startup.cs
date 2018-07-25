@@ -1,3 +1,4 @@
+using CVnHR.Business.Kvk;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -21,6 +22,24 @@ namespace CVnHR.manage
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            // TODO!
+            //var handler = new HttpClientHandler
+            //{
+            //    SslProtocols = SslProtocols.Tls12,
+            //    CheckCertificateRevocationList = false,
+            //    ClientCertificateOptions = ClientCertificateOption.Manual,
+            //    AllowAutoRedirect = true,
+            //    UseCookies = true,
+            //    CookieContainer = cookieContainer,
+            //    AutomaticDecompression = DecompressionMethods.Deflate | DecompressionMethods.GZip,
+            //    //PreAuthenticate = true,
+
+            //    UseProxy = true,
+            //    Proxy = new WebProxy("http://127.0.0.1:8888", false),
+
+            //};
+            //services.AddHttpClient("kvk").AddHttpMessageHandler(new LoggingHandler(handler));
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>

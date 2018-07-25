@@ -264,3 +264,4 @@ __pycache__/
 
 src/CVnHR.manage/Certificates/*.txt
 !src/CVnHR.manage/Certificates/dummy.txt
+src/CVnHR.manage/Certificates/*.cer

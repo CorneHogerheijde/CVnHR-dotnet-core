@@ -1,13 +1,10 @@
-﻿using System;
+﻿using CVnHR.Business.HrDataservice;
+using System;
 using System.IO;
-using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Security.Authentication;
 using System.Security.Cryptography.X509Certificates;
 using System.Security.Cryptography.Xml;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
 
@@ -16,13 +13,12 @@ namespace CVnHR.Business.Kvk
     //Example from:
     //https://stackoverflow.com/questions/47104618/how-do-i-call-xml-soap-service-that-requires-signature-from-net-core/48818293#48818293
 
-
-    public class HRDataservice
+    public class HrDataservice : IHrDataservice
     {
         private readonly string _klantReferentie;
-        private readonly IHttpClientFactory _httpClientFactory;
+        private readonly IHrDataServiceHttpClient _httpClientFactory;
 
-        public HRDataservice(string klantReferentie, IHttpClientFactory httpClientFactory)
+        public HrDataservice(string klantReferentie, IHrDataServiceHttpClient httpClientFactory)
         {
             _klantReferentie = klantReferentie;
             _httpClientFactory = httpClientFactory;
@@ -30,40 +26,12 @@ namespace CVnHR.Business.Kvk
 
         public async Task<object> GetInschrijvingFromKvK(string kvkNummer)
         {
+            var certificate = _httpClientFactory.GetCertificate();
 
-            // TODO: make this work without having the certificate in the store... (SSL, 100-continue)
-
-            // Create a collection object and populate it using the PFX file
-            var password = File.ReadAllText("Certificates/digilevering.drenthe.nl.txt");
-            var certificate = new X509Certificate2("Certificates/digilevering.drenthe.nl.pfx",  password);
             var responseMessage = string.Empty; 
             var envelope = BuildEnvelope(certificate, kvkNummer);
-
-            var cookieContainer = new CookieContainer();
-            var handler = new HttpClientHandler
-            {
-                SslProtocols = SslProtocols.Tls12 | SslProtocols.Tls11 | SslProtocols.Tls,
-                CheckCertificateRevocationList = false,
-                ClientCertificateOptions = ClientCertificateOption.Manual,
-                AllowAutoRedirect = true,
-                UseCookies = true,
-                CookieContainer = cookieContainer,
-                AutomaticDecompression = DecompressionMethods.Deflate | DecompressionMethods.GZip,
-                //PreAuthenticate = true,
-                
-                UseProxy = true,
-                Proxy = new WebProxy("http://127.0.0.1:8888", false),
-                
-            };
-
-            handler.ClientCertificates.Add(certificate);
-            handler.ServerCertificateCustomValidationCallback = (a, b, c, d) => { return true; };
-
-            //TODO: var client = _httpClientFactory.CreateClient();
-            var client = new HttpClient(new LoggingHandler(handler));
-            client.DefaultRequestHeaders.Connection.Add("Keep-Alive");
-            client.DefaultRequestHeaders.ExpectContinue = true;
-            client.DefaultRequestHeaders.Add("SOAPAction", "\"http://es.kvk.nl/ophalenInschrijving\"");
+            
+            var client = _httpClientFactory.GetHttpClient();
 
             var content = new StringContent(envelope, Encoding.UTF8, "text/xml");
             var response = await client.PostAsync("https://webservices.kvk.nl/postbus1", content);
@@ -313,45 +281,6 @@ namespace CVnHR.Business.Kvk
                 }
 
                 return idElem;
-            }
-        }
-    }
-
-    public class LoggingHandler : DelegatingHandler
-    {
-        public LoggingHandler(HttpMessageHandler innerHandler)
-            : base(innerHandler)
-        {
-        }
-
-        protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
-        {
-            Console.WriteLine("Request:");
-            Console.WriteLine(request.ToString());
-            if (request.Content != null)
-            {
-                Console.WriteLine(await request.Content.ReadAsStringAsync());
-            }
-            Console.WriteLine();
-
-            try
-            {
-                var result = base.SendAsync(request, cancellationToken);
-                var response = await result;
-
-                Console.WriteLine("Response statuscode:");
-                Console.WriteLine(response.StatusCode);
-                if (response.Content != null)
-                {
-                    Console.WriteLine(await response.Content.ReadAsStringAsync());
-                }
-                Console.WriteLine();
-
-                return response;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
             }
         }
     }

@@ -15,6 +15,13 @@ namespace CVnHR.manage.Controllers
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
 
+        private readonly IHrDataservice _hrDataservice;
+
+        public SampleDataController(IHrDataservice hrDataservice)
+        {
+            _hrDataservice = hrDataservice;
+        }
+
         [HttpGet("[action]")]
         public IEnumerable<WeatherForecast> WeatherForecasts(int startDateIndex)
         {
@@ -30,7 +37,7 @@ namespace CVnHR.manage.Controllers
         [HttpGet("[action]")]
         public async Task<object> HrDataservice(string kvknummer = "53352009")
         {
-            var x = await new HRDataservice("ACC_I_002", null).GetInschrijvingFromKvK(kvknummer);
+            var x = await _hrDataservice.GetInschrijvingFromKvK(kvknummer);
             return x;
         }
 

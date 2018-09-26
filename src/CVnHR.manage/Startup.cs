@@ -1,7 +1,8 @@
+using CVnHR.Business.HrDataservice;
 using CVnHR.Business.Kvk;
+using CVnHR.Business.Logging;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
@@ -23,23 +24,27 @@ namespace CVnHR.manage
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            // TODO!
-            //var handler = new HttpClientHandler
-            //{
-            //    SslProtocols = SslProtocols.Tls12,
-            //    CheckCertificateRevocationList = false,
-            //    ClientCertificateOptions = ClientCertificateOption.Manual,
-            //    AllowAutoRedirect = true,
-            //    UseCookies = true,
-            //    CookieContainer = cookieContainer,
-            //    AutomaticDecompression = DecompressionMethods.Deflate | DecompressionMethods.GZip,
-            //    //PreAuthenticate = true,
 
-            //    UseProxy = true,
-            //    Proxy = new WebProxy("http://127.0.0.1:8888", false),
+            // TODO: clean this
+            const string klantReferentie = "ACC_I_002"; // TODO set in config
 
-            //};
-            //services.AddHttpClient("kvk").AddHttpMessageHandler(new LoggingHandler(handler));
+            services.AddTransient<IHrDataServiceHttpClient, HrDataServiceHttpClient>();
+            services.AddTransient<IHrDataservice, HrDataservice>((serviceProvider) => 
+                new HrDataservice(klantReferentie, serviceProvider.GetService<IHrDataServiceHttpClient>()));
+            services.AddTransient<LoggingHandler>();
+            services.AddHttpClient("hrDataservice")
+                .ConfigurePrimaryHttpMessageHandler((serviceProvider) => {
+                    var hrDataService = serviceProvider.GetService<IHrDataServiceHttpClient>();
+                    var handler = hrDataService.GetHttpClientHandler();
+                    var certificate = hrDataService.GetCertificate();
+
+                    // TODO: only install certificate after uploading??
+                    hrDataService.InstallCertificate(certificate);
+
+                    handler.ClientCertificates.Add(certificate);
+                    return handler;
+                })
+                .AddHttpMessageHandler<LoggingHandler>();
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>

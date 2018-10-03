@@ -20,10 +20,10 @@ class Settings extends Component {
                 <ul>
                     {this.props.settings.certificates.length > 0
                         && this.props.settings.certificates.map(certificate =>
-                           <li>{certificate}</li>
+                        <li key={certificate}>{certificate}</li>
                         )}
                 </ul>
-                {this.props.settings.certificates.length == 0 &&
+                {this.props.settings.certificates.length === 0 &&
                     <p>No Certificate found!
                         Add pfx file in Certificates location if no certificate listed here.
                     </p>}

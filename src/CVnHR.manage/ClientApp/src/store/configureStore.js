@@ -1,6 +1,6 @@
 ﻿import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
 import thunk from 'redux-thunk';
-import { routerReducer, routerMiddleware } from 'react-router-redux';
+import { connectRouter, routerMiddleware } from 'connected-react-router';
 import * as Counter from './Counter';
 import * as WeatherForecasts from './WeatherForecasts';
 import * as Settings from './Settings';
@@ -9,7 +9,7 @@ export default function configureStore(history, initialState) {
   const reducers = {
     counter: Counter.reducer,
     weatherForecasts: WeatherForecasts.reducer,
-    settings: Settings.reducer,
+    settings: Settings.reducer
   };
 
   const middleware = [
@@ -26,11 +26,10 @@ export default function configureStore(history, initialState) {
 
   const rootReducer = combineReducers({
     ...reducers,
-    routing: routerReducer
   });
 
   return createStore(
-    rootReducer,
+    connectRouter(history)(rootReducer), // new root reducer with router state
     initialState,
     compose(applyMiddleware(...middleware), ...enhancers)
   );

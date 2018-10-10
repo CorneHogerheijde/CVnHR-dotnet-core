@@ -1,42 +1,70 @@
-﻿const requestCertificatesType = 'REQUEST_CERTIFICATES';
-const receiveCertificatesType = 'RECEIVE_CERTIFICATES';
+﻿const requestSettingsType = 'REQUEST_SETTINGS';
+const receiveSettingsType = 'RECEIVE_SETTINGS';
+const updateApiKeyType = 'UPDATE_APIKEY';
+const apiKeyUpdatedType = 'APIKEY_UPDATED';
+
 const initialState = {
     settings: {
-        certificates: []
+        certificates: [],
+        apiKey: null
     },
     isLoading: false
 };
 
 export const actionCreators = {
-    requestCertificates: () => async (dispatch, getState) => {
+    requestSettings: () => async (dispatch, getState) => {
 
-        dispatch({ type: requestCertificatesType });
+        dispatch({ type: requestSettingsType });
 
-        const url = `api/Settings/GetCertificates`;
+        const url = `api/Settings/GetSettings`;
         const response = await fetch(url);
-        const certificates = await response.json();
+        const settings = await response.json();
 
-        dispatch({ type: receiveCertificatesType, certificates });
+        dispatch({ type: receiveSettingsType, settings });
+    },
+    updateApiKey: (apiKey) => async (dispatch, getState) => {
+        const url = `api/Settings/UpdateApiKey`;
+        const response = await fetch(url, {
+            method: 'PUT',
+            body: JSON.stringify(apiKey),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        dispatch({ type: apiKeyUpdatedType, success: response.ok, apiKey });
     }
 };
 
 export const reducer = (state, action) => {
     state = state || initialState;
 
-    if (action.type === requestCertificatesType) {
+    if (action.type === requestSettingsType) {
         return {
             ...state,
             isLoading: true
         };
     }
 
-    if (action.type === receiveCertificatesType) {
+    if (action.type === receiveSettingsType) {
+        return {
+            ...state,
+            settings: action.settings,
+            isLoading: false
+        };
+    }
+
+    if (action.type === apiKeyUpdatedType) {
+        if (!action.success) {
+            alert('something went wrong!');
+            return state;
+        }
         return {
             ...state,
             settings: {
-                certificates: action.certificates
-            },
-            isLoading: false
+                ...state.settings,
+                apiKey: action.apiKey
+            }
         };
     }
 

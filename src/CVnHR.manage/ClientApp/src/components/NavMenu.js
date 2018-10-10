@@ -1,39 +1,45 @@
 ﻿import React from 'react';
 import { Link } from 'react-router-dom';
-import { Nav, Navbar, NavItem } from 'react-bootstrap';
+import { Nav, Navbar } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import './NavMenu.css';
 
 const NavMenu = props =>
-    <Navbar bg="dark" variant="dark" collapseOnSelect defaultExpanded fixed={'top'}>
+    <Navbar collapseOnSelect bg="dark" variant="dark" expand="md" fixed={'top'}>
         <Navbar.Brand>
             <Link to={'/'}>CVnHR.manage</Link>
         </Navbar.Brand>
-        <Navbar.Toggle />
-        <Navbar.Collapse>
-            <Nav>
-                <LinkContainer to={'/'} exact>
-                    <NavItem>
-                        Home
-                    </NavItem>
-                </LinkContainer>
-                <LinkContainer to={'/counter'}>
-                    <NavItem>
-                        Counter
-                    </NavItem>
-                </LinkContainer>
-                <LinkContainer to={'/fetchdata'}>
-                    <NavItem>
+        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+        <Navbar.Collapse id="responsive-navbar-nav">
+            <Nav className="flex-column">
+
+
+                <Nav.Item>
+                    <LinkContainer to={'/'} exact>
+                        <Nav.Link>
+                            Home
+                        </Nav.Link>
+                    </LinkContainer>
+                </Nav.Item>
+
+                <Nav.Item>
+                    <LinkContainer to={'/counter'}>
+                        <Nav.Link>
+                            Counter
+                </Nav.Link>
+                    </LinkContainer></Nav.Item>
+                <Nav.Item><LinkContainer to={'/fetchdata'}>
+                    <Nav.Link>
                         Fetch data
-                    </NavItem>
-                </LinkContainer>
-                <LinkContainer to={'/settings'}>
-                    <NavItem>
+                </Nav.Link>
+                </LinkContainer></Nav.Item>
+                <Nav.Item><LinkContainer to={'/settings'}>
+                    <Nav.Link>
                         Settings
-                    </NavItem>
-                </LinkContainer>
+                </Nav.Link>
+                </LinkContainer></Nav.Item>
             </Nav>
-        </Navbar.Collapse>
+        </Navbar.Collapse >
     </Navbar>;
 
 export default NavMenu;

@@ -25,7 +25,7 @@ export default function configureStore(history, initialState) {
   }
 
   const rootReducer = combineReducers({
-    ...reducers,
+    ...reducers
   });
 
   return createStore(

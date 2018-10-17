@@ -1,6 +1,5 @@
 ﻿const requestSettingsType = 'REQUEST_SETTINGS';
 const receiveSettingsType = 'RECEIVE_SETTINGS';
-const updateApiKeyType = 'UPDATE_APIKEY';
 const apiKeyUpdatedType = 'APIKEY_UPDATED';
 
 const initialState = {
@@ -8,11 +7,17 @@ const initialState = {
         certificates: [],
         apiKey: null
     },
-    isLoading: false
+    isLoading: false,
+    dataLoaded: false
 };
 
 export const actionCreators = {
     requestSettings: () => async (dispatch, getState) => {
+        var state = getState();
+        if (state.settings.isLoading || state.settings.dataLoaded) {
+            // Don't issue a duplicate  request (we already have or are loading the requested data)
+            return;
+        }
 
         dispatch({ type: requestSettingsType });
 
@@ -50,7 +55,8 @@ export const reducer = (state, action) => {
         return {
             ...state,
             settings: action.settings,
-            isLoading: false
+            isLoading: false,
+            dataLoaded: true
         };
     }
 

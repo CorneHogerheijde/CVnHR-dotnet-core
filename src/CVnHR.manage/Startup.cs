@@ -1,6 +1,7 @@
 using CVnHR.Business.HrDataservice;
 using CVnHR.Business.Kvk;
 using CVnHR.Business.Logging;
+using CVnHR.Business.Services;
 using CVnHR.manage.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -53,7 +54,7 @@ namespace CVnHR.manage
                 configuration.RootPath = "ClientApp/build";
             });
 
-            services.Configure<KvkSettings>(Configuration.GetSection("kvk"));
+            services.AddTransient<ISettingsService, SettingsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

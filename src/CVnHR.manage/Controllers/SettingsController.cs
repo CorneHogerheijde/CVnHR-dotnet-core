@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using CVnHR.manage.Models;
 using Microsoft.Extensions.Configuration;
+using CVnHR.Business.Services;
 
 namespace CVnHR.manage.Controllers
 {
@@ -14,12 +15,12 @@ namespace CVnHR.manage.Controllers
     {
         private const string CertificatesPath = "Certificates";
         private readonly KvkSettings _kvkSettings;
-        private readonly IConfiguration _configuration;
+        private readonly ISettingsService _settingsService;
 
-        public SettingsController(IOptions<KvkSettings> kvkSettings, IConfiguration configuration)
+        public SettingsController(ISettingsService settingsService)
         {
-            _kvkSettings = kvkSettings.Value;
-            _configuration = configuration;
+            _settingsService = settingsService;
+            _kvkSettings = _settingsService.GetSettings<KvkSettings>();
         }
 
         [HttpGet("[action]")]
@@ -33,11 +34,10 @@ namespace CVnHR.manage.Controllers
         }
 
         [HttpPut("[action]")]
-        public string UpdateApiKey(string newApiKey)
+        public string UpdateApiKey([FromBody]string newApiKey)
         {
-            // TODO
-            //_configuration.
-
+            _kvkSettings.ApiKey = newApiKey;
+            _settingsService.UpdateSettings(_kvkSettings);
 
             return newApiKey;
         }

@@ -7,7 +7,7 @@ import './NavMenu.css';
 const NavMenu = props =>
     <Navbar collapseOnSelect bg="dark" variant="dark" expand="md" fixed={'top'}>
         <Navbar.Brand>
-            <Link to={'/'} exact>CVnHR.manage</Link>
+            <Link to={'/'}>CVnHR.manage</Link>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">

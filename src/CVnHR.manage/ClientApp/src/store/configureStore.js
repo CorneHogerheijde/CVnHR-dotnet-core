@@ -4,12 +4,14 @@ import { connectRouter, routerMiddleware } from 'connected-react-router';
 import * as Counter from './Counter';
 import * as WeatherForecasts from './WeatherForecasts';
 import * as Settings from './Settings';
+import * as Kvk from './Kvk';
 
 export default function configureStore(history, initialState) {
   const reducers = {
-    counter: Counter.reducer,
-    weatherForecasts: WeatherForecasts.reducer,
-    settings: Settings.reducer
+      counter: Counter.reducer,
+      weatherForecasts: WeatherForecasts.reducer,
+      settings: Settings.reducer,
+      kvk: Kvk.reducer
   };
 
   const middleware = [

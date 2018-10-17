@@ -23,7 +23,7 @@ class Settings extends Component {
                 <h1>Settings</h1>
                 <h3>Certificates</h3>
                 <p>
-                    Current installed certificate(s):
+                    Currently installed certificate(s):
                 </p>
                 {this.props.isLoading && <div>Loading...</div>}
                 {!this.props.isLoading &&

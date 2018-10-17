@@ -1,12 +1,9 @@
-﻿using System.IO;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
+﻿using CVnHR.Business.Services;
 using CVnHR.manage.Models;
-using Microsoft.Extensions.Configuration;
-using CVnHR.Business.Services;
+using CVnHR.manage.Models.Settings;
+using Microsoft.AspNetCore.Mvc;
+using System.IO;
+using System.Linq;
 
 namespace CVnHR.manage.Controllers
 {
@@ -41,11 +38,5 @@ namespace CVnHR.manage.Controllers
 
             return newApiKey;
         }
-    }
-
-    public class CVnHRSettings // TODO move
-    {
-        public IEnumerable<string> Certificates { get; set; }
-        public string ApiKey { get; set; }
     }
 }

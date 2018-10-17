@@ -7,13 +7,11 @@ import './NavMenu.css';
 const NavMenu = props =>
     <Navbar collapseOnSelect bg="dark" variant="dark" expand="md" fixed={'top'}>
         <Navbar.Brand>
-            <Link to={'/'}>CVnHR.manage</Link>
+            <Link to={'/'} exact>CVnHR.manage</Link>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="flex-column">
-
-
                 <Nav.Item>
                     <LinkContainer to={'/'} exact>
                         <Nav.Link>
@@ -21,7 +19,6 @@ const NavMenu = props =>
                         </Nav.Link>
                     </LinkContainer>
                 </Nav.Item>
-
                 <Nav.Item>
                     <LinkContainer to={'/counter'}>
                         <Nav.Link>

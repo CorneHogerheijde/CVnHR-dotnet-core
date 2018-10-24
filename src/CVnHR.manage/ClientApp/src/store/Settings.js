@@ -5,7 +5,7 @@ const apiKeyUpdatedType = 'APIKEY_UPDATED';
 const initialState = {
     settings: {
         certificates: [],
-        apiKey: null
+        kvkApiSettings: {}
     },
     isLoading: false,
     dataLoaded: false
@@ -27,17 +27,17 @@ export const actionCreators = {
 
         dispatch({ type: receiveSettingsType, settings });
     },
-    updateApiKey: (apiKey) => async (dispatch, getState) => {
-        const url = `api/Settings/UpdateApiKey`;
+    updateApiSettings: (kvkApiSettings) => async (dispatch, getState) => {
+        const url = `api/Settings/UpdateKvkApiSettings`;
         const response = await fetch(url, {
             method: 'PUT',
-            body: JSON.stringify(apiKey),
+            body: JSON.stringify(kvkApiSettings),
             headers: {
                 'Content-Type': 'application/json'
             }
         });
 
-        dispatch({ type: apiKeyUpdatedType, success: response.ok, apiKey });
+        dispatch({ type: apiKeyUpdatedType, success: response.ok, kvkApiSettings });
     }
 };
 
@@ -69,7 +69,7 @@ export const reducer = (state, action) => {
             ...state,
             settings: {
                 ...state.settings,
-                apiKey: action.apiKey
+                kvkApiSettings: action.kvkApiSettings
             }
         };
     }

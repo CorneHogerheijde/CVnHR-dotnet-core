@@ -1,6 +1,6 @@
-﻿using CVnHR.Business.Services;
+﻿using CVnHR.Business.Kvk.Api.Entities;
+using CVnHR.Business.Services;
 using CVnHR.manage.Models;
-using CVnHR.manage.Models.Settings;
 using Microsoft.AspNetCore.Mvc;
 using System.IO;
 using System.Linq;
@@ -11,13 +11,13 @@ namespace CVnHR.manage.Controllers
     public class SettingsController : Controller
     {
         private const string CertificatesPath = "Certificates";
-        private readonly KvkSettings _kvkSettings;
+        private KvkApiSettings _kvkApiSettings;
         private readonly ISettingsService _settingsService;
 
         public SettingsController(ISettingsService settingsService)
         {
             _settingsService = settingsService;
-            _kvkSettings = _settingsService.GetSettings<KvkSettings>();
+            _kvkApiSettings = _settingsService.GetSettings<KvkApiSettings>();
         }
 
         [HttpGet("[action]")]
@@ -26,17 +26,17 @@ namespace CVnHR.manage.Controllers
             return new CVnHRSettings() {
                 Certificates = Directory.GetFiles(CertificatesPath, "*.pfx")
                     .Select(p => p.Replace(CertificatesPath + "\\", string.Empty).Replace(".pfx", string.Empty)),
-                ApiKey = _kvkSettings.ApiKey
+                KvkApiSettings = _kvkApiSettings
             };
         }
 
         [HttpPut("[action]")]
-        public string UpdateApiKey([FromBody]string newApiKey)
+        public KvkApiSettings UpdateKvkApiSettings([FromBody]KvkApiSettings kvkApiSettings)
         {
-            _kvkSettings.ApiKey = newApiKey;
-            _settingsService.UpdateSettings(_kvkSettings);
+            _kvkApiSettings = kvkApiSettings;
+            _settingsService.UpdateSettings(_kvkApiSettings);
 
-            return newApiKey;
+            return _kvkApiSettings;
         }
     }
 }

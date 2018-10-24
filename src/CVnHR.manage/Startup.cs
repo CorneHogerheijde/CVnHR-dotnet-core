@@ -1,5 +1,6 @@
 using CVnHR.Business.HrDataservice;
 using CVnHR.Business.Kvk;
+using CVnHR.Business.Kvk.Api;
 using CVnHR.Business.Logging;
 using CVnHR.Business.Services;
 using CVnHR.manage.Models;
@@ -55,6 +56,7 @@ namespace CVnHR.manage
             });
 
             services.AddTransient<ISettingsService, SettingsService>();
+            services.AddTransient<IKvkSearchApi, KvkSearchApi>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

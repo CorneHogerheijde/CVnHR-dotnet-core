@@ -7,6 +7,9 @@ class Settings extends Component {
     constructor(props) {
         super(props);
         this.updateApiKey = this.updateApiKey.bind(this);
+        this.updateBaseUrl = this.updateBaseUrl.bind(this);
+        this.updateSearchUrl = this.updateSearchUrl.bind(this);
+        this.updateProfileUrl = this.updateProfileUrl.bind(this);
     }
 
     componentWillMount() {
@@ -14,7 +17,19 @@ class Settings extends Component {
     }
 
     updateApiKey(e) {
-        this.props.settings.apiKey = e.target.value;
+        this.props.settings.kvkApiSettings.apiKey = e.target.value;
+    }
+
+    updateBaseUrl(e) {
+        this.props.settings.kvkApiSettings.baseUrl = e.target.value;
+    }
+
+    updateSearchUrl(e) {
+        this.props.settings.kvkApiSettings.searchUrl = e.target.value;
+    }
+
+    updateProfileUrl(e) {
+        this.props.settings.kvkApiSettings.profileUrl = e.target.value;
     }
 
     render() {
@@ -41,13 +56,39 @@ class Settings extends Component {
                             </p>}
                         <p><strong>TODO: allow upload and edit of certificate</strong></p>
 
-                        <p>KvK API key</p>
+                    <label>
+                        KvK API key
                         <input
                             type='text'
-                            defaultValue={this.props.settings.apiKey}
+                            defaultValue={this.props.settings.kvkApiSettings.apiKey}
                             onChange={this.updateApiKey}
-                            />
-                        <button onClick={() => this.props.updateApiKey(this.props.settings.apiKey)}>update</button>
+                        />
+                    </label>
+                    <label>
+                        Kvk base url
+                        <input
+                            type='text'
+                            defaultValue={this.props.settings.kvkApiSettings.baseUrl}
+                            onChange={this.updateBaseUrl}
+                        />
+                    </label>
+                    <label>
+                        Kvk search url
+                        <input
+                            type='text'
+                            defaultValue={this.props.settings.kvkApiSettings.searchUrl}
+                            onChange={this.updateSearchUrl}
+                        />
+                    </label>
+                    <label>
+                        Kvk profile url
+                        <input
+                            type='text'
+                            defaultValue={this.props.settings.kvkApiSettings.profileUrl}
+                            onChange={this.updateProfileUrl}
+                        />
+                    </label>
+                    <button onClick={() => this.props.updateApiSettings(this.props.settings.kvkApiSettings)}>update settings</button>
                     </>
                 }
             </div>

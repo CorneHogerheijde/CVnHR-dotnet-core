@@ -19,14 +19,11 @@ export const actionCreators = {
 
         dispatch({ type: requestKvkSearchType, q });
 
-        console.log(q);
-        // TODO!
-
-        /*const url = `api/SampleData/WeatherForecasts?startDateIndex=${startDateIndex}`;
+        const url = `api/kvk?q=${q}`;
         const response = await fetch(url);
-        const forecasts = await response.json();*/
-        const result = { item: 'bla' };
-        
+        const result = await response.json();
+
+        console.log(result);
 
         dispatch({ type: receiveKvkSearchType, q, result });
     }

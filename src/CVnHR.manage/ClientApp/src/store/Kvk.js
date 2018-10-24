@@ -48,9 +48,7 @@ export const reducer = (state, action) => {
             ...state,
             kvk: {
                 ...state.kvk,
-                result: {
-                    result: action.result
-                }
+                result: action.result
             },
             isLoading: false
         };

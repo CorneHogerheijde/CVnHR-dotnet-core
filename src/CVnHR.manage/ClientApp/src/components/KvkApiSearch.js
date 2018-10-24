@@ -22,6 +22,10 @@ class KvkApiSearch extends Component {
                     onChange={this.search}
                 />
                 <button onClick={() => this.props.search(this.props.kvk.q)}>search</button>
+
+                {this.props.isLoading && <div>Loading...</div>}
+                {this.props.kvk.result.items
+                    && <div>TODO: show results and add query/state to url... ({this.props.kvk.result.items[0].kvkNumber})</div>}
             </>
         );
     }

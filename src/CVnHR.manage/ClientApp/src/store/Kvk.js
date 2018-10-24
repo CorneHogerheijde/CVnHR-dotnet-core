@@ -1,13 +1,18 @@
 ﻿const requestKvkSearchType = 'REQUEST_KVK_SEARCH';
 const receiveKvkSearchType = 'RECEIVE_KVK_SEARCH';
 const initialState = {
-    kvk: { q: null, result: null },
+    q: null,
+    kvk: {
+        q: null,
+        result: {  }
+    },
     isLoading: false
 };
 
 export const actionCreators = {
     search: q => async (dispatch, getState) => {
-        if (q === getState().kvk.q) {
+        const state = getState();
+        if (q === state.kvk.q) {
             // Don't issue a duplicate request (we already have or are loading the requested data)
             return;
         }
@@ -33,7 +38,10 @@ export const reducer = (state, action) => {
     if (action.type === requestKvkSearchType) {
         return {
             ...state,
-            kvk: { q: action.q },
+            q: action.q,
+            kvk: {
+                ...state.kvk,
+            },
             isLoading: true
         };
     }
@@ -43,7 +51,9 @@ export const reducer = (state, action) => {
             ...state,
             kvk: {
                 ...state.kvk,
-                result: action.result
+                result: {
+                    result: action.result
+                }
             },
             isLoading: false
         };

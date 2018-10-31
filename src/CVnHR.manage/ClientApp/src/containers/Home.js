@@ -1,11 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import KvkApiSearch from './KvkApiSearch';
+import KvkApiSearch from '../components/KvkApiSearch';
 
 const Home = props => 
   <div>
         <h1>Zoek bij KvK</h1>
-        <KvkApiSearch />
+        <KvkApiSearch q={props.match.params.q} />
   </div>
 ;
 

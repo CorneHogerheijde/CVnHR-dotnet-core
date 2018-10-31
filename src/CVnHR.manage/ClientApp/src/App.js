@@ -9,8 +9,8 @@ import Search from './containers/Search';
 
 export default () => (
   <Layout>
-        <Route exact path='/' component={Home} />
-        <Route path='/search/:q?' component={Search} />
+    <Route exact path='/' component={Home} />
+    <Route path='/search/:q?' component={Search} />
     <Route path='/counter' component={Counter} />
     <Route path='/fetchdata/:startDateIndex?' component={FetchData} />
     <Route path='/settings' component={Settings} />

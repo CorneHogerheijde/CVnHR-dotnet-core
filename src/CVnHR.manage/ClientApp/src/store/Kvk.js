@@ -1,31 +1,26 @@
-﻿import { push } from 'connected-react-router';
-
-const requestKvkSearchType = 'REQUEST_KVK_SEARCH';
+﻿const requestKvkSearchType = 'REQUEST_KVK_SEARCH';
 const receiveKvkSearchType = 'RECEIVE_KVK_SEARCH';
 const initialState = {
     kvk: {
         q: null,
         result: {},
-        startPage: 1
+        startPage: null
     },
     isLoading: false
 };
 
 export const actionCreators = {
-    search: q => async (dispatch, getState) => {
+    search: (q, startPage) => async (dispatch, getState) => {
         const state = getState();
-        const { startPage } = state.router.location.query || { startPage: 1 };
-
-        if (q === state.kvk.q && startPage === state.kvk.startPage) {
+        
+        if (state.isLoading || (q === state.kvk.q && startPage === state.kvk.startPage)) {
             // Don't issue a duplicate request (we already have or are loading the requested data)
             return;
         }
-        
-        dispatch(push(`/search/${q}${state.router.location.query? `?startPage=${startPage}`: ''}`));
 
         dispatch({ type: requestKvkSearchType, q });
-
-        const url = `api/kvk?q=${q}&startPage=${startPage}`;
+        
+        const url = `api/kvk?q=${q}&startPage=${startPage || 1}`;
         const response = await fetch(url);
         const result = await response.json();
 
@@ -52,7 +47,8 @@ export const reducer = (state, action) => {
             ...state,
             kvk: {
                 ...state.kvk,
-                result: action.result
+                result: action.result,
+                startPage: action.result.startPage
             },
             isLoading: false
         };

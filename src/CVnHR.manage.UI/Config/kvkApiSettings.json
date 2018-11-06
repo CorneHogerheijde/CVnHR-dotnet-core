@@ -1,0 +1,6 @@
+{
+  "ApiKey": null,
+  "BaseUrl": "https://api.kvk.nl",
+  "SearchUrl": "/api/v2/search/companies",
+  "ProfileUrl": "/api/v2/profiles/companies"
+}

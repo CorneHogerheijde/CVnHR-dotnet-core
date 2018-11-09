@@ -3,7 +3,7 @@
     <h1>Settings</h1>
     <icon v-if="!currentSettings" icon="spinner" pulse />
 
-    <div v-if="currentSettings.certificates">
+    <div v-if="currentSettings && currentSettings.certificates">
       <ul>
         <li v-for="cert in currentSettings.certificates">{{cert}}</li>
       </ul>
@@ -29,14 +29,13 @@
     },
 
     methods: {
-      ...mapActions(['updateSettings', 'ensureSettings']),
+      ...mapActions(['updateSettings']),
       doSomething() {
         this.updateSettings({ settings: 'a string of settings' });
       }
     },
 
     created() {
-      this.ensureSettings();
     }
   }
 </script>

@@ -12,7 +12,9 @@
 </template>
 
 <script>
-    import NavMenu from './nav-menu'
+  import NavMenu from './nav-menu'
+  import { mapActions, mapState } from 'vuex'
+  // TODO: import InitialeState from './initial-state'
 
     export default {
       components: {
@@ -21,6 +23,14 @@
 
       data () {
         return {}
+      },
+
+      methods: {
+        ...mapActions(['ensureSettings']),
+      },
+
+      created() {
+        this.ensureSettings();
       }
     }
 </script>

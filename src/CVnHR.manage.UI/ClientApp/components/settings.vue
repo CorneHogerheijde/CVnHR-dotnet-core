@@ -25,7 +25,7 @@
         Kvk profile url
         <input v-model="currentSettings.kvkApiSettings.profileUrl" />
       </label>
-      <button v-on:click="updateSettings(currentSettings)">update settings</button>
+      <button @click="updateSettings(currentSettings)">update settings</button>
     </div>
   </div> 
 </template>
@@ -46,6 +46,8 @@
   }
 </script>
 
-<settings>
-
-</settings>
+<style>
+  label, input {
+    width: 100%;
+  }
+</style>

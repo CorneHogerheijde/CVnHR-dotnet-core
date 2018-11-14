@@ -11,10 +11,12 @@ fontawesome.library.add(
   require('@fortawesome/fontawesome-free-solid/faHome'),
   require('@fortawesome/fontawesome-free-solid/faList'),
   require('@fortawesome/fontawesome-free-solid/faSpinner'),
+  require('@fortawesome/fontawesome-free-solid/faCog'),
+  require('@fortawesome/fontawesome-free-solid/faBook'),
   // Brands
   require('@fortawesome/fontawesome-free-brands/faFontAwesome'),
   require('@fortawesome/fontawesome-free-brands/faMicrosoft'),
-  require('@fortawesome/fontawesome-free-brands/faVuejs')
+  require('@fortawesome/fontawesome-free-brands/faVuejs'),
 )
 
 export {

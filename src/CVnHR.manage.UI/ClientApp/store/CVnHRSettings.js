@@ -25,7 +25,6 @@ const settingsMutations = {
     state.settings = settings
   },
   async [updateSettingsType](state, settings) {
-    console.log('updating settings!', settings)
     try {
       axios.put(`/api/settings/UpdateKvkApiSettings`, settings.kvkApiSettings)
     } catch (err) {

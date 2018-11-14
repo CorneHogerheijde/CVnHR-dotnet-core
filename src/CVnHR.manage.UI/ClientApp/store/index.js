@@ -12,7 +12,7 @@ const MAIN_SET_COUNTER = 'MAIN_SET_COUNTER'
 const state = {
   counter: 1,
   settings: null,
-  kvkApiSearch: { q: null }
+  kvkApiSearch: { q: null, startPage: 1, result: null, loading: false }
 }
 
 // MUTATIONS

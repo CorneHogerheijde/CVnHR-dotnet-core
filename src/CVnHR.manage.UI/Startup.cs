@@ -1,3 +1,4 @@
+using CVnHR.Business.Kvk.Api;
 using CVnHR.Business.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -28,6 +29,7 @@ namespace CVnHR.manage.UI
             services.AddSingleton<Providers.IWeatherProvider, Providers.WeatherProviderFake>();
 
             services.AddTransient<ISettingsService, SettingsService>();
+            services.AddTransient<IKvkSearchApi, KvkSearchApi>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

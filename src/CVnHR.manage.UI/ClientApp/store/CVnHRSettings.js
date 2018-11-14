@@ -1,30 +1,37 @@
 import axios from 'axios'
 
 const updateSettingsType = 'updateSettingsType'
+const ensureSettingsType = 'ensureSettings'
 
 const settingsActions = {
   ensureSettings: async ({ commit }) => {
-    var settings = null
-    try {
-      let response = await axios.get(`/api/settings/GetSettings`)
-      console.log(response)
-      settings = response.data
-    } catch (err) {
-      window.alert(err)
-      console.log(err)
-    }
-
-    commit(updateSettingsType, settings)
+    commit(ensureSettingsType)
   },
   updateSettings: ({ commit }, settings) => {
-    console.log('updating settings!', settings)
-    settings = 'settings updated.'
     commit(updateSettingsType, settings)
   }
 }
 
 const settingsMutations = {
-  [updateSettingsType] (state, settings) {
+  async [ensureSettingsType] (state) {
+    let settings = null
+    try {
+      let response = await axios.get(`/api/settings/GetSettings`)
+      settings = response.data
+    } catch (err) {
+      window.alert(err)
+      console.log(err)
+    }
+    state.settings = settings
+  },
+  async [updateSettingsType](state, settings) {
+    console.log('updating settings!', settings)
+    try {
+      axios.put(`/api/settings/UpdateKvkApiSettings`, settings.kvkApiSettings)
+    } catch (err) {
+      window.alert(err)
+      console.log(err)
+    }
     state.settings = settings
   }
 }

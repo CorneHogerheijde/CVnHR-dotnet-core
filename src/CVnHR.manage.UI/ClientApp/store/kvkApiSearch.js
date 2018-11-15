@@ -30,7 +30,7 @@ const kvkApiSearchMutations = {
     state.kvkApiSearch.result = result
     state.kvkApiSearch.loading = false
   },
-  [resetKvkApiSearchType](state) {
+  [resetKvkApiSearchType] (state) {
     state.kvkApiSearch.result = null
   }
 }

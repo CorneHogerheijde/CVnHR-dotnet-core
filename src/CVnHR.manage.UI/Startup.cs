@@ -1,4 +1,7 @@
+using CVnHR.Business.HrDataservice;
+using CVnHR.Business.Kvk;
 using CVnHR.Business.Kvk.Api;
+using CVnHR.Business.Logging;
 using CVnHR.Business.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -30,6 +33,28 @@ namespace CVnHR.manage.UI
 
             services.AddTransient<ISettingsService, SettingsService>();
             services.AddTransient<IKvkSearchApi, KvkSearchApi>();
+
+            services.AddTransient<IHRDataserviceMessageParser, HRDataserviceMessageParser>();
+            // TODO: clean this
+            const string klantReferentie = "ACC_I_002"; // TODO set in config
+
+            services.AddTransient<IHrDataServiceHttpClient, HrDataServiceHttpClient>();
+            services.AddTransient<IHrDataservice, HrDataservice>((serviceProvider) =>
+                new HrDataservice(klantReferentie, serviceProvider.GetService<IHrDataServiceHttpClient>()));
+            services.AddTransient<LoggingHandler>();
+            services.AddHttpClient("hrDataservice")
+                .ConfigurePrimaryHttpMessageHandler((serviceProvider) => {
+                    var hrDataService = serviceProvider.GetService<IHrDataServiceHttpClient>();
+                    var handler = hrDataService.GetHttpClientHandler();
+                    var certificate = hrDataService.GetCertificate();
+
+                    // TODO: only install certificate after uploading??
+                    hrDataService.InstallCertificate(certificate);
+
+                    handler.ClientCertificates.Add(certificate);
+                    return handler;
+                })
+                .AddHttpMessageHandler<LoggingHandler>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

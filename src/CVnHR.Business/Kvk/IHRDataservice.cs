@@ -7,6 +7,6 @@ namespace CVnHR.Business.Kvk
 {
     public interface IHrDataservice
     {
-        Task<object> GetInschrijvingFromKvK(string kvkNummer);
+        Task<string> GetInschrijvingFromKvK(string kvkNummer);
     }
 }

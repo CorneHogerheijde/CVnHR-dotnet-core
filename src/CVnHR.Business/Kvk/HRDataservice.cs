@@ -24,7 +24,7 @@ namespace CVnHR.Business.Kvk
             _httpClientFactory = httpClientFactory;
         }
 
-        public async Task<object> GetInschrijvingFromKvK(string kvkNummer)
+        public async Task<string> GetInschrijvingFromKvK(string kvkNummer)
         {
             var certificate = _httpClientFactory.GetCertificate();
 
@@ -40,8 +40,6 @@ namespace CVnHR.Business.Kvk
             {
                 responseMessage = await response.Content.ReadAsStringAsync();
             }
-
-            Console.WriteLine(responseMessage);
 
             return responseMessage;
         }

@@ -6,6 +6,6 @@ namespace CVnHR.Business.Kvk
 {
     public interface IHRDataserviceMessageParser
     {
-        ophalenInschrijvingResponse Parse(string message);
+        MaatschappelijkeActiviteitResponseType Parse(string message);
     }
 }

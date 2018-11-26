@@ -17,8 +17,6 @@ const kvkSearchMutations = {
     state.kvkSearch.kvkNumber = kvkNumber
     state.kvkSearch.loading = true
 
-    console.log('searching for kvkNumber: ', kvkNumber) // TODO implement url.
-
     const url = `api/kvk/${kvkNumber}`
 
     let result = null

@@ -2,16 +2,20 @@
   <div>
     <icon v-if="loading" icon="spinner" pulse />
 
-    TODO: show result for number {{currentKvkSearch.kvkNumber}}
-
+    <div v-for="(value, key) in currentKvkSearch.result">
+      <objectList v-bind:name="key" v-bind:value="value"></objectList>
+    </div>
 
   </div>
 </template>
 
 <script>
   import { mapActions, mapState } from 'vuex'
+  import objectList from '../utilities/object'
 
   export default {
+    components: { objectList },
+
     computed: {
       ...mapState({
         currentKvkSearch: state => state.kvkSearch,

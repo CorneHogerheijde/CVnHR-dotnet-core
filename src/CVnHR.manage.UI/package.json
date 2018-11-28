@@ -26,10 +26,11 @@
     "vuex-router-sync": "^4.3.2"
   },
   "devDependencies": {
-    "@fortawesome/fontawesome": "^1.1.4",
-    "@fortawesome/fontawesome-free-brands": "^5.0.8",
-    "@fortawesome/fontawesome-free-solid": "^5.0.8",
-    "@fortawesome/vue-fontawesome": "0.0.22",
+    "@fortawesome/fontawesome-svg-core": "^1.2.8",
+    "@fortawesome/free-solid-svg-icons": "^5.5.0",
+    "@fortawesome/free-brands-svg-icons": "^5.5.0",
+    "@fortawesome/free-regular-svg-icons": "^5.5.0",
+    "@fortawesome/vue-fontawesome": "^0.1.2",
     "aspnet-webpack": "^2.0.3",
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.2.2",

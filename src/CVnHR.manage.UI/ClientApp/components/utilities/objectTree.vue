@@ -6,7 +6,9 @@
       </div>
     </div>
     <div v-else-if="label" :style="indent">
+      
       <label @click="toggleChildren" :class="collapser">
+        <icon v-if="isObject(value)" :icon="iconClasses" />
         {{ label }}:
         <span v-if="!isObject(value)">
           {{ formatValue }}
@@ -61,6 +63,9 @@
       formatValue() {
         return this.value ? this.value : this.value == null ? '[null]' : '[empty]';
       },
+      iconClasses() {
+        return this.showChildren ? ['far', 'minus-square'] : ['far', 'plus-square']
+      }
     },
 
     methods: {

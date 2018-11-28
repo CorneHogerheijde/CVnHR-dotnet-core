@@ -1,20 +1,16 @@
 <template>
   <div>
     <icon v-if="loading" icon="spinner" pulse />
-
-    <div v-for="(value, key) in currentKvkSearch.result">
-      <objectList v-bind:name="key" v-bind:value="value"></objectList>
-    </div>
-
+    <objectTree :item="currentKvkSearch.result"></objectTree>
   </div>
 </template>
 
 <script>
   import { mapActions, mapState } from 'vuex'
-  import objectList from '../utilities/object'
+  import objectTree from '../utilities/objectTree'
 
   export default {
-    components: { objectList },
+    components: { objectTree },
 
     computed: {
       ...mapState({

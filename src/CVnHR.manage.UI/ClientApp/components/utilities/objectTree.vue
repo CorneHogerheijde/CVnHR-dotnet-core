@@ -7,7 +7,7 @@
     </div>
     <div v-else-if="label" :style="indent">
       
-      <label @click="toggleChildren" :class="collapser">
+      <label @click="toggleChildren" :class="collapser" v-if="(value || showEmpty)">
         <icon v-if="isObject(value)" :icon="iconClasses" />
         {{ label }}:
         <span v-if="!isObject(value)">
@@ -45,30 +45,44 @@
 </template>
 
 <script>
+  import { mapActions, mapState } from 'vuex'
+
   export default {
-    props: ['label', 'value', 'depth', 'item'], 
+    props: ['label', 'value', 'depth', 'item', 'showAll'], 
     name: 'objectTree',
     data() {
-      return { showChildren: true } // TODO: make collapse all possible (state?)
+      return { showChildrenLocal: false }
     },
 
     computed: {
+      ...mapState({
+        settings: state => state.kvkSearch.viewSettings,
+      }),
       indent() {
         return this.depth > 0 ? { transform: `translate(25px)` } : null
       },
       collapser() {
         return this.isObject(this.value) ? 'collapser' : null;
       },
-      
       formatValue() {
         return this.value ? this.value : this.value == null ? '[null]' : '[empty]';
       },
       iconClasses() {
         return this.showChildren ? ['far', 'minus-square'] : ['far', 'plus-square']
+      },
+      showChildren() {
+        if (this.settings && this.settings.collapseAll) {
+          this.showChildrenLocal = false
+        }
+        return (this.settings && this.settings.showChildren) || this.showChildrenLocal
+      },
+      showEmpty() {
+        return this.settings && this.settings.showEmpty
       }
     },
 
     methods: {
+      ...mapActions(['updateKvkSearchViewSettings']),
       isObject(value) {
         return value && typeof value === 'object';
       },
@@ -76,9 +90,10 @@
         return this.isObject(value) && value.constructor === Array;
       },
       toggleChildren() {
-        this.showChildren = !this.showChildren;
+        this.showChildrenLocal = !this.showChildrenLocal;
+        updateKvkSearchViewSettings({ collapseAll: false })
       }
-    }
+    },
   }
 </script>
 

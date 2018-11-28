@@ -1,6 +1,13 @@
 <template>
   <div>
     <icon v-if="loading" icon="spinner" pulse />
+
+    <template v-if="currentKvkSearch.result">
+      <hr />
+      <button @click="toggleShowChildren">{{ showAll ? 'alles inklappen' : 'alles uitklappen'}}</button>
+      <button @click="toggleShowEmpty">{{ showEmpty ? 'lege velden tonen' : 'lege velden verbergen'}}</button>
+    </template>
+
     <objectTree :item="currentKvkSearch.result"></objectTree>
   </div>
 </template>
@@ -15,17 +22,29 @@
     computed: {
       ...mapState({
         currentKvkSearch: state => state.kvkSearch,
-        loading: state => state.kvkApiSearch.loading
-      })
+        loading: state => state.kvkSearch.loading
+      }),
+      showAll() {
+        return this.currentKvkSearch.viewSettings && this.currentKvkSearch.viewSettings.showChildren
+      },
+      showEmpty() {
+        return this.currentKvkSearch.viewSettings && this.currentKvkSearch.viewSettings.showEmpty
+      }
     },
 
     methods: {
-      ...mapActions(['searchKvk', 'resetKvkSearch']),
+      ...mapActions(['searchKvk', 'resetKvkSearch', 'updateKvkSearchViewSettings']),
       search: function () {
         if (!!this.currentKvkSearch.kvkNumber) {
           console.log(this.currentKvkSearch.kvkNumber)
           this.$router.push({ query: { kvk: this.currentKvkSearch.kvkNumber } })
         }
+      },
+      toggleShowChildren: function () {
+        this.updateKvkSearchViewSettings({ showChildren: !this.showAll, collapseAll: !this.showAll })
+      },
+      toggleShowEmpty: function () {
+        this.updateKvkSearchViewSettings({ showEmpty: !this.showEmpty })
       }
     },
 

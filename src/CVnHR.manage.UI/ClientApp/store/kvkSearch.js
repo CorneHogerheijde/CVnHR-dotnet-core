@@ -2,6 +2,7 @@ import axios from 'axios'
 
 const searchKvkType = 'searchKvkType'
 const resetKvkSearchType = 'resetKvkSearchType'
+const updateKvkSearchViewSettingsType = 'updateKvkSearchViewSettingsType'
 
 const kvkSearchActions = {
   searchKvk: async ({ commit }, kvkNumber) => {
@@ -9,6 +10,9 @@ const kvkSearchActions = {
   },
   resetKvkSearch: async ({ commit }) => {
     commit(resetKvkSearchType)
+  },
+  updateKvkSearchViewSettings: async ({ commit }, viewSettings) => {
+    commit(updateKvkSearchViewSettingsType, viewSettings)
   }
 }
 
@@ -32,6 +36,12 @@ const kvkSearchMutations = {
   },
   [resetKvkSearchType] (state) {
     state.kvkSearch.result = null
+  },
+  [updateKvkSearchViewSettingsType] (state, viewSettings) {
+    state.kvkSearch.viewSettings = {
+      ...state.kvkSearch.viewSettings,
+      ...viewSettings
+    }
   }
 }
 

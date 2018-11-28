@@ -14,7 +14,8 @@ const state = {
   counter: 1,
   settings: null,
   kvkApiSearch: { q: null, startPage: 1, result: null, loading: false },
-  kvkSearch: { kvkNumber: null, result: null, loading: false }
+  kvkSearch: {
+    kvkNumber: null, result: null, loading: false, viewSettings: { showEmpty: false} }
 }
 
 // MUTATIONS

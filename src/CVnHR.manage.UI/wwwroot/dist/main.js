@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "16ac5ad9523520bec14b"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "cfcc15315b0fdcfa4887"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -12444,18 +12444,6 @@ function applyToTag (styleElement, obj) {
 /* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
-// 7.1.15 ToLength
-var toInteger = __webpack_require__(57);
-var min = Math.min;
-module.exports = function (it) {
-  return it > 0 ? min(toInteger(it), 0x1fffffffffffff) : 0; // pow(2, 53) - 1 == 9007199254740991
-};
-
-
-/***/ }),
-/* 13 */
-/***/ (function(module, exports, __webpack_require__) {
-
 "use strict";
 
 
@@ -12482,7 +12470,25 @@ exports.default = _assign2.default || function (target) {
 };
 
 /***/ }),
+/* 13 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// 7.1.15 ToLength
+var toInteger = __webpack_require__(57);
+var min = Math.min;
+module.exports = function (it) {
+  return it > 0 ? min(toInteger(it), 0x1fffffffffffff) : 0; // pow(2, 53) - 1 == 9007199254740991
+};
+
+
+/***/ }),
 /* 14 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = (__webpack_require__(26))(16);
+
+/***/ }),
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var isObject = __webpack_require__(21);
@@ -12493,7 +12499,7 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // Thank's IE8 for his funny defineProperty
@@ -12503,15 +12509,15 @@ module.exports = !__webpack_require__(35)(function () {
 
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var anObject = __webpack_require__(14);
+var anObject = __webpack_require__(15);
 var IE8_DOM_DEFINE = __webpack_require__(106);
 var toPrimitive = __webpack_require__(67);
 var dP = Object.defineProperty;
 
-exports.f = __webpack_require__(15) ? Object.defineProperty : function defineProperty(O, P, Attributes) {
+exports.f = __webpack_require__(16) ? Object.defineProperty : function defineProperty(O, P, Attributes) {
   anObject(O);
   P = toPrimitive(P, true);
   anObject(Attributes);
@@ -12523,12 +12529,6 @@ exports.f = __webpack_require__(15) ? Object.defineProperty : function definePro
   return O;
 };
 
-
-/***/ }),
-/* 17 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = (__webpack_require__(26))(16);
 
 /***/ }),
 /* 18 */
@@ -12612,9 +12612,9 @@ module.exports = function (it, key) {
 /* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var dP = __webpack_require__(16);
+var dP = __webpack_require__(17);
 var createDesc = __webpack_require__(51);
-module.exports = __webpack_require__(15) ? function (object, key, value) {
+module.exports = __webpack_require__(16) ? function (object, key, value) {
   return dP.f(object, key, createDesc(1, value));
 } : function (object, key, value) {
   object[key] = value;
@@ -12656,7 +12656,7 @@ module.exports = function (it) {
 var ctx = __webpack_require__(30);
 var IObject = __webpack_require__(55);
 var toObject = __webpack_require__(25);
-var toLength = __webpack_require__(12);
+var toLength = __webpack_require__(13);
 var asc = __webpack_require__(209);
 module.exports = function (TYPE, $create) {
   var IS_MAP = TYPE == 1;
@@ -13106,7 +13106,7 @@ module.exports = function (bitmap, value) {
 /* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var def = __webpack_require__(16).f;
+var def = __webpack_require__(17).f;
 var has = __webpack_require__(19);
 var TAG = __webpack_require__(5)('toStringTag');
 
@@ -13312,7 +13312,7 @@ var global = __webpack_require__(2);
 var core = __webpack_require__(8);
 var LIBRARY = __webpack_require__(37);
 var wksExt = __webpack_require__(69);
-var defineProperty = __webpack_require__(16).f;
+var defineProperty = __webpack_require__(17).f;
 module.exports = function (name) {
   var $Symbol = core.Symbol || (core.Symbol = LIBRARY ? {} : global.Symbol || {});
   if (name.charAt(0) != '_' && !(name in $Symbol)) defineProperty($Symbol, name, { value: wksExt.f(name) });
@@ -13466,7 +13466,7 @@ exports = module.exports = __webpack_require__(7)();
 
 
 // module
-exports.push([module.i, "\na[data-v-009bbd5d] {\n  color: blue;\n  cursor: pointer;\n}\n", "", {"version":3,"sources":["D:/Projects/GitHub/CVnHR/src/CVnHR.manage.UI/ClientApp/components/kvk/ClientApp\\components\\kvk/kvkApiSearchResult.vue"],"names":[],"mappings":";AA6EA;EACA,YAAA;EACA,gBAAA;CACA","file":"kvkApiSearchResult.vue","sourcesContent":["<template>\r\n  <div>\r\n    <icon v-if=\"loading\" icon=\"spinner\" pulse />\n\n    <p v-if=\"result && result.totalItems == 0\" class=\"text-danger\">Nothing found.</p>\r\n    <div v-if=\"result && result.totalItems > 0\" class=\"kvk-api-result-table container\">\n      <p> {{result.totalItems}} items found.</p>\r\n\r\n      <div class=\"row\" v-for=\"item in result.items\" v-if=\"result.totalItems > 0\">\r\n        <div class=\"col-md\">{{item.kvkNumber}}</div>\r\n        <div class=\"col-md-5\">{{item.tradeNames === null ? '[??]' : (item.tradeNames.businessName || item.tradeNames.shortBusinessName)}}</div>\r\n        <div class=\"col-md-4\">{{getAddress(item)}}</div>\r\n        <div class=\"col-md\">\r\n          <router-link :to=\"`/?kvk=${item.kvkNumber}`\">zoek</router-link>\r\n        </div>\r\n      </div>\r\n\n      <br/>\r\n      <div class=\"controls row justify-content-between\">\r\n        <div class=\"col-md font-italic\">\n          {{result.totalItems}} resultaten gevonden. Pagina {{result.startPage}} van {{endPage}}\n        </div>\n        <div class=\"col-md text-md-right\">\r\n          <a href=\"#\" v-if=\"result.startPage > 1\" v-on:click=\"prevPage\">vorige pagina</a>\n          <span v-if=\"result.startPage > 1 && result.startPage < endPage\">|</span>\r\n          <a href=\"#\" v-if=\"result.startPage < endPage\" v-on:click=\"nextPage\">volgende pagina</a>\r\n        </div>\r\n      </div>\r\n\r\n    </div>\r\n\r\n  </div>\r\n</template>\r\n\r\n<script>\r\n  import { mapActions, mapState } from 'vuex'\r\n\r\n  export default {\r\n    computed: {\r\n      ...mapState({\n        loading: state => state.kvkApiSearch.loading,\r\n        result: state => state.kvkApiSearch.result,\r\n      }),\n      endPage: function () {\n        const r = this.result\n        return r\n          ? parseInt(r.totalItems / r.itemsPerPage) + (r.totalItems % r.itemsPerPage > 0 ? 1 : 0)\n          : 0;\n      }\r\n    },\n\n    methods: {\n      nextPage: function (e) {\n        e.preventDefault()\n        this.$router.push({\n          query: { ...this.$route.query, startPage: parseInt(this.$route.query.startPage || 1) + 1 }\n        })\n        return false\n      },\n      prevPage: function (e) {\n        e.preventDefault()\n        this.$router.push({\n          query: { ...this.$route.query, startPage: parseInt(this.$route.query.startPage || 1) - 1 }\n        })\n        return false\n      },\n      getAddress: function (item) {\n        const address = item.addresses ? item.addresses[0] : null\n        return address\n          ? `${address.street} ${address.houseNumber}${address.houseNumberAddition} ${address.city}`\n          : null\n      }\n    }\r\n  }\r\n</script>\r\n\r\n<style scoped>\r\n  a {\n    color: blue;\n    cursor: pointer;\r\n  }\r\n</style>\r\n"],"sourceRoot":""}]);
+exports.push([module.i, "\na[data-v-009bbd5d] {\n  color: blue;\n  cursor: pointer;\n}\n", "", {"version":3,"sources":["D:/Projects/GitHub/CVnHR/src/CVnHR.manage.UI/ClientApp/components/kvk/ClientApp\\components\\kvk/kvkApiSearchResult.vue"],"names":[],"mappings":";AA6EA;EACA,YAAA;EACA,gBAAA;CACA","file":"kvkApiSearchResult.vue","sourcesContent":["<template>\r\n  <div>\r\n    <icon v-if=\"loading\" icon=\"spinner\" pulse />\r\n\r\n    <p v-if=\"result && result.totalItems == 0\" class=\"text-danger\">Nothing found.</p>\r\n    <div v-if=\"result && result.totalItems > 0\" class=\"kvk-api-result-table container\">\r\n      <p> {{result.totalItems}} items found.</p>\r\n\r\n      <div class=\"row\" v-for=\"item in result.items\" v-if=\"result.totalItems > 0\">\r\n        <div class=\"col-md\">{{item.kvkNumber}}</div>\r\n        <div class=\"col-md-5\">{{item.tradeNames === null ? '[??]' : (item.tradeNames.businessName || item.tradeNames.shortBusinessName)}}</div>\r\n        <div class=\"col-md-4\">{{getAddress(item)}}</div>\r\n        <div class=\"col-md\">\r\n          <router-link :to=\"`/?kvk=${item.kvkNumber}`\">zoek</router-link>\r\n        </div>\r\n      </div>\r\n\r\n      <br/>\r\n      <div class=\"controls row justify-content-between\">\r\n        <div class=\"col-md font-italic\">\r\n          {{result.totalItems}} resultaten gevonden. Pagina {{result.startPage}} van {{endPage}}\r\n        </div>\r\n        <div class=\"col-md text-md-right\">\r\n          <a href=\"#\" v-if=\"result.startPage > 1\" v-on:click=\"prevPage\">vorige pagina</a>\r\n          <span v-if=\"result.startPage > 1 && result.startPage < endPage\">|</span>\r\n          <a href=\"#\" v-if=\"result.startPage < endPage\" v-on:click=\"nextPage\">volgende pagina</a>\r\n        </div>\r\n      </div>\r\n\r\n    </div>\r\n\r\n  </div>\r\n</template>\r\n\r\n<script>\r\n  import { mapActions, mapState } from 'vuex'\r\n\r\n  export default {\r\n    computed: {\r\n      ...mapState({\r\n        loading: state => state.kvkApiSearch.loading,\r\n        result: state => state.kvkApiSearch.result,\r\n      }),\r\n      endPage: function () {\r\n        const r = this.result\r\n        return r\r\n          ? parseInt(r.totalItems / r.itemsPerPage) + (r.totalItems % r.itemsPerPage > 0 ? 1 : 0)\r\n          : 0;\r\n      }\r\n    },\r\n\r\n    methods: {\r\n      nextPage: function (e) {\r\n        e.preventDefault()\r\n        this.$router.push({\r\n          query: { ...this.$route.query, startPage: parseInt(this.$route.query.startPage || 1) + 1 }\r\n        })\r\n        return false\r\n      },\r\n      prevPage: function (e) {\r\n        e.preventDefault()\r\n        this.$router.push({\r\n          query: { ...this.$route.query, startPage: parseInt(this.$route.query.startPage || 1) - 1 }\r\n        })\r\n        return false\r\n      },\r\n      getAddress: function (item) {\r\n        const address = item.addresses ? item.addresses[0] : null\r\n        return address\r\n          ? `${address.street} ${address.houseNumber}${address.houseNumberAddition} ${address.city}`\r\n          : null\r\n      }\r\n    }\r\n  }\r\n</script>\r\n\r\n<style scoped>\r\n  a {\r\n    color: blue;\r\n    cursor: pointer;\r\n  }\r\n</style>\r\n"],"sourceRoot":""}]);
 
 // exports
 
@@ -13480,7 +13480,7 @@ exports = module.exports = __webpack_require__(7)();
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", "", {"version":3,"sources":[],"names":[],"mappings":"","file":"kvkSearch.vue","sourceRoot":""}]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", "", {"version":3,"sources":[],"names":[],"mappings":"","file":"kvkSearch.vue","sourceRoot":""}]);
 
 // exports
 
@@ -13508,7 +13508,7 @@ exports = module.exports = __webpack_require__(7)();
 
 
 // module
-exports.push([module.i, "\nlabel[data-v-3e6d51d1] {\n  font-weight: bold;\n  margin: 0\n}\nlabel span[data-v-3e6d51d1] {\n    font-weight: normal;\n}\n.collapser[data-v-3e6d51d1] {\n  cursor: pointer;\n}\n", "", {"version":3,"sources":["D:/Projects/GitHub/CVnHR/src/CVnHR.manage.UI/ClientApp/components/utilities/ClientApp\\components\\utilities/objectTree.vue"],"names":[],"mappings":";AAqFA;EACA,kBAAA;EACA,SAAA;CACA;AACA;IACA,oBAAA;CACA;AAEA;EACA,gBAAA;CACA","file":"objectTree.vue","sourcesContent":["<template>\r\n  <div>\n    <div v-if=\"item\">\r\n      <div v-for=\"(value, label) in item\">\r\n        <objectTree :label=\"label\" :value=\"value\" :depth=\"0\"></objectTree>\r\n      </div>\r\n    </div>\n    <div v-else-if=\"label\" :style=\"indent\">\r\n      \r\n      <label @click=\"toggleChildren\" :class=\"collapser\">\r\n        <icon v-if=\"isObject(value)\" :icon=\"iconClasses\" />\r\n        {{ label }}:\r\n        <span v-if=\"!isObject(value)\">\r\n          {{ formatValue }}\r\n        </span>\r\n      </label>\r\n      <template v-if=\"showChildren && isObject(value)\">\r\n        <template v-if=\"!isArray(value)\">\r\n          <objectTree v-for=\"(val, label) in value\"\r\n                      :label=\"label\"\r\n                      :value=\"val\"\r\n                      :key=\"label + depth\"\r\n                      :depth=\"depth + 1\"></objectTree>\r\n        </template>\r\n        <template v-else>\r\n          <template v-for=\"(val, index) in value\">\r\n            [\r\n            <template v-if=\"isObject(val)\">\r\n              <objectTree v-for=\"(val, label) in val\"\r\n                          :label=\"label\"\r\n                          :value=\"val\"\r\n                          :key=\"label + depth + index\"\r\n                          :depth=\"depth + 1\"></objectTree>\r\n            </template>\r\n            <template v-else>\r\n              <span>\"{{val}}\"</span>\r\n            </template>\r\n            ]\r\n            <span v-if=\"index != Object.keys(value).length - 1\">,</span>\r\n          </template>\r\n        </template>\r\n      </template>\r\n    </div>\n  </div>\r\n</template>\r\n\r\n<script>\r\n  export default {\r\n    props: ['label', 'value', 'depth', 'item'], \r\n    name: 'objectTree',\n    data() {\n      return { showChildren: true } // TODO: make collapse all possible (state?)\r\n    },\n\n    computed: {\n      indent() {\r\n        return this.depth > 0 ? { transform: `translate(25px)` } : null\r\n      },\n      collapser() {\n        return this.isObject(this.value) ? 'collapser' : null;\n      },\n      \n      formatValue() {\n        return this.value ? this.value : this.value == null ? '[null]' : '[empty]';\n      },\n      iconClasses() {\r\n        return this.showChildren ? ['far', 'minus-square'] : ['far', 'plus-square']\r\n      }\n    },\n\n    methods: {\n      isObject(value) {\n        return value && typeof value === 'object';\n      },\n      isArray(value) {\n        return this.isObject(value) && value.constructor === Array;\n      },\n      toggleChildren() {\r\n        this.showChildren = !this.showChildren;\r\n      }\n    }\r\n  }\r\n</script>\r\n\r\n<style scoped>\r\n  label {\n    font-weight: bold;\n    margin: 0\n  }\r\n    label span {\n      font-weight: normal;\r\n    }\r\n\r\n  .collapser {\n    cursor: pointer;\r\n  }\n</style>\r\n"],"sourceRoot":""}]);
+exports.push([module.i, "\nlabel[data-v-3e6d51d1] {\n  font-weight: bold;\n  margin: 0\n}\nlabel span[data-v-3e6d51d1] {\n    font-weight: normal;\n}\n.collapser[data-v-3e6d51d1] {\n  cursor: pointer;\n}\n", "", {"version":3,"sources":["D:/Projects/GitHub/CVnHR/src/CVnHR.manage.UI/ClientApp/components/utilities/ClientApp\\components\\utilities/objectTree.vue"],"names":[],"mappings":";AAoGA;EACA,kBAAA;EACA,SAAA;CACA;AACA;IACA,oBAAA;CACA;AAEA;EACA,gBAAA;CACA","file":"objectTree.vue","sourcesContent":["<template>\r\n  <div>\n    <div v-if=\"item\">\r\n      <div v-for=\"(value, label) in item\">\r\n        <objectTree :label=\"label\" :value=\"value\" :depth=\"0\"></objectTree>\r\n      </div>\r\n    </div>\n    <div v-else-if=\"label\" :style=\"indent\">\r\n      \r\n      <label @click=\"toggleChildren\" :class=\"collapser\" v-if=\"(value || showEmpty)\">\r\n        <icon v-if=\"isObject(value)\" :icon=\"iconClasses\" />\r\n        {{ label }}:\r\n        <span v-if=\"!isObject(value)\">\r\n          {{ formatValue }}\r\n        </span>\r\n      </label>\r\n      <template v-if=\"showChildren && isObject(value)\">\r\n        <template v-if=\"!isArray(value)\">\r\n          <objectTree v-for=\"(val, label) in value\"\r\n                      :label=\"label\"\r\n                      :value=\"val\"\r\n                      :key=\"label + depth\"\r\n                      :depth=\"depth + 1\"></objectTree>\r\n        </template>\r\n        <template v-else>\r\n          <template v-for=\"(val, index) in value\">\r\n            [\r\n            <template v-if=\"isObject(val)\">\r\n              <objectTree v-for=\"(val, label) in val\"\r\n                          :label=\"label\"\r\n                          :value=\"val\"\r\n                          :key=\"label + depth + index\"\r\n                          :depth=\"depth + 1\"></objectTree>\r\n            </template>\r\n            <template v-else>\r\n              <span>\"{{val}}\"</span>\r\n            </template>\r\n            ]\r\n            <span v-if=\"index != Object.keys(value).length - 1\">,</span>\r\n          </template>\r\n        </template>\r\n      </template>\r\n    </div>\n  </div>\r\n</template>\r\n\r\n<script>\n  import { mapActions, mapState } from 'vuex'\n\r\n  export default {\r\n    props: ['label', 'value', 'depth', 'item', 'showAll'], \r\n    name: 'objectTree',\n    data() {\n      return { showChildrenLocal: false }\r\n    },\n\n    computed: {\n      ...mapState({\r\n        settings: state => state.kvkSearch.viewSettings,\r\n      }),\n      indent() {\r\n        return this.depth > 0 ? { transform: `translate(25px)` } : null\r\n      },\n      collapser() {\n        return this.isObject(this.value) ? 'collapser' : null;\n      },\n      formatValue() {\n        return this.value ? this.value : this.value == null ? '[null]' : '[empty]';\n      },\n      iconClasses() {\r\n        return this.showChildren ? ['far', 'minus-square'] : ['far', 'plus-square']\r\n      },\n      showChildren() {\n        if (this.settings && this.settings.collapseAll) {\n          this.showChildrenLocal = false\n        }\n        return (this.settings && this.settings.showChildren) || this.showChildrenLocal\n      },\n      showEmpty() {\n        return this.settings && this.settings.showEmpty\n      }\n    },\n\n    methods: {\n      ...mapActions(['updateKvkSearchViewSettings']),\n      isObject(value) {\n        return value && typeof value === 'object';\n      },\n      isArray(value) {\n        return this.isObject(value) && value.constructor === Array;\n      },\n      toggleChildren() {\r\n        this.showChildrenLocal = !this.showChildrenLocal;\n        updateKvkSearchViewSettings({ collapseAll: false })\r\n      }\n    },\n  }\r\n</script>\r\n\r\n<style scoped>\r\n  label {\n    font-weight: bold;\n    margin: 0\n  }\r\n    label span {\n      font-weight: normal;\r\n    }\r\n\r\n  .collapser {\n    cursor: pointer;\r\n  }\n</style>\r\n"],"sourceRoot":""}]);
 
 // exports
 
@@ -15609,7 +15609,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _extends2 = __webpack_require__(13);
+var _extends2 = __webpack_require__(12);
 
 var _extends3 = _interopRequireDefault(_extends2);
 
@@ -15617,7 +15617,7 @@ var _navMenu = __webpack_require__(269);
 
 var _navMenu2 = _interopRequireDefault(_navMenu);
 
-var _vuex = __webpack_require__(17);
+var _vuex = __webpack_require__(14);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -15649,11 +15649,11 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _extends2 = __webpack_require__(13);
+var _extends2 = __webpack_require__(12);
 
 var _extends3 = _interopRequireDefault(_extends2);
 
-var _vuex = __webpack_require__(17);
+var _vuex = __webpack_require__(14);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -15822,7 +15822,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _vuex = __webpack_require__(17);
+var _vuex = __webpack_require__(14);
 
 var _kvkApiSearch = __webpack_require__(266);
 
@@ -15852,11 +15852,11 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _extends2 = __webpack_require__(13);
+var _extends2 = __webpack_require__(12);
 
 var _extends3 = _interopRequireDefault(_extends2);
 
-var _vuex = __webpack_require__(17);
+var _vuex = __webpack_require__(14);
 
 var _kvkApiSearchResult = __webpack_require__(267);
 
@@ -15920,11 +15920,11 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _extends2 = __webpack_require__(13);
+var _extends2 = __webpack_require__(12);
 
 var _extends3 = _interopRequireDefault(_extends2);
 
-var _vuex = __webpack_require__(17);
+var _vuex = __webpack_require__(14);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -15976,11 +15976,11 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _extends2 = __webpack_require__(13);
+var _extends2 = __webpack_require__(12);
 
 var _extends3 = _interopRequireDefault(_extends2);
 
-var _vuex = __webpack_require__(17);
+var _vuex = __webpack_require__(14);
 
 var _objectTree = __webpack_require__(271);
 
@@ -15996,16 +15996,29 @@ exports.default = {
       return state.kvkSearch;
     },
     loading: function loading(state) {
-      return state.kvkApiSearch.loading;
+      return state.kvkSearch.loading;
     }
-  })),
+  }), {
+    showAll: function showAll() {
+      return this.currentKvkSearch.viewSettings && this.currentKvkSearch.viewSettings.showChildren;
+    },
+    showEmpty: function showEmpty() {
+      return this.currentKvkSearch.viewSettings && this.currentKvkSearch.viewSettings.showEmpty;
+    }
+  }),
 
-  methods: (0, _extends3.default)({}, (0, _vuex.mapActions)(['searchKvk', 'resetKvkSearch']), {
+  methods: (0, _extends3.default)({}, (0, _vuex.mapActions)(['searchKvk', 'resetKvkSearch', 'updateKvkSearchViewSettings']), {
     search: function search() {
       if (!!this.currentKvkSearch.kvkNumber) {
         console.log(this.currentKvkSearch.kvkNumber);
         this.$router.push({ query: { kvk: this.currentKvkSearch.kvkNumber } });
       }
+    },
+    toggleShowChildren: function toggleShowChildren() {
+      this.updateKvkSearchViewSettings({ showChildren: !this.showAll, collapseAll: !this.showAll });
+    },
+    toggleShowEmpty: function toggleShowEmpty() {
+      this.updateKvkSearchViewSettings({ showEmpty: !this.showEmpty });
     }
   }),
 
@@ -16071,11 +16084,11 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _extends2 = __webpack_require__(13);
+var _extends2 = __webpack_require__(12);
 
 var _extends3 = _interopRequireDefault(_extends2);
 
-var _vuex = __webpack_require__(17);
+var _vuex = __webpack_require__(14);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -16104,17 +16117,27 @@ var _typeof2 = __webpack_require__(163);
 
 var _typeof3 = _interopRequireDefault(_typeof2);
 
+var _extends2 = __webpack_require__(12);
+
+var _extends3 = _interopRequireDefault(_extends2);
+
+var _vuex = __webpack_require__(14);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = {
-  props: ['label', 'value', 'depth', 'item'],
+  props: ['label', 'value', 'depth', 'item', 'showAll'],
   name: 'objectTree',
   data: function data() {
-    return { showChildren: true };
+    return { showChildrenLocal: false };
   },
 
 
-  computed: {
+  computed: (0, _extends3.default)({}, (0, _vuex.mapState)({
+    settings: function settings(state) {
+      return state.kvkSearch.viewSettings;
+    }
+  }), {
     indent: function indent() {
       return this.depth > 0 ? { transform: 'translate(25px)' } : null;
     },
@@ -16126,10 +16149,19 @@ exports.default = {
     },
     iconClasses: function iconClasses() {
       return this.showChildren ? ['far', 'minus-square'] : ['far', 'plus-square'];
+    },
+    showChildren: function showChildren() {
+      if (this.settings && this.settings.collapseAll) {
+        this.showChildrenLocal = false;
+      }
+      return this.settings && this.settings.showChildren || this.showChildrenLocal;
+    },
+    showEmpty: function showEmpty() {
+      return this.settings && this.settings.showEmpty;
     }
-  },
+  }),
 
-  methods: {
+  methods: (0, _extends3.default)({}, (0, _vuex.mapActions)(['updateKvkSearchViewSettings']), {
     isObject: function isObject(value) {
       return value && (typeof value === 'undefined' ? 'undefined' : (0, _typeof3.default)(value)) === 'object';
     },
@@ -16137,9 +16169,10 @@ exports.default = {
       return this.isObject(value) && value.constructor === Array;
     },
     toggleChildren: function toggleChildren() {
-      this.showChildren = !this.showChildren;
+      this.showChildrenLocal = !this.showChildrenLocal;
+      updateKvkSearchViewSettings({ collapseAll: false });
     }
-  }
+  })
 };
 
 /***/ }),
@@ -16183,7 +16216,7 @@ module.exports = document && document.documentElement;
 /* 106 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = !__webpack_require__(15) && !__webpack_require__(35)(function () {
+module.exports = !__webpack_require__(16) && !__webpack_require__(35)(function () {
   return Object.defineProperty(__webpack_require__(60)('div'), 'a', { get: function () { return 7; } }).a != 7;
 });
 
@@ -16281,7 +16314,7 @@ module.exports = function (Base, NAME, Constructor, next, DEFAULT, IS_SET, FORCE
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.2 / 15.2.3.5 Object.create(O [, Properties])
-var anObject = __webpack_require__(14);
+var anObject = __webpack_require__(15);
 var dPs = __webpack_require__(186);
 var enumBugKeys = __webpack_require__(61);
 var IE_PROTO = __webpack_require__(64)('IE_PROTO');
@@ -16376,7 +16409,7 @@ module.exports = function (exec) {
 /* 113 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var anObject = __webpack_require__(14);
+var anObject = __webpack_require__(15);
 var isObject = __webpack_require__(21);
 var newPromiseCapability = __webpack_require__(62);
 
@@ -16402,7 +16435,7 @@ module.exports = __webpack_require__(20);
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.3.20 SpeciesConstructor(O, defaultConstructor)
-var anObject = __webpack_require__(14);
+var anObject = __webpack_require__(15);
 var aFunction = __webpack_require__(47);
 var SPECIES = __webpack_require__(5)('species');
 module.exports = function (O, D) {
@@ -16587,7 +16620,7 @@ for (var i = 0; i < DOMIterables.length; i++) {
 // false -> Array#indexOf
 // true  -> Array#includes
 var toIObject = __webpack_require__(43);
-var toLength = __webpack_require__(12);
+var toLength = __webpack_require__(13);
 var toAbsoluteIndex = __webpack_require__(56);
 module.exports = function (IS_INCLUDES) {
   return function ($this, el, fromIndex) {
@@ -16616,7 +16649,7 @@ module.exports = function (IS_INCLUDES) {
 var aFunction = __webpack_require__(28);
 var toObject = __webpack_require__(25);
 var IObject = __webpack_require__(55);
-var toLength = __webpack_require__(12);
+var toLength = __webpack_require__(13);
 
 module.exports = function (that, callbackfn, aLen, memo, isRight) {
   aFunction(callbackfn);
@@ -22606,7 +22639,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.store = exports.router = exports.app = undefined;
 
-var _extends2 = __webpack_require__(13);
+var _extends2 = __webpack_require__(12);
 
 var _extends3 = _interopRequireDefault(_extends2);
 
@@ -22854,7 +22887,7 @@ var _defineProperty2 = __webpack_require__(45);
 
 var _defineProperty3 = _interopRequireDefault(_defineProperty2);
 
-var _extends3 = __webpack_require__(13);
+var _extends3 = __webpack_require__(12);
 
 var _extends4 = _interopRequireDefault(_extends3);
 
@@ -22862,7 +22895,7 @@ var _vue = __webpack_require__(4);
 
 var _vue2 = _interopRequireDefault(_vue);
 
-var _vuex = __webpack_require__(17);
+var _vuex = __webpack_require__(14);
 
 var _vuex2 = _interopRequireDefault(_vuex);
 
@@ -22882,7 +22915,8 @@ var state = {
   counter: 1,
   settings: null,
   kvkApiSearch: { q: null, startPage: 1, result: null, loading: false },
-  kvkSearch: { kvkNumber: null, result: null, loading: false }
+  kvkSearch: {
+    kvkNumber: null, result: null, loading: false, viewSettings: { showEmpty: false } }
 };
 
 var mutations = (0, _extends4.default)({}, _CVnHRSettings.settingsMutations, _kvkApiSearch.kvkApiSearchMutations, _kvkSearch.kvkSearchMutations, (0, _defineProperty3.default)({}, MAIN_SET_COUNTER, function (state, obj) {
@@ -23053,6 +23087,10 @@ var _defineProperty2 = __webpack_require__(45);
 
 var _defineProperty3 = _interopRequireDefault(_defineProperty2);
 
+var _extends2 = __webpack_require__(12);
+
+var _extends3 = _interopRequireDefault(_extends2);
+
 var _regenerator = __webpack_require__(46);
 
 var _regenerator2 = _interopRequireDefault(_regenerator);
@@ -23071,6 +23109,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var searchKvkType = 'searchKvkType';
 var resetKvkSearchType = 'resetKvkSearchType';
+var updateKvkSearchViewSettingsType = 'updateKvkSearchViewSettingsType';
 
 var kvkSearchActions = {
   searchKvk: function () {
@@ -23114,41 +23153,62 @@ var kvkSearchActions = {
     return function resetKvkSearch(_x3) {
       return _ref3.apply(this, arguments);
     };
+  }(),
+  updateKvkSearchViewSettings: function () {
+    var _ref5 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee3(_ref6, viewSettings) {
+      var commit = _ref6.commit;
+      return _regenerator2.default.wrap(function _callee3$(_context3) {
+        while (1) {
+          switch (_context3.prev = _context3.next) {
+            case 0:
+              commit(updateKvkSearchViewSettingsType, viewSettings);
+
+            case 1:
+            case 'end':
+              return _context3.stop();
+          }
+        }
+      }, _callee3, undefined);
+    }));
+
+    return function updateKvkSearchViewSettings(_x4, _x5) {
+      return _ref5.apply(this, arguments);
+    };
   }()
 };
 
-var kvkSearchMutations = (_kvkSearchMutations = {}, (0, _defineProperty3.default)(_kvkSearchMutations, searchKvkType, function (state, _ref5) {
+var kvkSearchMutations = (_kvkSearchMutations = {}, (0, _defineProperty3.default)(_kvkSearchMutations, searchKvkType, function (state, _ref7) {
   var _this = this;
 
-  var kvkNumber = _ref5.kvkNumber;
-  return (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee3() {
+  var kvkNumber = _ref7.kvkNumber;
+  return (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee4() {
     var url, result, response;
-    return _regenerator2.default.wrap(function _callee3$(_context3) {
+    return _regenerator2.default.wrap(function _callee4$(_context4) {
       while (1) {
-        switch (_context3.prev = _context3.next) {
+        switch (_context4.prev = _context4.next) {
           case 0:
             state.kvkSearch.kvkNumber = kvkNumber;
             state.kvkSearch.loading = true;
 
             url = 'api/kvk/' + kvkNumber;
             result = null;
-            _context3.prev = 4;
-            _context3.next = 7;
+            _context4.prev = 4;
+            _context4.next = 7;
             return _axios2.default.get(url);
 
           case 7:
-            response = _context3.sent;
+            response = _context4.sent;
 
             result = response.data;
-            _context3.next = 15;
+            _context4.next = 15;
             break;
 
           case 11:
-            _context3.prev = 11;
-            _context3.t0 = _context3['catch'](4);
+            _context4.prev = 11;
+            _context4.t0 = _context4['catch'](4);
 
-            window.alert(_context3.t0);
-            console.log(_context3.t0);
+            window.alert(_context4.t0);
+            console.log(_context4.t0);
 
           case 15:
             state.kvkSearch.result = result;
@@ -23156,13 +23216,15 @@ var kvkSearchMutations = (_kvkSearchMutations = {}, (0, _defineProperty3.default
 
           case 17:
           case 'end':
-            return _context3.stop();
+            return _context4.stop();
         }
       }
-    }, _callee3, _this, [[4, 11]]);
+    }, _callee4, _this, [[4, 11]]);
   }))();
 }), (0, _defineProperty3.default)(_kvkSearchMutations, resetKvkSearchType, function (state) {
   state.kvkSearch.result = null;
+}), (0, _defineProperty3.default)(_kvkSearchMutations, updateKvkSearchViewSettingsType, function (state, viewSettings) {
+  state.kvkSearch.viewSettings = (0, _extends3.default)({}, state.kvkSearch.viewSettings, viewSettings);
 }), _kvkSearchMutations);
 
 exports.kvkSearchActions = kvkSearchActions;
@@ -23392,7 +23454,7 @@ module.exports = function (it) {
 var ctx = __webpack_require__(48);
 var call = __webpack_require__(179);
 var isArrayIter = __webpack_require__(177);
-var anObject = __webpack_require__(14);
+var anObject = __webpack_require__(15);
 var toLength = __webpack_require__(117);
 var getIterFn = __webpack_require__(195);
 var BREAK = {};
@@ -23468,7 +23530,7 @@ module.exports = Array.isArray || function isArray(arg) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // call something on iterator step with safe closing on error
-var anObject = __webpack_require__(14);
+var anObject = __webpack_require__(15);
 module.exports = function (iterator, fn, value, entries) {
   try {
     return entries ? fn(anObject(value)[0], value[1]) : fn(value);
@@ -23545,7 +23607,7 @@ module.exports = function (done, value) {
 var META = __webpack_require__(53)('meta');
 var isObject = __webpack_require__(21);
 var has = __webpack_require__(19);
-var setDesc = __webpack_require__(16).f;
+var setDesc = __webpack_require__(17).f;
 var id = 0;
 var isExtensible = Object.isExtensible || function () {
   return true;
@@ -23717,11 +23779,11 @@ module.exports = !$assign || __webpack_require__(35)(function () {
 /* 186 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var dP = __webpack_require__(16);
-var anObject = __webpack_require__(14);
+var dP = __webpack_require__(17);
+var anObject = __webpack_require__(15);
 var getKeys = __webpack_require__(49);
 
-module.exports = __webpack_require__(15) ? Object.defineProperties : function defineProperties(O, Properties) {
+module.exports = __webpack_require__(16) ? Object.defineProperties : function defineProperties(O, Properties) {
   anObject(O);
   var keys = getKeys(Properties);
   var length = keys.length;
@@ -23744,7 +23806,7 @@ var has = __webpack_require__(19);
 var IE8_DOM_DEFINE = __webpack_require__(106);
 var gOPD = Object.getOwnPropertyDescriptor;
 
-exports.f = __webpack_require__(15) ? gOPD : function getOwnPropertyDescriptor(O, P) {
+exports.f = __webpack_require__(16) ? gOPD : function getOwnPropertyDescriptor(O, P) {
   O = toIObject(O);
   P = toPrimitive(P, true);
   if (IE8_DOM_DEFINE) try {
@@ -23819,8 +23881,8 @@ module.exports = function (target, src, safe) {
 
 var global = __webpack_require__(2);
 var core = __webpack_require__(8);
-var dP = __webpack_require__(16);
-var DESCRIPTORS = __webpack_require__(15);
+var dP = __webpack_require__(17);
+var DESCRIPTORS = __webpack_require__(16);
 var SPECIES = __webpack_require__(5)('species');
 
 module.exports = function (KEY) {
@@ -23949,7 +24011,7 @@ $export($export.S + $export.F, 'Object', { assign: __webpack_require__(185) });
 
 var $export = __webpack_require__(18);
 // 19.1.2.4 / 15.2.3.6 Object.defineProperty(O, P, Attributes)
-$export($export.S + $export.F * !__webpack_require__(15), 'Object', { defineProperty: __webpack_require__(16).f });
+$export($export.S + $export.F * !__webpack_require__(16), 'Object', { defineProperty: __webpack_require__(17).f });
 
 
 /***/ }),
@@ -24254,7 +24316,7 @@ $export($export.S + $export.F * !(USE_NATIVE && __webpack_require__(181)(functio
 // ECMAScript 6 symbols shim
 var global = __webpack_require__(2);
 var has = __webpack_require__(19);
-var DESCRIPTORS = __webpack_require__(15);
+var DESCRIPTORS = __webpack_require__(16);
 var $export = __webpack_require__(18);
 var redefine = __webpack_require__(114);
 var META = __webpack_require__(183).KEY;
@@ -24267,7 +24329,7 @@ var wksExt = __webpack_require__(69);
 var wksDefine = __webpack_require__(68);
 var enumKeys = __webpack_require__(174);
 var isArray = __webpack_require__(178);
-var anObject = __webpack_require__(14);
+var anObject = __webpack_require__(15);
 var isObject = __webpack_require__(21);
 var toIObject = __webpack_require__(27);
 var toPrimitive = __webpack_require__(67);
@@ -24275,7 +24337,7 @@ var createDesc = __webpack_require__(51);
 var _create = __webpack_require__(109);
 var gOPNExt = __webpack_require__(188);
 var $GOPD = __webpack_require__(187);
-var $DP = __webpack_require__(16);
+var $DP = __webpack_require__(17);
 var $keys = __webpack_require__(49);
 var gOPD = $GOPD.f;
 var dP = $DP.f;
@@ -24566,7 +24628,7 @@ module.exports = function (it, Constructor, name, forbiddenField) {
 
 var toObject = __webpack_require__(25);
 var toAbsoluteIndex = __webpack_require__(56);
-var toLength = __webpack_require__(12);
+var toLength = __webpack_require__(13);
 
 module.exports = [].copyWithin || function copyWithin(target /* = 0 */, start /* = 0, end = @length */) {
   var O = toObject(this);
@@ -24599,7 +24661,7 @@ module.exports = [].copyWithin || function copyWithin(target /* = 0 */, start /*
 
 var toObject = __webpack_require__(25);
 var toAbsoluteIndex = __webpack_require__(56);
-var toLength = __webpack_require__(12);
+var toLength = __webpack_require__(13);
 module.exports = function fill(value /* , start = 0, end = @length */) {
   var O = toObject(this);
   var length = toLength(O.length);
@@ -24654,7 +24716,7 @@ var ctx = __webpack_require__(30);
 var call = __webpack_require__(128);
 var isArrayIter = __webpack_require__(126);
 var anObject = __webpack_require__(22);
-var toLength = __webpack_require__(12);
+var toLength = __webpack_require__(13);
 var getIterFn = __webpack_require__(136);
 var BREAK = {};
 var RETURN = {};
@@ -25157,7 +25219,7 @@ var $export = __webpack_require__(1);
 var toObject = __webpack_require__(25);
 var call = __webpack_require__(128);
 var isArrayIter = __webpack_require__(126);
-var toLength = __webpack_require__(12);
+var toLength = __webpack_require__(13);
 var createProperty = __webpack_require__(124);
 var getIterFn = __webpack_require__(136);
 
@@ -25250,7 +25312,7 @@ $export($export.P + $export.F * (__webpack_require__(55) != Object || !__webpack
 var $export = __webpack_require__(1);
 var toIObject = __webpack_require__(43);
 var toInteger = __webpack_require__(57);
-var toLength = __webpack_require__(12);
+var toLength = __webpack_require__(13);
 var $native = [].lastIndexOf;
 var NEGATIVE_ZERO = !!$native && 1 / [1].lastIndexOf(1, -0) < 0;
 
@@ -25357,7 +25419,7 @@ var $export = __webpack_require__(1);
 var html = __webpack_require__(73);
 var cof = __webpack_require__(29);
 var toAbsoluteIndex = __webpack_require__(56);
-var toLength = __webpack_require__(12);
+var toLength = __webpack_require__(13);
 var arraySlice = [].slice;
 
 // fallback for not array-like ES3 strings and DOM objects
@@ -28235,9 +28297,29 @@ var render = function() {
         ? _c("icon", { attrs: { icon: "spinner", pulse: "" } })
         : _vm._e(),
       _vm._v(" "),
+      _vm.currentKvkSearch.result
+        ? [
+            _c("hr"),
+            _vm._v(" "),
+            _c("button", { on: { click: _vm.toggleShowChildren } }, [
+              _vm._v(
+                _vm._s(_vm.showAll ? "alles inklappen" : "alles uitklappen")
+              )
+            ]),
+            _vm._v(" "),
+            _c("button", { on: { click: _vm.toggleShowEmpty } }, [
+              _vm._v(
+                _vm._s(
+                  _vm.showEmpty ? "lege velden tonen" : "lege velden verbergen"
+                )
+              )
+            ])
+          ]
+        : _vm._e(),
+      _vm._v(" "),
       _c("objectTree", { attrs: { item: _vm.currentKvkSearch.result } })
     ],
-    1
+    2
   )
 }
 var staticRenderFns = []
@@ -28390,24 +28472,28 @@ var render = function() {
             "div",
             { style: _vm.indent },
             [
-              _c(
-                "label",
-                { class: _vm.collapser, on: { click: _vm.toggleChildren } },
-                [
-                  _vm.isObject(_vm.value)
-                    ? _c("icon", { attrs: { icon: _vm.iconClasses } })
-                    : _vm._e(),
-                  _vm._v("\n      " + _vm._s(_vm.label) + ":\n      "),
-                  !_vm.isObject(_vm.value)
-                    ? _c("span", [
-                        _vm._v(
-                          "\n        " + _vm._s(_vm.formatValue) + "\n      "
-                        )
-                      ])
-                    : _vm._e()
-                ],
-                1
-              ),
+              _vm.value || _vm.showEmpty
+                ? _c(
+                    "label",
+                    { class: _vm.collapser, on: { click: _vm.toggleChildren } },
+                    [
+                      _vm.isObject(_vm.value)
+                        ? _c("icon", { attrs: { icon: _vm.iconClasses } })
+                        : _vm._e(),
+                      _vm._v("\n      " + _vm._s(_vm.label) + ":\n      "),
+                      !_vm.isObject(_vm.value)
+                        ? _c("span", [
+                            _vm._v(
+                              "\n        " +
+                                _vm._s(_vm.formatValue) +
+                                "\n      "
+                            )
+                          ])
+                        : _vm._e()
+                    ],
+                    1
+                  )
+                : _vm._e(),
               _vm._v(" "),
               _vm.showChildren && _vm.isObject(_vm.value)
                 ? [

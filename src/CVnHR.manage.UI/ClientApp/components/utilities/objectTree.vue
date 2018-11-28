@@ -1,5 +1,4 @@
 <template>
-  <div>
     <div v-if="item">
       <div v-for="(value, label) in item">
         <objectTree :label="label" :value="value" :depth="0"></objectTree>
@@ -41,7 +40,6 @@
         </template>
       </template>
     </div>
-  </div>
 </template>
 
 <script>
@@ -51,7 +49,7 @@
     props: ['label', 'value', 'depth', 'item', 'showAll'], 
     name: 'objectTree',
     data() {
-      return { showChildrenLocal: false }
+      return { showChildren: false }
     },
 
     computed: {
@@ -59,7 +57,7 @@
         settings: state => state.kvkSearch.viewSettings,
       }),
       indent() {
-        return this.depth > 0 ? { transform: `translate(25px)` } : null
+        return this.depth > 0 ? { 'padding-left': `25px` } : null
       },
       collapser() {
         return this.isObject(this.value) ? 'collapser' : null;
@@ -70,14 +68,17 @@
       iconClasses() {
         return this.showChildren ? ['far', 'minus-square'] : ['far', 'plus-square']
       },
-      showChildren() {
-        if (this.settings && this.settings.collapseAll) {
-          this.showChildrenLocal = false
-        }
-        return (this.settings && this.settings.showChildren) || this.showChildrenLocal
-      },
       showEmpty() {
         return this.settings && this.settings.showEmpty
+      },
+      showChildrenWatch() {
+        return this.settings.showChildren
+      }
+    },
+
+    watch: {
+      showChildrenWatch: function () {
+        this.showChildren = this.settings.showChildren;
       }
     },
 
@@ -90,10 +91,13 @@
         return this.isObject(value) && value.constructor === Array;
       },
       toggleChildren() {
-        this.showChildrenLocal = !this.showChildrenLocal;
-        updateKvkSearchViewSettings({ collapseAll: false })
+        this.showChildren = !this.showChildren;
       }
     },
+
+    created() {
+      this.showChildren = this.settings.showChildren;
+    }
   }
 </script>
 

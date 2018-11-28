@@ -1,1 +1,0 @@
-﻿Add certificates in this folder.

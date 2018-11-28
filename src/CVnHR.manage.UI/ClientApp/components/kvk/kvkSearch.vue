@@ -1,11 +1,10 @@
 <template>
   <div>
     <icon v-if="loading" icon="spinner" pulse />
-
     <template v-if="currentKvkSearch.result">
       <hr />
       <button @click="toggleShowChildren">{{ showAll ? 'alles inklappen' : 'alles uitklappen'}}</button>
-      <button @click="toggleShowEmpty">{{ showEmpty ? 'lege velden tonen' : 'lege velden verbergen'}}</button>
+      <button @click="toggleShowEmpty">{{ showEmpty ? 'lege velden verbergen' : 'lege velden tonen'}}</button>
     </template>
 
     <objectTree :item="currentKvkSearch.result"></objectTree>
@@ -29,6 +28,11 @@
       },
       showEmpty() {
         return this.currentKvkSearch.viewSettings && this.currentKvkSearch.viewSettings.showEmpty
+      },
+      arrayOfItems() {
+        return this.currentKvkSearch.result
+          ? this.toArray(this.currentKvkSearch.result)
+          : null;
       }
     },
 
@@ -36,7 +40,6 @@
       ...mapActions(['searchKvk', 'resetKvkSearch', 'updateKvkSearchViewSettings']),
       search: function () {
         if (!!this.currentKvkSearch.kvkNumber) {
-          console.log(this.currentKvkSearch.kvkNumber)
           this.$router.push({ query: { kvk: this.currentKvkSearch.kvkNumber } })
         }
       },

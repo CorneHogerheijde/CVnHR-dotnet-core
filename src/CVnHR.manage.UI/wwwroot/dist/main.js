@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "cfcc15315b0fdcfa4887"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "caef203ce4bc5d67ca10"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -706,7 +706,7 @@
 /******/ 	__webpack_require__.h = function() { return hotCurrentHash; };
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return hotCreateRequire(301)(__webpack_require__.s = 301);
+/******/ 	return hotCreateRequire(302)(__webpack_require__.s = 302);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -1009,35 +1009,6 @@ module.exports = $export;
 
 /***/ }),
 /* 2 */
-/***/ (function(module, exports) {
-
-// https://github.com/zloirock/core-js/issues/86#issuecomment-115759028
-var global = module.exports = typeof window != 'undefined' && window.Math == Math
-  ? window : typeof self != 'undefined' && self.Math == Math ? self
-  // eslint-disable-next-line no-new-func
-  : Function('return this')();
-if (typeof __g == 'number') __g = global; // eslint-disable-line no-undef
-
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var store = __webpack_require__(134)('wks');
-var uid = __webpack_require__(78);
-var Symbol = __webpack_require__(6).Symbol;
-var USE_SYMBOL = typeof Symbol == 'function';
-
-var $exports = module.exports = function (name) {
-  return store[name] || (store[name] =
-    USE_SYMBOL && Symbol[name] || (USE_SYMBOL ? Symbol : uid)('Symbol.' + name));
-};
-
-$exports.store = store;
-
-
-/***/ }),
-/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, setImmediate) {/*!
@@ -11988,7 +11959,36 @@ return Vue;
 
 })));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(140), __webpack_require__(300).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(140), __webpack_require__(301).setImmediate))
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports) {
+
+// https://github.com/zloirock/core-js/issues/86#issuecomment-115759028
+var global = module.exports = typeof window != 'undefined' && window.Math == Math
+  ? window : typeof self != 'undefined' && self.Math == Math ? self
+  // eslint-disable-next-line no-new-func
+  : Function('return this')();
+if (typeof __g == 'number') __g = global; // eslint-disable-line no-undef
+
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var store = __webpack_require__(134)('wks');
+var uid = __webpack_require__(78);
+var Symbol = __webpack_require__(6).Symbol;
+var USE_SYMBOL = typeof Symbol == 'function';
+
+var $exports = module.exports = function (name) {
+  return store[name] || (store[name] =
+    USE_SYMBOL && Symbol[name] || (USE_SYMBOL ? Symbol : uid)('Symbol.' + name));
+};
+
+$exports.store = store;
+
 
 /***/ }),
 /* 5 */
@@ -11996,7 +11996,7 @@ return Vue;
 
 var store = __webpack_require__(65)('wks');
 var uid = __webpack_require__(53);
-var Symbol = __webpack_require__(2).Symbol;
+var Symbol = __webpack_require__(3).Symbol;
 var USE_SYMBOL = typeof Symbol == 'function';
 
 var $exports = module.exports = function (name) {
@@ -12534,7 +12534,7 @@ exports.f = __webpack_require__(16) ? Object.defineProperty : function definePro
 /* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var global = __webpack_require__(2);
+var global = __webpack_require__(3);
 var core = __webpack_require__(8);
 var ctx = __webpack_require__(48);
 var hide = __webpack_require__(20);
@@ -12855,7 +12855,7 @@ module.exports = true;
 /***/ (function(module, exports, __webpack_require__) {
 
 // 22.1.3.31 Array.prototype[@@unscopables]
-var UNSCOPABLES = __webpack_require__(3)('unscopables');
+var UNSCOPABLES = __webpack_require__(4)('unscopables');
 var ArrayProto = Array.prototype;
 if (ArrayProto[UNSCOPABLES] == undefined) __webpack_require__(32)(ArrayProto, UNSCOPABLES, {});
 module.exports = function (key) {
@@ -13195,7 +13195,7 @@ module.exports = function (it) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var isObject = __webpack_require__(21);
-var document = __webpack_require__(2).document;
+var document = __webpack_require__(3).document;
 // typeof document.createElement is 'object' in old IE
 var is = isObject(document) && isObject(document.createElement);
 module.exports = function (it) {
@@ -13261,7 +13261,7 @@ module.exports = function (key) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var core = __webpack_require__(8);
-var global = __webpack_require__(2);
+var global = __webpack_require__(3);
 var SHARED = '__core-js_shared__';
 var store = global[SHARED] || (global[SHARED] = {});
 
@@ -13308,7 +13308,7 @@ module.exports = function (it, S) {
 /* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var global = __webpack_require__(2);
+var global = __webpack_require__(3);
 var core = __webpack_require__(8);
 var LIBRARY = __webpack_require__(37);
 var wksExt = __webpack_require__(69);
@@ -13332,7 +13332,7 @@ exports.f = __webpack_require__(5);
 
 // getting tag from 19.1.3.6 Object.prototype.toString()
 var cof = __webpack_require__(29);
-var TAG = __webpack_require__(3)('toStringTag');
+var TAG = __webpack_require__(4)('toStringTag');
 // ES3 wrong here
 var ARG = cof(function () { return arguments; }()) == 'Arguments';
 
@@ -13414,7 +13414,7 @@ module.exports = function (bitmap, value) {
 
 var def = __webpack_require__(41).f;
 var has = __webpack_require__(54);
-var TAG = __webpack_require__(3)('toStringTag');
+var TAG = __webpack_require__(4)('toStringTag');
 
 module.exports = function (it, tag, stat) {
   if (it && !has(it = stat ? it : it.prototype, TAG)) def(it, TAG, { configurable: true, value: tag });
@@ -13466,7 +13466,7 @@ exports = module.exports = __webpack_require__(7)();
 
 
 // module
-exports.push([module.i, "\na[data-v-009bbd5d] {\n  color: blue;\n  cursor: pointer;\n}\n", "", {"version":3,"sources":["D:/Projects/GitHub/CVnHR/src/CVnHR.manage.UI/ClientApp/components/kvk/ClientApp\\components\\kvk/kvkApiSearchResult.vue"],"names":[],"mappings":";AA6EA;EACA,YAAA;EACA,gBAAA;CACA","file":"kvkApiSearchResult.vue","sourcesContent":["<template>\r\n  <div>\r\n    <icon v-if=\"loading\" icon=\"spinner\" pulse />\r\n\r\n    <p v-if=\"result && result.totalItems == 0\" class=\"text-danger\">Nothing found.</p>\r\n    <div v-if=\"result && result.totalItems > 0\" class=\"kvk-api-result-table container\">\r\n      <p> {{result.totalItems}} items found.</p>\r\n\r\n      <div class=\"row\" v-for=\"item in result.items\" v-if=\"result.totalItems > 0\">\r\n        <div class=\"col-md\">{{item.kvkNumber}}</div>\r\n        <div class=\"col-md-5\">{{item.tradeNames === null ? '[??]' : (item.tradeNames.businessName || item.tradeNames.shortBusinessName)}}</div>\r\n        <div class=\"col-md-4\">{{getAddress(item)}}</div>\r\n        <div class=\"col-md\">\r\n          <router-link :to=\"`/?kvk=${item.kvkNumber}`\">zoek</router-link>\r\n        </div>\r\n      </div>\r\n\r\n      <br/>\r\n      <div class=\"controls row justify-content-between\">\r\n        <div class=\"col-md font-italic\">\r\n          {{result.totalItems}} resultaten gevonden. Pagina {{result.startPage}} van {{endPage}}\r\n        </div>\r\n        <div class=\"col-md text-md-right\">\r\n          <a href=\"#\" v-if=\"result.startPage > 1\" v-on:click=\"prevPage\">vorige pagina</a>\r\n          <span v-if=\"result.startPage > 1 && result.startPage < endPage\">|</span>\r\n          <a href=\"#\" v-if=\"result.startPage < endPage\" v-on:click=\"nextPage\">volgende pagina</a>\r\n        </div>\r\n      </div>\r\n\r\n    </div>\r\n\r\n  </div>\r\n</template>\r\n\r\n<script>\r\n  import { mapActions, mapState } from 'vuex'\r\n\r\n  export default {\r\n    computed: {\r\n      ...mapState({\r\n        loading: state => state.kvkApiSearch.loading,\r\n        result: state => state.kvkApiSearch.result,\r\n      }),\r\n      endPage: function () {\r\n        const r = this.result\r\n        return r\r\n          ? parseInt(r.totalItems / r.itemsPerPage) + (r.totalItems % r.itemsPerPage > 0 ? 1 : 0)\r\n          : 0;\r\n      }\r\n    },\r\n\r\n    methods: {\r\n      nextPage: function (e) {\r\n        e.preventDefault()\r\n        this.$router.push({\r\n          query: { ...this.$route.query, startPage: parseInt(this.$route.query.startPage || 1) + 1 }\r\n        })\r\n        return false\r\n      },\r\n      prevPage: function (e) {\r\n        e.preventDefault()\r\n        this.$router.push({\r\n          query: { ...this.$route.query, startPage: parseInt(this.$route.query.startPage || 1) - 1 }\r\n        })\r\n        return false\r\n      },\r\n      getAddress: function (item) {\r\n        const address = item.addresses ? item.addresses[0] : null\r\n        return address\r\n          ? `${address.street} ${address.houseNumber}${address.houseNumberAddition} ${address.city}`\r\n          : null\r\n      }\r\n    }\r\n  }\r\n</script>\r\n\r\n<style scoped>\r\n  a {\r\n    color: blue;\r\n    cursor: pointer;\r\n  }\r\n</style>\r\n"],"sourceRoot":""}]);
+exports.push([module.i, "\na[data-v-009bbd5d] {\n  color: blue;\n  cursor: pointer;\n}\n", "", {"version":3,"sources":["D:/Projects/GitHub/CVnHR/src/CVnHR.manage.UI/ClientApp/components/kvk/ClientApp\\components\\kvk/kvkApiSearchResult.vue"],"names":[],"mappings":";AA6EA;EACA,YAAA;EACA,gBAAA;CACA","file":"kvkApiSearchResult.vue","sourcesContent":["<template>\r\n  <div>\r\n    <icon v-if=\"loading\" icon=\"spinner\" pulse />\r\n\r\n    <p v-if=\"result && result.totalItems == 0\" class=\"text-danger\">Nothing found.</p>\r\n    <div v-if=\"result && result.totalItems > 0\" class=\"kvk-api-result-table container\">\r\n      <p> {{result.totalItems}} items found.</p>\r\n\r\n      <div class=\"row\" v-for=\"item in result.items\" v-if=\"result.totalItems > 0\">\r\n        <div class=\"col-md\">{{item.kvkNumber}}</div>\r\n        <div class=\"col-md-5\">{{item.tradeNames === null ? '[??]' : (item.tradeNames.businessName || item.tradeNames.shortBusinessName)}}</div>\r\n        <div class=\"col-md-4\">{{getAddress(item)}}</div>\r\n        <div class=\"col-md\">\r\n          <router-link :to=\"`/?kvk=${item.kvkNumber}`\">toon</router-link>\r\n        </div>\r\n      </div>\r\n\r\n      <br/>\r\n      <div class=\"controls row justify-content-between\">\r\n        <div class=\"col-md font-italic\">\r\n          {{result.totalItems}} resultaten gevonden. Pagina {{result.startPage}} van {{endPage}}\r\n        </div>\r\n        <div class=\"col-md text-md-right\">\r\n          <a href=\"#\" v-if=\"result.startPage > 1\" v-on:click=\"prevPage\">vorige pagina</a>\r\n          <span v-if=\"result.startPage > 1 && result.startPage < endPage\">|</span>\r\n          <a href=\"#\" v-if=\"result.startPage < endPage\" v-on:click=\"nextPage\">volgende pagina</a>\r\n        </div>\r\n      </div>\r\n\r\n    </div>\r\n\r\n  </div>\r\n</template>\r\n\r\n<script>\r\n  import { mapActions, mapState } from 'vuex'\r\n\r\n  export default {\r\n    computed: {\r\n      ...mapState({\r\n        loading: state => state.kvkApiSearch.loading,\r\n        result: state => state.kvkApiSearch.result,\r\n      }),\r\n      endPage: function () {\r\n        const r = this.result\r\n        return r\r\n          ? parseInt(r.totalItems / r.itemsPerPage) + (r.totalItems % r.itemsPerPage > 0 ? 1 : 0)\r\n          : 0;\r\n      }\r\n    },\r\n\r\n    methods: {\r\n      nextPage: function (e) {\r\n        e.preventDefault()\r\n        this.$router.push({\r\n          query: { ...this.$route.query, startPage: parseInt(this.$route.query.startPage || 1) + 1 }\r\n        })\r\n        return false\r\n      },\r\n      prevPage: function (e) {\r\n        e.preventDefault()\r\n        this.$router.push({\r\n          query: { ...this.$route.query, startPage: parseInt(this.$route.query.startPage || 1) - 1 }\r\n        })\r\n        return false\r\n      },\r\n      getAddress: function (item) {\r\n        const address = item.addresses ? item.addresses[0] : null\r\n        return address\r\n          ? `${address.street} ${address.houseNumber}${address.houseNumberAddition} ${address.city}`\r\n          : null\r\n      }\r\n    }\r\n  }\r\n</script>\r\n\r\n<style scoped>\r\n  a {\r\n    color: blue;\r\n    cursor: pointer;\r\n  }\r\n</style>\r\n"],"sourceRoot":""}]);
 
 // exports
 
@@ -13480,7 +13480,7 @@ exports = module.exports = __webpack_require__(7)();
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", "", {"version":3,"sources":[],"names":[],"mappings":"","file":"kvkSearch.vue","sourceRoot":""}]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", "", {"version":3,"sources":[],"names":[],"mappings":"","file":"kvkSearch.vue","sourceRoot":""}]);
 
 // exports
 
@@ -13508,7 +13508,7 @@ exports = module.exports = __webpack_require__(7)();
 
 
 // module
-exports.push([module.i, "\nlabel[data-v-3e6d51d1] {\n  font-weight: bold;\n  margin: 0\n}\nlabel span[data-v-3e6d51d1] {\n    font-weight: normal;\n}\n.collapser[data-v-3e6d51d1] {\n  cursor: pointer;\n}\n", "", {"version":3,"sources":["D:/Projects/GitHub/CVnHR/src/CVnHR.manage.UI/ClientApp/components/utilities/ClientApp\\components\\utilities/objectTree.vue"],"names":[],"mappings":";AAoGA;EACA,kBAAA;EACA,SAAA;CACA;AACA;IACA,oBAAA;CACA;AAEA;EACA,gBAAA;CACA","file":"objectTree.vue","sourcesContent":["<template>\r\n  <div>\n    <div v-if=\"item\">\r\n      <div v-for=\"(value, label) in item\">\r\n        <objectTree :label=\"label\" :value=\"value\" :depth=\"0\"></objectTree>\r\n      </div>\r\n    </div>\n    <div v-else-if=\"label\" :style=\"indent\">\r\n      \r\n      <label @click=\"toggleChildren\" :class=\"collapser\" v-if=\"(value || showEmpty)\">\r\n        <icon v-if=\"isObject(value)\" :icon=\"iconClasses\" />\r\n        {{ label }}:\r\n        <span v-if=\"!isObject(value)\">\r\n          {{ formatValue }}\r\n        </span>\r\n      </label>\r\n      <template v-if=\"showChildren && isObject(value)\">\r\n        <template v-if=\"!isArray(value)\">\r\n          <objectTree v-for=\"(val, label) in value\"\r\n                      :label=\"label\"\r\n                      :value=\"val\"\r\n                      :key=\"label + depth\"\r\n                      :depth=\"depth + 1\"></objectTree>\r\n        </template>\r\n        <template v-else>\r\n          <template v-for=\"(val, index) in value\">\r\n            [\r\n            <template v-if=\"isObject(val)\">\r\n              <objectTree v-for=\"(val, label) in val\"\r\n                          :label=\"label\"\r\n                          :value=\"val\"\r\n                          :key=\"label + depth + index\"\r\n                          :depth=\"depth + 1\"></objectTree>\r\n            </template>\r\n            <template v-else>\r\n              <span>\"{{val}}\"</span>\r\n            </template>\r\n            ]\r\n            <span v-if=\"index != Object.keys(value).length - 1\">,</span>\r\n          </template>\r\n        </template>\r\n      </template>\r\n    </div>\n  </div>\r\n</template>\r\n\r\n<script>\n  import { mapActions, mapState } from 'vuex'\n\r\n  export default {\r\n    props: ['label', 'value', 'depth', 'item', 'showAll'], \r\n    name: 'objectTree',\n    data() {\n      return { showChildrenLocal: false }\r\n    },\n\n    computed: {\n      ...mapState({\r\n        settings: state => state.kvkSearch.viewSettings,\r\n      }),\n      indent() {\r\n        return this.depth > 0 ? { transform: `translate(25px)` } : null\r\n      },\n      collapser() {\n        return this.isObject(this.value) ? 'collapser' : null;\n      },\n      formatValue() {\n        return this.value ? this.value : this.value == null ? '[null]' : '[empty]';\n      },\n      iconClasses() {\r\n        return this.showChildren ? ['far', 'minus-square'] : ['far', 'plus-square']\r\n      },\n      showChildren() {\n        if (this.settings && this.settings.collapseAll) {\n          this.showChildrenLocal = false\n        }\n        return (this.settings && this.settings.showChildren) || this.showChildrenLocal\n      },\n      showEmpty() {\n        return this.settings && this.settings.showEmpty\n      }\n    },\n\n    methods: {\n      ...mapActions(['updateKvkSearchViewSettings']),\n      isObject(value) {\n        return value && typeof value === 'object';\n      },\n      isArray(value) {\n        return this.isObject(value) && value.constructor === Array;\n      },\n      toggleChildren() {\r\n        this.showChildrenLocal = !this.showChildrenLocal;\n        updateKvkSearchViewSettings({ collapseAll: false })\r\n      }\n    },\n  }\r\n</script>\r\n\r\n<style scoped>\r\n  label {\n    font-weight: bold;\n    margin: 0\n  }\r\n    label span {\n      font-weight: normal;\r\n    }\r\n\r\n  .collapser {\n    cursor: pointer;\r\n  }\n</style>\r\n"],"sourceRoot":""}]);
+exports.push([module.i, "\nlabel[data-v-3e6d51d1] {\n  font-weight: bold;\n  margin: 0\n}\nlabel span[data-v-3e6d51d1] {\n    font-weight: normal;\n}\n.collapser[data-v-3e6d51d1] {\n  cursor: pointer;\n}\n", "", {"version":3,"sources":["D:/Projects/GitHub/CVnHR/src/CVnHR.manage.UI/ClientApp/components/utilities/ClientApp\\components\\utilities/objectTree.vue"],"names":[],"mappings":";AAwGA;EACA,kBAAA;EACA,SAAA;CACA;AACA;IACA,oBAAA;CACA;AAEA;EACA,gBAAA;CACA","file":"objectTree.vue","sourcesContent":["<template>\r\n    <div v-if=\"item\">\r\n      <div v-for=\"(value, label) in item\">\r\n        <objectTree :label=\"label\" :value=\"value\" :depth=\"0\"></objectTree>\r\n      </div>\r\n    </div>\n    <div v-else-if=\"label\" :style=\"indent\">\r\n      \r\n      <label @click=\"toggleChildren\" :class=\"collapser\" v-if=\"(value || showEmpty)\">\r\n        <icon v-if=\"isObject(value)\" :icon=\"iconClasses\" />\r\n        {{ label }}:\r\n        <span v-if=\"!isObject(value)\">\r\n          {{ formatValue }}\r\n        </span>\r\n      </label>\r\n      <template v-if=\"showChildren && isObject(value)\">\r\n        <template v-if=\"!isArray(value)\">\r\n          <objectTree v-for=\"(val, label) in value\"\r\n                      :label=\"label\"\r\n                      :value=\"val\"\r\n                      :key=\"label + depth\"\r\n                      :depth=\"depth + 1\"></objectTree>\r\n        </template>\r\n        <template v-else>\r\n          <template v-for=\"(val, index) in value\">\r\n            [\r\n            <template v-if=\"isObject(val)\">\r\n              <objectTree v-for=\"(val, label) in val\"\r\n                          :label=\"label\"\r\n                          :value=\"val\"\r\n                          :key=\"label + depth + index\"\r\n                          :depth=\"depth + 1\"></objectTree>\r\n            </template>\r\n            <template v-else>\r\n              <span>\"{{val}}\"</span>\r\n            </template>\r\n            ]\r\n            <span v-if=\"index != Object.keys(value).length - 1\">,</span>\r\n          </template>\r\n        </template>\r\n      </template>\r\n    </div>\n</template>\r\n\r\n<script>\n  import { mapActions, mapState } from 'vuex'\n\r\n  export default {\r\n    props: ['label', 'value', 'depth', 'item', 'showAll'], \r\n    name: 'objectTree',\n    data() {\n      return { showChildren: false }\r\n    },\n\n    computed: {\n      ...mapState({\r\n        settings: state => state.kvkSearch.viewSettings,\r\n      }),\n      indent() {\r\n        return this.depth > 0 ? { 'padding-left': `25px` } : null\r\n      },\n      collapser() {\n        return this.isObject(this.value) ? 'collapser' : null;\n      },\n      formatValue() {\n        return this.value ? this.value : this.value == null ? '[null]' : '[empty]';\n      },\n      iconClasses() {\r\n        return this.showChildren ? ['far', 'minus-square'] : ['far', 'plus-square']\r\n      },\n      showEmpty() {\n        return this.settings && this.settings.showEmpty\n      },\n      showChildrenWatch() {\n        return this.settings.showChildren\n      }\n    },\n\n    watch: {\n      showChildrenWatch: function () {\n        this.showChildren = this.settings.showChildren;\n      }\n    },\n\n    methods: {\n      ...mapActions(['updateKvkSearchViewSettings']),\n      isObject(value) {\n        return value && typeof value === 'object';\n      },\n      isArray(value) {\n        return this.isObject(value) && value.constructor === Array;\n      },\n      toggleChildren() {\n        this.showChildren = !this.showChildren;\n      }\n    },\n\n    created() {\n      this.showChildren = this.settings.showChildren;\n    }\n  }\r\n</script>\r\n\r\n<style scoped>\r\n  label {\n    font-weight: bold;\n    margin: 0\n  }\r\n    label span {\n      font-weight: normal;\r\n    }\r\n\r\n  .collapser {\n    cursor: pointer;\r\n  }\r\n</style>\r\n"],"sourceRoot":""}]);
 
 // exports
 
@@ -16004,13 +16004,15 @@ exports.default = {
     },
     showEmpty: function showEmpty() {
       return this.currentKvkSearch.viewSettings && this.currentKvkSearch.viewSettings.showEmpty;
+    },
+    arrayOfItems: function arrayOfItems() {
+      return this.currentKvkSearch.result ? this.toArray(this.currentKvkSearch.result) : null;
     }
   }),
 
   methods: (0, _extends3.default)({}, (0, _vuex.mapActions)(['searchKvk', 'resetKvkSearch', 'updateKvkSearchViewSettings']), {
     search: function search() {
       if (!!this.currentKvkSearch.kvkNumber) {
-        console.log(this.currentKvkSearch.kvkNumber);
         this.$router.push({ query: { kvk: this.currentKvkSearch.kvkNumber } });
       }
     },
@@ -16129,7 +16131,7 @@ exports.default = {
   props: ['label', 'value', 'depth', 'item', 'showAll'],
   name: 'objectTree',
   data: function data() {
-    return { showChildrenLocal: false };
+    return { showChildren: false };
   },
 
 
@@ -16139,7 +16141,7 @@ exports.default = {
     }
   }), {
     indent: function indent() {
-      return this.depth > 0 ? { transform: 'translate(25px)' } : null;
+      return this.depth > 0 ? { 'padding-left': '25px' } : null;
     },
     collapser: function collapser() {
       return this.isObject(this.value) ? 'collapser' : null;
@@ -16150,16 +16152,19 @@ exports.default = {
     iconClasses: function iconClasses() {
       return this.showChildren ? ['far', 'minus-square'] : ['far', 'plus-square'];
     },
-    showChildren: function showChildren() {
-      if (this.settings && this.settings.collapseAll) {
-        this.showChildrenLocal = false;
-      }
-      return this.settings && this.settings.showChildren || this.showChildrenLocal;
-    },
     showEmpty: function showEmpty() {
       return this.settings && this.settings.showEmpty;
+    },
+    showChildrenWatch: function showChildrenWatch() {
+      return this.settings.showChildren;
     }
   }),
+
+  watch: {
+    showChildrenWatch: function showChildrenWatch() {
+      this.showChildren = this.settings.showChildren;
+    }
+  },
 
   methods: (0, _extends3.default)({}, (0, _vuex.mapActions)(['updateKvkSearchViewSettings']), {
     isObject: function isObject(value) {
@@ -16169,10 +16174,13 @@ exports.default = {
       return this.isObject(value) && value.constructor === Array;
     },
     toggleChildren: function toggleChildren() {
-      this.showChildrenLocal = !this.showChildrenLocal;
-      updateKvkSearchViewSettings({ collapseAll: false });
+      this.showChildren = !this.showChildren;
     }
-  })
+  }),
+
+  created: function created() {
+    this.showChildren = this.settings.showChildren;
+  }
 };
 
 /***/ }),
@@ -16208,7 +16216,7 @@ module.exports = function (it) {
 /* 105 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var document = __webpack_require__(2).document;
+var document = __webpack_require__(3).document;
 module.exports = document && document.documentElement;
 
 
@@ -16453,7 +16461,7 @@ var ctx = __webpack_require__(48);
 var invoke = __webpack_require__(176);
 var html = __webpack_require__(105);
 var cel = __webpack_require__(60);
-var global = __webpack_require__(2);
+var global = __webpack_require__(3);
 var process = global.process;
 var setTask = global.setImmediate;
 var clearTask = global.clearImmediate;
@@ -16593,7 +16601,7 @@ __webpack_require__(108)(String, 'String', function (iterated) {
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(196);
-var global = __webpack_require__(2);
+var global = __webpack_require__(3);
 var hide = __webpack_require__(20);
 var Iterators = __webpack_require__(36);
 var TO_STRING_TAG = __webpack_require__(5)('toStringTag');
@@ -16707,7 +16715,7 @@ module.exports = (
 
 // check on default Array iterator
 var Iterators = __webpack_require__(40);
-var ITERATOR = __webpack_require__(3)('iterator');
+var ITERATOR = __webpack_require__(4)('iterator');
 var ArrayProto = Array.prototype;
 
 module.exports = function (it) {
@@ -16758,7 +16766,7 @@ var Iterators = __webpack_require__(40);
 var $iterCreate = __webpack_require__(213);
 var setToStringTag = __webpack_require__(76);
 var getPrototypeOf = __webpack_require__(218);
-var ITERATOR = __webpack_require__(3)('iterator');
+var ITERATOR = __webpack_require__(4)('iterator');
 var BUGGY = !([].keys && 'next' in [].keys()); // Safari has buggy iterators w/o `next`
 var FF_ITERATOR = '@@iterator';
 var KEYS = 'keys';
@@ -16824,7 +16832,7 @@ module.exports = function (Base, NAME, Constructor, next, DEFAULT, IS_SET, FORCE
 /* 130 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var ITERATOR = __webpack_require__(3)('iterator');
+var ITERATOR = __webpack_require__(4)('iterator');
 var SAFE_CLOSING = false;
 
 try {
@@ -16895,7 +16903,7 @@ module.exports = Object.keys || function keys(O) {
 var global = __webpack_require__(6);
 var dP = __webpack_require__(41);
 var DESCRIPTORS = __webpack_require__(39);
-var SPECIES = __webpack_require__(3)('species');
+var SPECIES = __webpack_require__(4)('species');
 
 module.exports = function (KEY) {
   var C = global[KEY];
@@ -17019,7 +17027,7 @@ module.exports = {
 /***/ (function(module, exports, __webpack_require__) {
 
 var classof = __webpack_require__(70);
-var ITERATOR = __webpack_require__(3)('iterator');
+var ITERATOR = __webpack_require__(4)('iterator');
 var Iterators = __webpack_require__(40);
 module.exports = __webpack_require__(24).getIteratorMethod = function (it) {
   if (it != undefined) return it[ITERATOR]
@@ -17484,7 +17492,7 @@ function createReporter() {
 
   var overlay;
   if (typeof document !== 'undefined' && options.overlay) {
-    overlay = __webpack_require__(296)({
+    overlay = __webpack_require__(297)({
       ansiColors: options.ansiColors,
       overlayStyles: options.overlayStyles
     });
@@ -17547,7 +17555,7 @@ function createReporter() {
   };
 }
 
-var processUpdate = __webpack_require__(297);
+var processUpdate = __webpack_require__(298);
 
 var customHandler;
 var subscribeAllHandler;
@@ -17618,7 +17626,7 @@ if (module) {
   };
 }
 
-/* WEBPACK VAR INJECTION */}.call(exports, "?path=__webpack_hmr&dynamicPublicPath=true", __webpack_require__(298)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, "?path=__webpack_hmr&dynamicPublicPath=true", __webpack_require__(299)(module)))
 
 /***/ }),
 /* 144 */
@@ -22643,7 +22651,7 @@ var _extends2 = __webpack_require__(12);
 
 var _extends3 = _interopRequireDefault(_extends2);
 
-var _vue = __webpack_require__(4);
+var _vue = __webpack_require__(2);
 
 var _vue2 = _interopRequireDefault(_vue);
 
@@ -22659,7 +22667,7 @@ var _store = __webpack_require__(155);
 
 var _store2 = _interopRequireDefault(_store);
 
-var _vuexRouterSync = __webpack_require__(295);
+var _vuexRouterSync = __webpack_require__(296);
 
 var _appRoot = __webpack_require__(261);
 
@@ -22721,11 +22729,11 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _vue = __webpack_require__(4);
+var _vue = __webpack_require__(2);
 
 var _vue2 = _interopRequireDefault(_vue);
 
-var _vueRouter = __webpack_require__(299);
+var _vueRouter = __webpack_require__(300);
 
 var _vueRouter2 = _interopRequireDefault(_vueRouter);
 
@@ -22891,7 +22899,7 @@ var _extends3 = __webpack_require__(12);
 
 var _extends4 = _interopRequireDefault(_extends3);
 
-var _vue = __webpack_require__(4);
+var _vue = __webpack_require__(2);
 
 var _vue2 = _interopRequireDefault(_vue);
 
@@ -23663,7 +23671,7 @@ var meta = module.exports = {
 /* 184 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var global = __webpack_require__(2);
+var global = __webpack_require__(3);
 var macrotask = __webpack_require__(116).set;
 var Observer = global.MutationObserver || global.WebKitMutationObserver;
 var process = global.process;
@@ -23879,7 +23887,7 @@ module.exports = function (target, src, safe) {
 
 "use strict";
 
-var global = __webpack_require__(2);
+var global = __webpack_require__(3);
 var core = __webpack_require__(8);
 var dP = __webpack_require__(17);
 var DESCRIPTORS = __webpack_require__(16);
@@ -23934,7 +23942,7 @@ module.exports = function (index, length) {
 /* 194 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var global = __webpack_require__(2);
+var global = __webpack_require__(3);
 var navigator = global.navigator;
 
 module.exports = navigator && navigator.userAgent || '';
@@ -24021,7 +24029,7 @@ $export($export.S + $export.F * !__webpack_require__(16), 'Object', { defineProp
 "use strict";
 
 var LIBRARY = __webpack_require__(37);
-var global = __webpack_require__(2);
+var global = __webpack_require__(3);
 var ctx = __webpack_require__(48);
 var classof = __webpack_require__(104);
 var $export = __webpack_require__(18);
@@ -24314,7 +24322,7 @@ $export($export.S + $export.F * !(USE_NATIVE && __webpack_require__(181)(functio
 "use strict";
 
 // ECMAScript 6 symbols shim
-var global = __webpack_require__(2);
+var global = __webpack_require__(3);
 var has = __webpack_require__(19);
 var DESCRIPTORS = __webpack_require__(16);
 var $export = __webpack_require__(18);
@@ -24557,7 +24565,7 @@ setToStringTag(global.JSON, 'JSON', true);
 
 var $export = __webpack_require__(18);
 var core = __webpack_require__(8);
-var global = __webpack_require__(2);
+var global = __webpack_require__(3);
 var speciesConstructor = __webpack_require__(115);
 var promiseResolve = __webpack_require__(113);
 
@@ -24680,7 +24688,7 @@ module.exports = function fill(value /* , start = 0, end = @length */) {
 
 var isObject = __webpack_require__(33);
 var isArray = __webpack_require__(127);
-var SPECIES = __webpack_require__(3)('species');
+var SPECIES = __webpack_require__(4)('species');
 
 module.exports = function (original) {
   var C;
@@ -24782,7 +24790,7 @@ var setToStringTag = __webpack_require__(76);
 var IteratorPrototype = {};
 
 // 25.1.2.1.1 %IteratorPrototype%[@@iterator]()
-__webpack_require__(32)(IteratorPrototype, __webpack_require__(3)('iterator'), function () { return this; });
+__webpack_require__(32)(IteratorPrototype, __webpack_require__(4)('iterator'), function () { return this; });
 
 module.exports = function (Constructor, NAME, next) {
   Constructor.prototype = create(IteratorPrototype, { next: descriptor(1, next) });
@@ -25031,7 +25039,7 @@ module.exports = function (target, src, safe) {
 // 7.3.20 SpeciesConstructor(O, defaultConstructor)
 var anObject = __webpack_require__(22);
 var aFunction = __webpack_require__(28);
-var SPECIES = __webpack_require__(3)('species');
+var SPECIES = __webpack_require__(4)('species');
 module.exports = function (O, D) {
   var C = anObject(O).constructor;
   var S;
@@ -25507,7 +25515,7 @@ __webpack_require__(133)('Array');
 // 19.1.3.6 Object.prototype.toString()
 var classof = __webpack_require__(70);
 var test = {};
-test[__webpack_require__(3)('toStringTag')] = 'z';
+test[__webpack_require__(4)('toStringTag')] = 'z';
 if (test + '' != '[object z]') {
   __webpack_require__(42)(Object.prototype, 'toString', function toString() {
     return '[object ' + classof(this) + ']';
@@ -25552,7 +25560,7 @@ var USE_NATIVE = !!function () {
   try {
     // correct subclassing with @@species support
     var promise = $Promise.resolve(1);
-    var FakePromise = (promise.constructor = {})[__webpack_require__(3)('species')] = function (exec) {
+    var FakePromise = (promise.constructor = {})[__webpack_require__(4)('species')] = function (exec) {
       exec(empty, empty);
     };
     // unhandled rejections tracking support, NodeJS Promise without it fails @@species test
@@ -25818,7 +25826,7 @@ var redefine = __webpack_require__(42);
 var global = __webpack_require__(6);
 var hide = __webpack_require__(32);
 var Iterators = __webpack_require__(40);
-var wks = __webpack_require__(3);
+var wks = __webpack_require__(4);
 var ITERATOR = wks('iterator');
 var TO_STRING_TAG = wks('toStringTag');
 var ArrayValues = Iterators.Array;
@@ -27501,7 +27509,7 @@ Component.options.__file = "ClientApp\\components\\app-root.vue"
 /* hot reload */
 if (true) {(function () {
   var hotAPI = __webpack_require__(0)
-  hotAPI.install(__webpack_require__(4), false)
+  hotAPI.install(__webpack_require__(2), false)
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
@@ -27561,7 +27569,7 @@ Component.options.__file = "ClientApp\\components\\counter-example.vue"
 /* hot reload */
 if (true) {(function () {
   var hotAPI = __webpack_require__(0)
-  hotAPI.install(__webpack_require__(4), false)
+  hotAPI.install(__webpack_require__(2), false)
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
@@ -27621,7 +27629,7 @@ Component.options.__file = "ClientApp\\components\\docs.vue"
 /* hot reload */
 if (true) {(function () {
   var hotAPI = __webpack_require__(0)
-  hotAPI.install(__webpack_require__(4), false)
+  hotAPI.install(__webpack_require__(2), false)
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
@@ -27681,7 +27689,7 @@ Component.options.__file = "ClientApp\\components\\fetch-data.vue"
 /* hot reload */
 if (true) {(function () {
   var hotAPI = __webpack_require__(0)
-  hotAPI.install(__webpack_require__(4), false)
+  hotAPI.install(__webpack_require__(2), false)
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
@@ -27741,7 +27749,7 @@ Component.options.__file = "ClientApp\\components\\home-page.vue"
 /* hot reload */
 if (true) {(function () {
   var hotAPI = __webpack_require__(0)
-  hotAPI.install(__webpack_require__(4), false)
+  hotAPI.install(__webpack_require__(2), false)
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
@@ -27801,7 +27809,7 @@ Component.options.__file = "ClientApp\\components\\kvk\\kvkApiSearch.vue"
 /* hot reload */
 if (true) {(function () {
   var hotAPI = __webpack_require__(0)
-  hotAPI.install(__webpack_require__(4), false)
+  hotAPI.install(__webpack_require__(2), false)
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
@@ -27861,7 +27869,7 @@ Component.options.__file = "ClientApp\\components\\kvk\\kvkApiSearchResult.vue"
 /* hot reload */
 if (true) {(function () {
   var hotAPI = __webpack_require__(0)
-  hotAPI.install(__webpack_require__(4), false)
+  hotAPI.install(__webpack_require__(2), false)
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
@@ -27921,7 +27929,7 @@ Component.options.__file = "ClientApp\\components\\kvk\\kvkSearch.vue"
 /* hot reload */
 if (true) {(function () {
   var hotAPI = __webpack_require__(0)
-  hotAPI.install(__webpack_require__(4), false)
+  hotAPI.install(__webpack_require__(2), false)
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
@@ -27981,7 +27989,7 @@ Component.options.__file = "ClientApp\\components\\nav-menu.vue"
 /* hot reload */
 if (true) {(function () {
   var hotAPI = __webpack_require__(0)
-  hotAPI.install(__webpack_require__(4), false)
+  hotAPI.install(__webpack_require__(2), false)
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
@@ -28041,7 +28049,7 @@ Component.options.__file = "ClientApp\\components\\settings.vue"
 /* hot reload */
 if (true) {(function () {
   var hotAPI = __webpack_require__(0)
-  hotAPI.install(__webpack_require__(4), false)
+  hotAPI.install(__webpack_require__(2), false)
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
@@ -28101,7 +28109,7 @@ Component.options.__file = "ClientApp\\components\\utilities\\objectTree.vue"
 /* hot reload */
 if (true) {(function () {
   var hotAPI = __webpack_require__(0)
-  hotAPI.install(__webpack_require__(4), false)
+  hotAPI.install(__webpack_require__(2), false)
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
@@ -28177,7 +28185,7 @@ var render = function() {
                           _c(
                             "router-link",
                             { attrs: { to: "/?kvk=" + item.kvkNumber } },
-                            [_vm._v("zoek")]
+                            [_vm._v("toon")]
                           )
                         ],
                         1
@@ -28310,7 +28318,7 @@ var render = function() {
             _c("button", { on: { click: _vm.toggleShowEmpty } }, [
               _vm._v(
                 _vm._s(
-                  _vm.showEmpty ? "lege velden tonen" : "lege velden verbergen"
+                  _vm.showEmpty ? "lege velden verbergen" : "lege velden tonen"
                 )
               )
             ])
@@ -28451,97 +28459,89 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _vm.item
+  return _vm.item
+    ? _c(
+        "div",
+        _vm._l(_vm.item, function(value, label) {
+          return _c(
+            "div",
+            [
+              _c("objectTree", {
+                attrs: { label: label, value: value, depth: 0 }
+              })
+            ],
+            1
+          )
+        })
+      )
+    : _vm.label
       ? _c(
           "div",
-          _vm._l(_vm.item, function(value, label) {
-            return _c(
-              "div",
-              [
-                _c("objectTree", {
-                  attrs: { label: label, value: value, depth: 0 }
-                })
-              ],
-              1
-            )
-          })
-        )
-      : _vm.label
-        ? _c(
-            "div",
-            { style: _vm.indent },
-            [
-              _vm.value || _vm.showEmpty
-                ? _c(
-                    "label",
-                    { class: _vm.collapser, on: { click: _vm.toggleChildren } },
-                    [
-                      _vm.isObject(_vm.value)
-                        ? _c("icon", { attrs: { icon: _vm.iconClasses } })
-                        : _vm._e(),
-                      _vm._v("\n      " + _vm._s(_vm.label) + ":\n      "),
-                      !_vm.isObject(_vm.value)
-                        ? _c("span", [
-                            _vm._v(
-                              "\n        " +
-                                _vm._s(_vm.formatValue) +
-                                "\n      "
-                            )
-                          ])
-                        : _vm._e()
-                    ],
-                    1
-                  )
-                : _vm._e(),
-              _vm._v(" "),
-              _vm.showChildren && _vm.isObject(_vm.value)
-                ? [
-                    !_vm.isArray(_vm.value)
-                      ? _vm._l(_vm.value, function(val, label) {
-                          return _c("objectTree", {
-                            key: label + _vm.depth,
-                            attrs: {
-                              label: label,
-                              value: val,
-                              depth: _vm.depth + 1
-                            }
-                          })
+          { style: _vm.indent },
+          [
+            _vm.value || _vm.showEmpty
+              ? _c(
+                  "label",
+                  { class: _vm.collapser, on: { click: _vm.toggleChildren } },
+                  [
+                    _vm.isObject(_vm.value)
+                      ? _c("icon", { attrs: { icon: _vm.iconClasses } })
+                      : _vm._e(),
+                    _vm._v("\n    " + _vm._s(_vm.label) + ":\n    "),
+                    !_vm.isObject(_vm.value)
+                      ? _c("span", [
+                          _vm._v(
+                            "\n      " + _vm._s(_vm.formatValue) + "\n    "
+                          )
+                        ])
+                      : _vm._e()
+                  ],
+                  1
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.showChildren && _vm.isObject(_vm.value)
+              ? [
+                  !_vm.isArray(_vm.value)
+                    ? _vm._l(_vm.value, function(val, label) {
+                        return _c("objectTree", {
+                          key: label + _vm.depth,
+                          attrs: {
+                            label: label,
+                            value: val,
+                            depth: _vm.depth + 1
+                          }
                         })
-                      : [
-                          _vm._l(_vm.value, function(val, index) {
-                            return [
-                              _vm._v("\n          [\n          "),
-                              _vm.isObject(val)
-                                ? _vm._l(val, function(val, label) {
-                                    return _c("objectTree", {
-                                      key: label + _vm.depth + index,
-                                      attrs: {
-                                        label: label,
-                                        value: val,
-                                        depth: _vm.depth + 1
-                                      }
-                                    })
+                      })
+                    : [
+                        _vm._l(_vm.value, function(val, index) {
+                          return [
+                            _vm._v("\n        [\n        "),
+                            _vm.isObject(val)
+                              ? _vm._l(val, function(val, label) {
+                                  return _c("objectTree", {
+                                    key: label + _vm.depth + index,
+                                    attrs: {
+                                      label: label,
+                                      value: val,
+                                      depth: _vm.depth + 1
+                                    }
                                   })
-                                : [
-                                    _c("span", [
-                                      _vm._v('"' + _vm._s(val) + '"')
-                                    ])
-                                  ],
-                              _vm._v("\n          ]\n          "),
-                              index != Object.keys(_vm.value).length - 1
-                                ? _c("span", [_vm._v(",")])
-                                : _vm._e()
-                            ]
-                          })
-                        ]
-                  ]
-                : _vm._e()
-            ],
-            2
-          )
-        : _vm._e()
-  ])
+                                })
+                              : [_c("span", [_vm._v('"' + _vm._s(val) + '"')])],
+                            _vm._v("\n        ]\n        "),
+                            index != Object.keys(_vm.value).length - 1
+                              ? _c("span", [_vm._v(",")])
+                              : _vm._e()
+                          ]
+                        })
+                      ]
+                ]
+              : _vm._e()
+          ],
+          2
+        )
+      : _vm._e()
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -29610,7 +29610,8 @@ function listToStyles (parentId, list) {
 
 
 /***/ }),
-/* 295 */
+/* 295 */,
+/* 296 */
 /***/ (function(module, exports) {
 
 exports.sync = function (store, router, options) {
@@ -29691,7 +29692,7 @@ function cloneRoute (to, from) {
 
 
 /***/ }),
-/* 296 */
+/* 297 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*eslint-env browser*/
@@ -29794,7 +29795,7 @@ module.exports.showProblems = showProblems;
 
 
 /***/ }),
-/* 297 */
+/* 298 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -29946,7 +29947,7 @@ module.exports = function(hash, moduleMap, options) {
 
 
 /***/ }),
-/* 298 */
+/* 299 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -29974,19 +29975,19 @@ module.exports = function(module) {
 
 
 /***/ }),
-/* 299 */
+/* 300 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = (__webpack_require__(26))(14);
 
 /***/ }),
-/* 300 */
+/* 301 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = (__webpack_require__(26))(36);
 
 /***/ }),
-/* 301 */
+/* 302 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(144);

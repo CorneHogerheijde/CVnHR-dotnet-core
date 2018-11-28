@@ -11,7 +11,7 @@
         <div class="col-md-5">{{item.tradeNames === null ? '[??]' : (item.tradeNames.businessName || item.tradeNames.shortBusinessName)}}</div>
         <div class="col-md-4">{{getAddress(item)}}</div>
         <div class="col-md">
-          <router-link :to="`/?kvk=${item.kvkNumber}`">zoek</router-link>
+          <router-link :to="`/?kvk=${item.kvkNumber}`">toon</router-link>
         </div>
       </div>
 

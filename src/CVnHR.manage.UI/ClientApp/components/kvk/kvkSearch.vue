@@ -16,11 +16,9 @@
       </ul>
       <div class="tab-content">
         <div class="tab-pane fade show active" id="result" role="tabpanel" aria-labelledby="result-tab">
-          (TODO, formatten!!!)
-          {{currentKvkSearch.result}}
+          <KvkSearchResult :item="currentKvkSearch.result"></KvkSearchResult>
         </div>
         <div class="tab-pane fade" id="treeview" role="tabpanel" aria-labelledby="treeview-tab">
-          <br />
           <button @click="toggleShowChildren">{{ showAll ? 'alles inklappen' : 'alles uitklappen'}}</button>
           <button @click="toggleShowEmpty">{{ showEmpty ? 'lege velden verbergen' : 'lege velden tonen'}}</button>
           <br /><br />
@@ -34,9 +32,10 @@
 <script>
   import { mapActions, mapState } from 'vuex'
   import objectTree from '../utilities/objectTree'
+  import KvkSearchResult from './kvkSearchResult'
 
   export default {
-    components: { objectTree },
+    components: { objectTree, KvkSearchResult },
 
     computed: {
       ...mapState({
@@ -98,5 +97,8 @@
 <style scoped>
   a.nav-link {
     color: #212529;
+  }
+  .tab-content {
+    padding-top: 20px;
   }
 </style>

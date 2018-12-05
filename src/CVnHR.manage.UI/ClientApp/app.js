@@ -9,6 +9,7 @@ require('bootstrap')
 
 // Registration of global components
 Vue.component('icon', FontAwesomeIcon)
+Vue.use(require('vue-moment'))
 
 Vue.prototype.$http = axios
 

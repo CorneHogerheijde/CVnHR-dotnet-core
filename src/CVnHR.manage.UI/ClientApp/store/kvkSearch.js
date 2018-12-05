@@ -28,7 +28,7 @@ const kvkSearchMutations = {
       let response = await axios.get(url)
       result = response.data
     } catch (err) {
-      window.alert(err)
+      //window.alert(err)
       console.log(err)
     }
     state.kvkSearch.result = result

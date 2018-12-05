@@ -36,8 +36,8 @@ namespace CVnHR.manage.Controllers
 
             var result = await _hrDataservice.GetInschrijvingFromKvK(kvkNumber);
             var response = _messageParser.Parse(result);
-            var activiteit = response.product.maatschappelijkeActiviteit;
-            return Json(activiteit);
+            //var activiteit = response.product.maatschappelijkeActiviteit;
+            return Json(response);
         }
     }
 }

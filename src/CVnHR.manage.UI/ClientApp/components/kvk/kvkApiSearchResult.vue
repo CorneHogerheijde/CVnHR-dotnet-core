@@ -21,9 +21,16 @@
           {{result.totalItems}} resultaten gevonden. Pagina {{result.startPage}} van {{endPage}}
         </div>
         <div class="col-md text-md-right">
-          <a href="#" v-if="result.startPage > 1" v-on:click="prevPage">vorige pagina</a>
-          <span v-if="result.startPage > 1 && result.startPage < endPage">|</span>
-          <a href="#" v-if="result.startPage < endPage" v-on:click="nextPage">volgende pagina</a>
+          <nav aria-label="Page navigation">
+            <ul class="pagination">
+              <li class="page-item">
+                <a class="page-link" href="#" v-if="result.startPage > 1" v-on:click="prevPage">vorige pagina</a>
+              </li>
+              <li class="page-item">
+                <a class="page-link" href="#" v-if="result.startPage < endPage" v-on:click="nextPage">volgende pagina</a>
+              </li>
+            </ul>
+          </nav>
         </div>
       </div>
 

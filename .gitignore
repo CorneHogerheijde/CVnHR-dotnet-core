@@ -264,3 +264,7 @@ __pycache__/
 
 src/CVnHR.manage/Certificates/*.txt
 !src/CVnHR.manage/Certificates/dummy.txt
+src/CVnHR.manage/Certificates/*.cer
+src/CVnHR.manage/Config/*.*
+src/CVnHR.manage.UI/wwwroot/dist/main.js
+*.map

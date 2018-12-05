@@ -5,6 +5,22 @@ First attempt to rewrite to Dotnet core of this repo: https://github.com/B3Partn
 
 TODO: add more documentation!
 
+## Run the project:
+
+* In Visual studio, set CVnHR.manage.UI as Startup project and hit F5
+* Command line: 
+  * from location CVnHR.manage.UI run `dotnet run`
+  * from root: run `dotnet run --project src/CVnHR.manage.UI/CVnHR.manage.UI.csproj`
+
+^* take care: probably need to run as admin^
+
+## CI/CD
+
+Azure DevOps is used for a basic pipeline, currently the project is build only.
+TODO: add tests, both FE and BE unittests and Integration tests (cypress?).
+
+[![Build Status](https://qnh-ontwikkeldesk.visualstudio.com/CVnHR/_apis/build/status/CorneHogerheijde.CVnHR-dotnet-core)](https://qnh-ontwikkeldesk.visualstudio.com/CVnHR/_build/latest?definitionId=3)
+
 
 ## Git conventions
 * We use Conventional Changelog, a commit standard pioneered by the Angular project which infers a structure in commit messages. Metadata in these commit messages are used to infer the version number for new releases and to generate a changelog. You can manually type the commit message in the format explained by the linked document.

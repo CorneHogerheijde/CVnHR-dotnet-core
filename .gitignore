@@ -262,9 +262,9 @@ __pycache__/
 
 # Custom ignores
 
-src/CVnHR.manage/Certificates/*.txt
-!src/CVnHR.manage/Certificates/dummy.txt
-src/CVnHR.manage/Certificates/*.cer
-src/CVnHR.manage/Config/*.*
+src/CVnHR.manage.UI/Certificates/*.txt
+!src/CVnHR.manage.UI/Certificates/dummy.txt
+src/CVnHR.manage.UI/Certificates/*.cer
+src/CVnHR.manage.UI/Config/*.*
 src/CVnHR.manage.UI/wwwroot/dist/main.js
-*.map
+src/CVnHR.manage.UI/wwwroot/dist/*.map

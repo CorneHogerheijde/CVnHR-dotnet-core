@@ -62,106 +62,25 @@
 
       <h3>Eigenaar</h3>
       <div class="row">
-        <div class="col-md-4">
-          Rechtsvorm:
-        </div>
+        <div class="col-md-4">Heeft als eigenaar:</div>
         <div class="col-md-8">
-          <strong>Uitgebreid:</strong> @Model.Inschrijving.UitgebreideRechtsvorm
-          @if (!string.IsNullOrEmpty(Model.Inschrijving.PersoonRechtsvorm))
-          {
-          @:| <strong>Persoon:</strong> @Model.Inschrijving.PersoonRechtsvorm
-          }
+          <objectTree :item="get('heeftAlsEigenaar.item')" />
         </div>
       </div>
-
       <div class="row">
-        <div class="col-md-4">
-          Volledige naam eigenaar:
-        </div>
+        <div class="col-md-4">Had als eigenaar:</div>
         <div class="col-md-8">
-          @Model.Inschrijving.VolledigeNaamEigenaar
+          <objectTree :item="get('hadAlsEigenaar.item')" />
         </div>
       </div>
 
-      <div class="row">
-        <div class="col-md-4">
-          Bijzondere Rechtstoestand:
-        </div>
+      <h3>Functie Vervullingen</h3>
+      <div class="row" v-for="(val, index) in get('heeftAlsEigenaar.item.heeft')">
+        <div class="col-md-4">{{get('item.functie.omschrijving', val)}}:</div>
         <div class="col-md-8">
-          @(Model.Inschrijving.BijzondereRechtsToestand ?? "nee")
+          <objectTree :item="val.item" />
         </div>
       </div>
-
-      <div class="row">
-        <div class="col-md-4">
-          Reden insolventie:
-        </div>
-        <div class="col-md-8">
-          @if (Model.Inschrijving.BijzondereRechtsToestand != null)
-          {
-          @Model.Inschrijving.RedenInsolventie
-          }
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-md-4">
-          Rechterlijke Uitspraak:
-        </div>
-        <div class="col-md-8">
-          @if (Model.Inschrijving.RechterlijkeUitspraak != null)
-          {
-          @Model.Inschrijving.RechterlijkeUitspraak
-          }
-        </div>
-      </div>
-
-
-      <div class="row">
-        <div class="col-md-4">
-          Beperking in Rechtshandeling:
-        </div>
-        <div class="col-md-8">
-          @(Model.Inschrijving.BeperkingInRechtshandeling ?? "nee")
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-md-4">
-          Eigenaar heeft gedeponeerd:
-        </div>
-        <div class="col-md-8">
-          @if (!string.IsNullOrEmpty(Model.Inschrijving.EigenaarHeeftGedeponeerd))
-          {
-          @Model.Inschrijving.EigenaarHeeftGedeponeerd
-          }
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-md-4">
-          Geplaatst Kapitaal:
-        </div>
-        <div class="col-md-8">
-          @if (!string.IsNullOrEmpty(Model.Inschrijving.GeplaatstKapitaal))
-          {
-          @Model.Inschrijving.GeplaatstKapitaal
-          }
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-md-4">
-          Gestort Kapitaal:
-        </div>
-        <div class="col-md-8">
-          @if (!string.IsNullOrEmpty(Model.Inschrijving.GestortKapitaal))
-          {
-          @Model.Inschrijving.GestortKapitaal
-          }
-        </div>
-      </div>
-
 
       TODO: show rest!
 
@@ -172,10 +91,12 @@
 <script>
   import { mapActions, mapState } from 'vuex'
   import moment from 'moment'
+  import objectTree from '../utilities/objectTree'
 
   export default {
     props: ['item'],
-    
+    components: { objectTree },
+
     data() {
       return { showChildren: false }
     },
@@ -214,5 +135,7 @@
 </script>
 
 <style scoped>
-
+  h3 {
+    margin: 25px 0 10px;
+  }
 </style>

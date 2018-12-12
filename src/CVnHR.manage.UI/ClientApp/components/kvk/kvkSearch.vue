@@ -13,6 +13,11 @@
             TreeView
           </a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" id="json-tab" data-toggle="tab" href="#json" role="tab" aria-controls="json" aria-selected="false">
+            JSON
+          </a>
+        </li>
       </ul>
       <div class="tab-content">
         <div class="tab-pane fade show active" id="result" role="tabpanel" aria-labelledby="result-tab">
@@ -23,6 +28,9 @@
           <button @click="toggleShowEmpty">{{ showEmpty ? 'lege velden verbergen' : 'lege velden tonen'}}</button>
           <br /><br />
           <objectTree :item="currentKvkSearch.result"></objectTree>
+        </div>
+        <div class="tab-pane fade" id="json" role="tabpanel" aria-labelledby="json-tab">
+          {{currentKvkSearch.result}}
         </div>
       </div>
     </template>

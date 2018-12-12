@@ -1,7 +1,8 @@
 <template>
   <div>
     <div v-if="item && !success">
-      TODO, show {{ item.meldingen.informatie }}
+      Foutmelding: {{ item.meldingen.fout[0].code }}: {{item.meldingen.fout[0].omschrijving}}
+      <objectTree :item="item" />
     </div>
     <div v-if="item && success" class="container">
       <div class="row">
@@ -63,26 +64,114 @@
       <h3>Eigenaar</h3>
       <div class="row">
         <div class="col-md-4">Heeft als eigenaar:</div>
+        <div class="col-md-8">{{get('heeftAlsEigenaar.item.volledigeNaam')}}</div>
+      </div>
+      <div class="row">
+        <div class="col-md-4"></div>
         <div class="col-md-8">
-          <objectTree :item="get('heeftAlsEigenaar.item')" />
+          <objectTree :item="get('heeftAlsEigenaar')" />
         </div>
       </div>
       <div class="row">
         <div class="col-md-4">Had als eigenaar:</div>
+        <div class="col-md-8">{{get('hadAlsEigenaar.item.volledigeNaam')}}</div>
+      </div>
+      <div class="row">
+        <div class="col-md-4"></div>
         <div class="col-md-8">
-          <objectTree :item="get('hadAlsEigenaar.item')" />
+          <objectTree :item="get('hadAlsEigenaar')" />
         </div>
       </div>
 
       <h3>Functie Vervullingen</h3>
-      <div class="row" v-for="(val, index) in get('heeftAlsEigenaar.item.heeft')">
-        <div class="col-md-4">{{get('item.functie.omschrijving', val)}}:</div>
-        <div class="col-md-8">
-          <objectTree :item="val.item" />
-        </div>
-      </div>
+      <table class="table table-striped table-bordered table-hover" v-if="get('heeftAlsEigenaar.item.heeft')">
+        <thead>
+          <tr>
+            <th>Functie</th>
+            <th>FunctieTitel</th>
+            <th>VolledigeNaam</th>
+            <th>Bevoegdheid</th>
+            <th>Volledig</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(val, index) in  get('heeftAlsEigenaar.item.heeft')">
+            <td>{{get('item.functie.referentieType', val)}}</td>
+            <td>{{get('item.functie.omschrijving', val)}}</td>
+            <td>{{get('item.item.item.volledigeNaam', val)}}</td>
+            <td>{{get('item.bevoegdheid.soort.omschrijving', val)}}</td>
+            <td>
+              <objectTree :item="val" />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div v-else>Geen functievervullingen bekend.</div>
 
-      TODO: show rest!
+      <h3>SBI Activiteiten</h3>
+      <table class="table table-striped table-bordered table-hover" v-if="get('manifesteertZichAls.onderneming.sbiActiviteit')">
+        <thead>
+          <tr>
+            <th>SBI Code</th>
+            <th>Omschrijving</th>
+            <th>HoofdActiviteit?</th>
+            <th>Volledig</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(val, index) in get('manifesteertZichAls.onderneming.sbiActiviteit')">
+            <td>{{get('sbiCode.code', val)}}</td>
+            <td>{{get('sbiCode.omschrijving', val)}}</td>
+            <td>{{get('isHoofdactiviteit.omschrijving', val)}}</td>
+            <td><objectTree :item="val" /></td>
+          </tr>
+        </tbody>
+      </table>
+      <div v-else>Geen SBI Activiteiten bekend.</div>
+
+      <h3>Vestigingen</h3>
+      <table class="table table-striped table-bordered table-hover vestiging">
+        <thead>
+          <tr>
+            <th>Vestigingsnummer</th>
+            <th>Naam</th>
+            <th>Telefoon</th>
+            <th>Email</th>
+            <th>Hoofd?</th>
+            <th>Type Adres</th>
+
+            <th>Adres</th>
+            <th>Volledig</th>
+          </tr>
+        </thead>
+        <tbody>
+          <template v-for="(val, index) in vestigingen">
+            <tr>
+              <td rowspan="2">{{get('item.vestigingsnummer', val)}}</td>
+              <td rowspan="2">{{get('item.eersteHandelsnaam', val)}}</td>
+              <td rowspan="2">
+                <span v-for="(gegevens, index) in get('item.communicatiegegevens.communicatienummer', val)">
+                  {{gegevens.nummer}}
+                </span>
+              </td>
+              <td rowspan="2">
+                <span v-for="(gegevens, index) in get('item.communicatiegegevens.emailAdres', val)">
+                  {{gegevens}}
+                </span>
+              </td>
+              <td rowspan="2">{{get('item.isHoofdVestiging', val) ? 'ja' : 'nee'}}</td>
+              <td>Vestiging</td>
+              <td>{{get('item.bezoekLocatie.volledigAdres', val)}}</td>
+              <td rowspan="2"><objectTree :item="val" /></td>
+            </tr>
+            <tr>
+              <td>Postadres</td>
+              <td>{{get('item.bezoekLocatie.volledigAdres', val)}}</td>
+            </tr>
+          </template>
+        </tbody>
+      </table>
+
 
     </div>
   </div>
@@ -105,8 +194,39 @@
       kvkItem() {
         return this.item ? this.item.product.maatschappelijkeActiviteit : {};
       },
+      vestigingen() {
+        const hoofdVestiging = this.get('wordtGeleidVanuit');
+        let nietCommercieleVestigingen = this.get('wordtUitgeoefendIn');
+        let commercieleVestigingen = this.get('manifesteertZichAls.onderneming.wordtUitgeoefendIn');
+
+        hoofdVestiging.item.isHoofdVestiging = true;
+
+        let vestigingen = [];
+        vestigingen.push(hoofdVestiging);
+        if (nietCommercieleVestigingen && nietCommercieleVestigingen.length > 0) {
+          vestigingen = vestigingen.concat(nietCommercieleVestigingen.map(vestiging => {
+            return {
+              isHoofdVestiging: false,
+              item: vestiging.nietCommercieleVestiging
+            };
+          }).filter(v => v.item.vestigingsnummer !== hoofdVestiging.item.vestigingsnummer));
+        }
+
+        if (commercieleVestigingen && commercieleVestigingen.length > 0) {
+          vestigingen = vestigingen.concat(commercieleVestigingen.map(vestiging => {
+            return {
+              isHoofdVestiging: false,
+              item: vestiging.commercieleVestiging
+            };
+          }).filter(v => v.item.vestigingsnummer !== hoofdVestiging.item.vestigingsnummer));
+        }
+
+        return vestigingen;
+      },
       success() {
-        return this.item && (this.item.meldingen.informatie[0].code === 'IPD0000');
+        return this.item
+          && this.item.meldingen.informatie
+          && (this.item.meldingen.informatie[0].code === 'IPD0000');
       },
     },
 

@@ -4,7 +4,7 @@
 
     <icon v-if="!currentSettings" icon="spinner" pulse />
 
-    <div v-if="currentSettings && currentSettings.certificate">
+    <div v-if="currentSettings">
       <!--UPLOAD-->
       <form enctype="multipart/form-data" novalidate v-if="true">
         <div class="dropbox">
@@ -17,13 +17,14 @@
             Upload certificate by dragging a pfx file here<br> or click to browse
           </p>
           <p v-if="false">
-            Uploading {{fileCount}} certificates...
+            Uploading certificate...
           </p>
         </div>
       </form>
 
       <h3>Current Certificate</h3>
-      <p>{{currentSettings.certificate}}</p>
+      <p v-if="currentSettings.certificate">{{currentSettings.certificate}}</p>
+      <p v-else>Upload a certificate to start working with this application.</p>
 
       <h3>Kvk Api Settings</h3>
       <label>
@@ -89,6 +90,11 @@
     methods: {
       ...mapActions(['updateSettings', 'uploadCertificate']),
       setPassword(files) {
+        if (files.length > 0) {
+          window.alert("Only upload one pfx file!")
+          return
+        }
+
         this.files = files;
         if (files.length > 0) {
           $('#password-modal').modal('show')

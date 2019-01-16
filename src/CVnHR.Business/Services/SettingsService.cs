@@ -45,7 +45,7 @@ namespace CVnHR.Business.Services
         public string GetCertificateName()
         {
             return Directory.GetFiles(CertificatesPath, "*.pfx")
-                    .SingleOrDefault()
+                    .SingleOrDefault()?
                     .Replace(CertificatesPath + "\\", string.Empty).Replace(".pfx", string.Empty);
         }
 

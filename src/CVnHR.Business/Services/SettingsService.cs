@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.DataProtection;
+﻿using CVnHR.Business.HrDataservice;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using System;
@@ -70,6 +71,9 @@ namespace CVnHR.Business.Services
             var protectedPassword = _dataProtector.Protect(password);
             var passwordPath = newFilePath.Replace(".pfx", ".txt");
             File.WriteAllText(passwordPath, protectedPassword);
+
+            // Ensure the certificate exists in the store
+            InstallCertificate();
         }
 
         public X509Certificate2 GetCertificate()
@@ -86,6 +90,20 @@ namespace CVnHR.Business.Services
             var typeName = typeof(T).Name;
             typeName = $"{char.ToLowerInvariant(typeName[0])}{typeName.Substring(1)}";
             return $"Config/{typeName}.json";
+        }
+
+        private void InstallCertificate()
+        {
+            var certificate = GetCertificate();
+            using (var store = new X509Store(StoreName.My, StoreLocation.LocalMachine))
+            {
+                store.Open(OpenFlags.ReadWrite);
+
+                if (!store.Certificates.Contains(certificate))
+                {
+                    store.Add(certificate);
+                }
+            }
         }
     }
 }

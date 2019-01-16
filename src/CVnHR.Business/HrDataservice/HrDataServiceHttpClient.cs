@@ -1,11 +1,6 @@
-﻿using CVnHR.Business.Logging;
-using CVnHR.Business.Services;
-using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using CVnHR.Business.Services;
 using System.Net.Http;
 using System.Security.Cryptography.X509Certificates;
-using System.Text;
 
 namespace CVnHR.Business.HrDataservice
 {
@@ -35,20 +30,6 @@ namespace CVnHR.Business.HrDataservice
         public X509Certificate2 GetCertificate()
         {
             return _settingsService.GetCertificate();
-        }
-
-        public void InstallCertificate(X509Certificate2 certificate)
-        {
-            // Ensure the certificate exists in the store
-            using (var store = new X509Store(StoreName.My, StoreLocation.LocalMachine))
-            {
-                store.Open(OpenFlags.ReadWrite);
-
-                if (!store.Certificates.Contains(certificate))
-                {
-                    store.Add(certificate);
-                }
-            }
         }
 
         public HttpClient GetHttpClient()

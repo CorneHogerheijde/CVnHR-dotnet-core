@@ -51,7 +51,7 @@
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLongTitle">Set password</h5>
+            <h5 class="modal-title" id="exampleModalLongTitle">Set password for certificate</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -60,7 +60,9 @@
             <input type="password" v-model="password" @keyup.enter="closeModal" />
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close">Save changes</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close">
+              Save password
+            </button>
           </div>
         </div>
       </div>
@@ -90,7 +92,7 @@
     methods: {
       ...mapActions(['updateSettings', 'uploadCertificate']),
       setPassword(files) {
-        if (files.length > 0) {
+        if (files.length > 1) {
           window.alert("Only upload one pfx file!")
           return
         }
@@ -105,6 +107,7 @@
         this.uploadCertificate(this.files)
       },
       closeModal() {
+        window.alert("TODO: implement cancel!")
         $('#password-modal').modal('hide')
       }
     },

@@ -2,6 +2,10 @@
   <div>
     <icon v-if="loading" icon="spinner" pulse />
     <template v-if="currentKvkSearch.result">
+      <button @click="toggleShowChildren">{{ showAll ? 'alles inklappen' : 'alles uitklappen'}}</button>
+      <button @click="toggleShowEmpty">{{ showEmpty ? 'lege velden verbergen' : 'lege velden tonen'}}</button>
+      <br />
+      <br />
       <ul class="nav nav-tabs" id="result-tabs" role="tablist">
         <li class="nav-item">
           <a class="nav-link active" id="result-tab" data-toggle="tab" href="#result" role="tab" aria-controls="result" aria-selected="true">
@@ -24,9 +28,6 @@
           <KvkSearchResult :item="currentKvkSearch.result"></KvkSearchResult>
         </div>
         <div class="tab-pane fade" id="treeview" role="tabpanel" aria-labelledby="treeview-tab">
-          <button @click="toggleShowChildren">{{ showAll ? 'alles inklappen' : 'alles uitklappen'}}</button>
-          <button @click="toggleShowEmpty">{{ showEmpty ? 'lege velden verbergen' : 'lege velden tonen'}}</button>
-          <br /><br />
           <objectTree :item="currentKvkSearch.result"></objectTree>
         </div>
         <div class="tab-pane fade" id="json" role="tabpanel" aria-labelledby="json-tab">

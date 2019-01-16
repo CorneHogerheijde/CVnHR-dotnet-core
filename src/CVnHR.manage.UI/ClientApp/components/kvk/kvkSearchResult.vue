@@ -83,6 +83,27 @@
         </div>
       </div>
 
+      <template v-if="get('heeftAlsEigenaar.item.bijzondereRechtstoestand')">
+        <h3>Bijzondere Rechtstoestand</h3>
+        <div class="row">
+          <div class="col-md-4">Soort:</div>
+          <div class="col-md-8">{{get('heeftAlsEigenaar.item.bijzondereRechtstoestand.soort.omschrijving')}}</div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">Sinds:</div>
+          <div class="col-md-8">{{formatDate(get('heeftAlsEigenaar.item.bijzondereRechtstoestand.registratie.registratieTijdstip'))}}</div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">Bij:</div>
+          <div class="col-md-8">{{get('heeftAlsEigenaar.item.bijzondereRechtstoestand.item.naam')}}, {{get('heeftAlsEigenaar.item.bijzondereRechtstoestand.item.plaats')}}</div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">Volledig:</div>
+          <div class="col-md-8"><objectTree :item="get('heeftAlsEigenaar.item.bijzondereRechtstoestand')" /></div>
+        </div>
+
+      </template>
+
       <h3>Functie Vervullingen</h3>
       <table class="table table-striped table-bordered table-hover" v-if="get('heeftAlsEigenaar.item.heeft')">
         <thead>
@@ -199,10 +220,12 @@
         let nietCommercieleVestigingen = this.get('wordtUitgeoefendIn');
         let commercieleVestigingen = this.get('manifesteertZichAls.onderneming.wordtUitgeoefendIn');
 
-        hoofdVestiging.item.isHoofdVestiging = true;
-
         let vestigingen = [];
-        vestigingen.push(hoofdVestiging);
+        if (hoofdVestiging && hoofdVestiging.item) {
+          hoofdVestiging.item.isHoofdVestiging = true;
+          vestigingen.push(hoofdVestiging);
+        }
+        
         if (nietCommercieleVestigingen && nietCommercieleVestigingen.length > 0) {
           vestigingen = vestigingen.concat(nietCommercieleVestigingen.map(vestiging => {
             return {

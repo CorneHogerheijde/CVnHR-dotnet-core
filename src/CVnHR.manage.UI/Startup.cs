@@ -55,6 +55,8 @@ namespace CVnHR.manage.UI
                     return handler;
                 })
                 .AddHttpMessageHandler<LoggingHandler>();
+
+            services.AddDataProtection(); // TODO?
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

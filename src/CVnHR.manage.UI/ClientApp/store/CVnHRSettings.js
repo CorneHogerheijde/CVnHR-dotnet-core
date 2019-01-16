@@ -1,7 +1,8 @@
 import axios from 'axios'
 
 const updateSettingsType = 'updateSettingsType'
-const ensureSettingsType = 'ensureSettings'
+const ensureSettingsType = 'ensureSettingsType'
+const uploadCertificateType = 'uploadCertificateType'
 
 const settingsActions = {
   ensureSettings: async ({ commit }) => {
@@ -9,6 +10,9 @@ const settingsActions = {
   },
   updateSettings: ({ commit }, settings) => {
     commit(updateSettingsType, settings)
+  },
+  uploadCertificate: ({ commit }, files) => {
+    commit(uploadCertificateType, files)
   }
 }
 
@@ -26,12 +30,36 @@ const settingsMutations = {
   },
   async [updateSettingsType](state, settings) {
     try {
-      axios.put(`/api/settings/UpdateKvkApiSettings`, settings.kvkApiSettings)
+      await axios.put(`/api/settings/UpdateKvkApiSettings`, settings.kvkApiSettings)
     } catch (err) {
       window.alert(err)
       console.log(err)
     }
     state.settings = settings
+  },
+  async [uploadCertificateType](state, files) {
+    // handle file changes
+    const formData = new FormData()
+
+    if (!files.length) return
+
+    // append the files to FormData
+    Array
+      .from(Array(files.length).keys())
+      .map(x => {
+        formData.append('certificate', files[x], files[x].name)
+      })
+
+    // append the password
+    formData.append('password', files.password)
+
+    try {
+      let response = await axios.post(`/api/settings/UpdateCertificate`, formData)
+      state.settings = response.data
+    } catch (err) {
+      window.alert(err)
+      console.log(err)
+    }
   }
 }
 

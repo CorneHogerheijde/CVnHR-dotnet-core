@@ -1,4 +1,5 @@
 ﻿using CVnHR.Business.Logging;
+using CVnHR.Business.Services;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -11,10 +12,13 @@ namespace CVnHR.Business.HrDataservice
     public class HrDataServiceHttpClient : IHrDataServiceHttpClient
     {
         private readonly IHttpClientFactory _httpClientFactory;
+        private readonly ISettingsService _settingsService;
 
-        public HrDataServiceHttpClient(IHttpClientFactory httpClientFactory)
+        public HrDataServiceHttpClient(IHttpClientFactory httpClientFactory,
+            ISettingsService settingsService)
         {
             _httpClientFactory = httpClientFactory;
+            _settingsService = settingsService;
         }
 
         public HttpClientHandler GetHttpClientHandler()
@@ -30,11 +34,7 @@ namespace CVnHR.Business.HrDataservice
 
         public X509Certificate2 GetCertificate()
         {
-            // TODO
-            var password = File.ReadAllText("Certificates/digilevering.drenthe.nl.txt");
-            var certificate = new X509Certificate2("Certificates/digilevering.drenthe.nl.pfx", password);
-
-            return certificate;
+            return _settingsService.GetCertificate();
         }
 
         public void InstallCertificate(X509Certificate2 certificate)

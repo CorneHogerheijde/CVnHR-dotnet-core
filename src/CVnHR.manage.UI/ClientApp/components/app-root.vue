@@ -1,10 +1,10 @@
 <template>
     <div id="app" class="container-fluid">
         <div class="row">
-            <div class="col-md-3">
+            <div class="col-md-2 leftcol">
                 <nav-menu params="route: route"></nav-menu>
             </div>
-            <div class="col-sm-9">
+            <div class="col-md-10">
                 <router-view></router-view>
             </div>
         </div>

@@ -3,6 +3,10 @@
     display: list-item;
 }
 
+.row {
+    margin: 0;
+}
+
 /* Highlighting rules for nav menu items */
 .nav-item a.active,
 .nav-item a.active:hover,
@@ -36,10 +40,15 @@
 
 @media (min-width: 768px) {
     /* On small screens, convert the nav menu to a vertical sidebar */
-    .main-nav {
+    .main-nav, .leftcol {
         height: 100%;
-        width: calc(25% - 20px);
-    }    
+        width: calc(18% - 20px);
+    }
+
+    .container-fluid {
+        padding: 0;
+    }
+
     .main-nav .navbar {
         border-radius: 0px;
         border-width: 0px;
@@ -71,8 +80,8 @@
     
     .navbar a {
         /* If a menu item's text is too long, truncate it */
-        width: 95%; /* Bug to fix here. Width 100% overflow. */
-        white-space: nowrap;
+        /*width: 95%; /* Bug to fix here. Width 100% overflow. */
+        /*white-space: nowrap;*/
         overflow: hidden;
         text-overflow: ellipsis;
     }

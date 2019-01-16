@@ -12,7 +12,7 @@ TODO: add more documentation!
   * from location CVnHR.manage.UI run `dotnet run`
   * from root: run `dotnet run --project src/CVnHR.manage.UI/CVnHR.manage.UI.csproj`
 
-^* take care: probably need to run as admin^
+<i>take care: probably need to run as admin</i>
 
 ## CI/CD
 

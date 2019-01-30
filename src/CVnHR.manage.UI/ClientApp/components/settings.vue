@@ -110,7 +110,6 @@
       },
       closeModal() {
         $('#password-modal').modal('hide')
-        
       }
     },
     mounted() {

@@ -57,10 +57,11 @@
             </button>
           </div>
           <div class="modal-body">
-            <input type="password" v-model="password" @keyup.enter="closeModal" />
+            <input type="password" v-model="password" @keyup.enter="uploadCertificateAndPassword" />
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close">
+            <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close"
+                    @click="uploadCertificateAndPassword">
               Save password
             </button>
           </div>
@@ -105,15 +106,16 @@
       uploadCertificateAndPassword() {
         this.files.password = this.password
         this.uploadCertificate(this.files)
+        this.closeModal()
       },
       closeModal() {
-        window.alert("TODO: implement cancel!")
         $('#password-modal').modal('hide')
+        
       }
     },
     mounted() {
       $('#password-modal')
-        .on('hide.bs.modal', this.uploadCertificateAndPassword)
+        .on('hide.bs.modal', () => { $('form').trigger("reset") })
     }
   }
 </script>

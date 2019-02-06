@@ -77,6 +77,12 @@
           ? `${address.street} ${address.houseNumber}${address.houseNumberAddition} ${address.city}`
           : null
       }
+    },
+
+    updated() {
+      if (this.result && this.result.totalItems === 1) {
+        this.$router.push({ query: { kvk: this.result.items[0].kvkNumber } })
+      }
     }
   }
 </script>

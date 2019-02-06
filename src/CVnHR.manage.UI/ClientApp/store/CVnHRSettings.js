@@ -28,7 +28,7 @@ const settingsMutations = {
     }
     state.settings = settings
   },
-  async [updateSettingsType](state, settings) {
+  async [updateSettingsType] (state, settings) {
     try {
       await axios.put(`/api/settings/UpdateKvkApiSettings`, settings.kvkApiSettings)
     } catch (err) {
@@ -37,7 +37,7 @@ const settingsMutations = {
     }
     state.settings = settings
   },
-  async [uploadCertificateType](state, files) {
+  async [uploadCertificateType] (state, files) {
     // handle file changes
     const formData = new FormData()
 

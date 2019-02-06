@@ -8,7 +8,6 @@ using System.Web;
 
 namespace CVnHR.Business.Kvk.Api
 {
-
     public class KvkSearchApi : IKvkSearchApi
     {
         private readonly ISettingsService _settingsService;

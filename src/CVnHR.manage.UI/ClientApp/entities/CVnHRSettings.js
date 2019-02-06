@@ -1,4 +1,4 @@
-
+﻿
 // $Classes/Enums/Interfaces(filter)[template][separator]
 // filter (optional): Matches the name or full name of the current item. * = match any, wrap in [] to match attributes or prefix with : to match interfaces or base classes.
 // template: The template to repeat for each matched item
@@ -7,8 +7,8 @@
 // More info: http://frhagn.github.io/Typewriter/
 
 export const CVnHRSettings = {
-  // CERTIFICATES
-  certificates: null,
+  // CERTIFICATE
+  certificate: null,
   // KVKAPISETTINGS
   kvkApiSettings: null
 }

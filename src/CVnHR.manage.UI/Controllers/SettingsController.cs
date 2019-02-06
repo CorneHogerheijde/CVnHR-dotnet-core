@@ -1,16 +1,15 @@
-﻿using CVnHR.Business.Kvk.Api.Entities;
+using CVnHR.Business.HrDataservice;
+using CVnHR.Business.Kvk.Api.Entities;
 using CVnHR.Business.Services;
 using CVnHR.manage.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.IO;
-using System.Linq;
 
 namespace CVnHR.manage.Controllers
 {
     [Route("api/[controller]")]
     public class SettingsController : Controller
     {
-        private const string CertificatesPath = "Certificates";
         private KvkApiSettings _kvkApiSettings;
         private readonly ISettingsService _settingsService;
 
@@ -24,8 +23,7 @@ namespace CVnHR.manage.Controllers
         public CVnHRSettings GetSettings()
         {
             return new CVnHRSettings() {
-                Certificates = Directory.GetFiles(CertificatesPath, "*.pfx")
-                    .Select(p => p.Replace(CertificatesPath + "\\", string.Empty).Replace(".pfx", string.Empty)),
+                Certificate = _settingsService.GetCertificateName(),
                 KvkApiSettings = _kvkApiSettings
             };
         }
@@ -33,10 +31,22 @@ namespace CVnHR.manage.Controllers
         [HttpPut("[action]")]
         public KvkApiSettings UpdateKvkApiSettings([FromBody]KvkApiSettings kvkApiSettings)
         {
-            _kvkApiSettings = kvkApiSettings;
             _settingsService.UpdateSettings(_kvkApiSettings);
+            _kvkApiSettings = kvkApiSettings;
 
             return _kvkApiSettings;
+        }
+
+        [HttpPost("[action]")]
+        public CVnHRSettings UpdateCertificate([FromForm]IFormFile certificate, [FromForm]string password)
+        {
+            _settingsService.UploadCertificate(certificate, password);
+
+            return new CVnHRSettings()
+            {
+                Certificate = _settingsService.GetCertificateName(),
+                KvkApiSettings = _kvkApiSettings
+            };
         }
     }
 }

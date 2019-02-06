@@ -12,8 +12,6 @@ namespace CVnHR.Business.HrDataservice
 
         X509Certificate2 GetCertificate();
 
-        void InstallCertificate(X509Certificate2 certificate);
-
         HttpClient GetHttpClient();
     }
 }

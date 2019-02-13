@@ -1,11 +1,13 @@
 ﻿using CVnHR.Business.Kvk.Api;
 using CVnHR.Business.Kvk.Api.Entities;
 using CVnHR.Business.Services;
+using MaxKagamine.Moq.HttpClient;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using System;
+using Newtonsoft.Json;
 using System.Collections.Generic;
-using System.Text;
+using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace CVnHR.Business.Tests.Kvk.Api
@@ -13,20 +15,25 @@ namespace CVnHR.Business.Tests.Kvk.Api
     [TestClass]
     public class KvkSearchApiTests
     {
-        [TestMethod, Description("Should correctly format the url and querystring to do the search")]
-        public void GetFormattedQueryStringTest()
+        private readonly Mock<ISettingsService> _settingsServiceMock;
+        public KvkSearchApiTests()
         {
-            // Arrange
             var settings = new KvkApiSettings()
             {
                 ApiKey = "unittest-apikey",
                 BaseUrl = "http://unittest.ut",
                 ProfileUrl = "/unittestsearch"
             };
-            var settingsService = new Mock<ISettingsService>();
-            settingsService.Setup(s => s.GetSettings<KvkApiSettings>())
+            _settingsServiceMock = new Mock<ISettingsService>();
+            _settingsServiceMock.Setup(s => s.GetSettings<KvkApiSettings>())
                 .Returns(settings);
-            var searchApi = new KvkSearchApi(settingsService.Object);
+        }
+
+        [TestMethod, Description("Should correctly format the url and querystring to do the search")]
+        public void GetFormattedQueryStringTest()
+        {
+            // Arrange
+            var searchApi = new KvkSearchApi(_settingsServiceMock.Object, null);
 
             // Act
             var result = searchApi.GetFormattedQueryString();
@@ -40,24 +47,80 @@ namespace CVnHR.Business.Tests.Kvk.Api
         public async Task SearchTest()
         {
             // Arrange
-            var settings = new KvkApiSettings()
+            var expectedData = new KvkSearchApiResult()
             {
-                ApiKey = "unittest-apikey",
-                BaseUrl = "http://unittest.ut",
-                ProfileUrl = "/unittestsearch"
+                ItemsPerPage = 10,
+                StartPage = 1,
+                Items = new List<ApiItem>() { new ApiItem { KvkNumber = "123456" } },
+                TotalItems = 1
             };
-            var settingsService = new Mock<ISettingsService>();
-            settingsService.Setup(s => s.GetSettings<KvkApiSettings>())
-                .Returns(settings);
-            var searchApi = new KvkSearchApi(settingsService.Object);
+            var jsonResponse = JsonConvert.SerializeObject(new KvkSearchApiResultWrapper()
+            {
+                ApiVersion = "1.0",
+                Data = expectedData
+            });
+            var handler = new Mock<HttpMessageHandler>();
+            handler.SetupAnyRequest()
+                .ReturnsResponse(jsonResponse, "application/json");
+
+            var searchApi = new KvkSearchApi(_settingsServiceMock.Object, handler.CreateClientFactory());
 
             // Act
             var result = await searchApi.Search(new KvkSearchApiParameters() { Q = "test" });
 
-            // TODO: fix this, make httpClient configurable etc.
+            // Assert
+            Assert.AreEqual(expectedData.ToString(), result.ToString(), "Expected data does not match returned data.");
+            handler.VerifyRequest("http://unittest.ut/api/v2/search/companies?apiKey=unittest-apikey&q=test", Times.Once());
+        }
+
+        [TestMethod, Description("Should correctly call search api")]
+        public async Task SearchTest_RequestNextPage()
+        {
+            // Arrange
+            var expectedData = new KvkSearchApiResult();
+            var jsonResponse = JsonConvert.SerializeObject(new KvkSearchApiResultWrapper()
+            {
+                ApiVersion = "1.0",
+                Data = expectedData
+            });
+            var handler = new Mock<HttpMessageHandler>();
+            handler.SetupAnyRequest()
+                .ReturnsResponse(jsonResponse, "application/json");
+
+            var searchApi = new KvkSearchApi(_settingsServiceMock.Object, handler.CreateClientFactory());
+
+            // Act
+            var result = await searchApi.Search(new KvkSearchApiParameters() { StartPage = 1 });
 
             // Assert
-            Assert.AreEqual(result.)
+            handler.VerifyRequest("http://unittest.ut/api/v2/search/companies?apiKey=unittest-apikey&startpage=1", Times.Once());
+        }
+
+        [TestMethod, Description("Should correctly throw an HttpRequestException when result from kvk fails")]
+        [ExpectedException(typeof(HttpRequestException))]
+        public async Task SearchTest_HttpRequestException()
+        {
+            // Arrange
+            var expectedData = new KvkSearchApiResult()
+            {
+                ItemsPerPage = 10,
+                StartPage = 1,
+                Items = new List<ApiItem>() { new ApiItem { KvkNumber = "123456" } },
+                TotalItems = 1
+            };
+            var jsonResponse = JsonConvert.SerializeObject(new KvkSearchApiResultWrapper()
+            {
+                ApiVersion = "1.0",
+                Data = expectedData
+            });
+            var handler = new Mock<HttpMessageHandler>();
+            handler.SetupAnyRequest()
+                .ReturnsResponse(HttpStatusCode.InternalServerError);
+
+            var searchApi = new KvkSearchApi(_settingsServiceMock.Object, handler.CreateClientFactory());
+
+            // Act
+            var result = await searchApi.Search(new KvkSearchApiParameters() { Q = "test" });
         }
     }
 }

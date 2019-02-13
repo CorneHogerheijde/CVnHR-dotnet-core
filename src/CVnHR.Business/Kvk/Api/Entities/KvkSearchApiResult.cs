@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Newtonsoft.Json;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace CVnHR.Business.Kvk.Api.Entities
 {
@@ -15,6 +17,11 @@ namespace CVnHR.Business.Kvk.Api.Entities
         public int ItemsPerPage { get; set; }
         public int TotalItems { get; set; }
         public int StartPage { get; set; }
+
+        public override string ToString()
+        {
+            return JsonConvert.SerializeObject(this);
+        }
     }
 
     public class ApiItem

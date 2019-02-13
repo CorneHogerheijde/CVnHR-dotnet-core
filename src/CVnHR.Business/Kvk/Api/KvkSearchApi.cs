@@ -11,10 +11,12 @@ namespace CVnHR.Business.Kvk.Api
     public class KvkSearchApi : IKvkSearchApi
     {
         private readonly ISettingsService _settingsService;
+        private readonly IHttpClientFactory _httpClientFactory;
 
-        public KvkSearchApi(ISettingsService settingsService)
+        public KvkSearchApi(ISettingsService settingsService, IHttpClientFactory httpClientFactory)
         {
             _settingsService = settingsService;
+            _httpClientFactory = httpClientFactory;
         }
 
         public string GetFormattedQueryString()
@@ -29,10 +31,12 @@ namespace CVnHR.Business.Kvk.Api
 
         public async Task<KvkSearchApiResult> Search(KvkSearchApiParameters parameters)
         {
-            var httpClient = new HttpClient();
+            var httpClient = _httpClientFactory.CreateClient();
 
-            var search = new List<string>();
-            search.Add(GetFormattedQueryString());
+            var search = new List<string>
+            {
+                GetFormattedQueryString()
+            };
             if (!string.IsNullOrWhiteSpace(parameters.Q))
             {
                 search.Add($"q={parameters.Q}");
@@ -49,7 +53,6 @@ namespace CVnHR.Business.Kvk.Api
             var content = await result.Content.ReadAsStringAsync();
 
             var apiResult = JsonConvert.DeserializeObject<KvkSearchApiResultWrapper>(content);
-
             return apiResult.Data;
         }
     }

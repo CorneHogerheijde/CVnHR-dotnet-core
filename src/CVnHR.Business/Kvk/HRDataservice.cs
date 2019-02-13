@@ -201,8 +201,6 @@ namespace CVnHR.Business.Kvk
                 signedXml.ComputeSignature();
                 var xmlDigitalSignature = signedXml.GetXml();
 
-//#error //TODO: fix this so we don't get any errors anymore.
-
                 // modify the fragment so it points at BinarySecurityToken instead
                 XmlNode info = null;
                 for (int i = 0; i < xmlDigitalSignature.ChildNodes.Count; i++)
@@ -234,10 +232,6 @@ namespace CVnHR.Business.Kvk
                 var sb = new StringBuilder();
                 var settings = new XmlWriterSettings
                 {
-                    //Indent = true,
-                    //IndentChars = "  ",
-                    //NewLineChars = "\r\n",
-                    //NewLineHandling = NewLineHandling.Replace,
                     Indent = false,
                     OmitXmlDeclaration = true,
                     WriteEndDocumentOnClose = true
@@ -247,39 +241,9 @@ namespace CVnHR.Business.Kvk
                     doc.Save(writer);
                 }
                 envelope = sb.ToString();
-
-                //envelope = doc.OuterXml;
             }
 
             return envelope;
-        }
-
-        public class SignedXmlWithId : SignedXml
-        {
-            public SignedXmlWithId(XmlDocument xml) : base(xml)
-            {
-            }
-
-            public SignedXmlWithId(XmlElement xmlElement)
-                : base(xmlElement)
-            {
-            }
-
-            public override XmlElement GetIdElement(XmlDocument doc, string id)
-            {
-                // check to see if it's a standard ID reference
-                XmlElement idElem = base.GetIdElement(doc, id);
-
-                if (idElem == null)
-                {
-                    XmlNamespaceManager nsManager = new XmlNamespaceManager(doc.NameTable);
-                    nsManager.AddNamespace("wsu", "http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd");
-
-                    idElem = doc.SelectSingleNode("//*[@wsu:Id=\"" + id + "\"]", nsManager) as XmlElement;
-                }
-
-                return idElem;
-            }
         }
     }
 }

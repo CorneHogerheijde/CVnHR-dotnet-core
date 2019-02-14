@@ -23,18 +23,18 @@ namespace CVnHR.Business.Tests.Kvk
             // Arrange
             var handler = new Mock<HttpMessageHandler>();
             handler.SetupAnyRequest()
-                .ReturnsResponse(HttpStatusCode.OK);
+                .ReturnsResponse("test", "application/xml");
 
             var hrDataServiceHttpClient = new Mock<IHrDataServiceHttpClient>();
 
-            var ecdsa = ECDsa.Create(); // generate asymmetric key pair
-            var req = new CertificateRequest("cn=unittest", ecdsa, HashAlgorithmName.SHA256);
-            var cert = req.CreateSelfSigned(DateTimeOffset.Now, DateTimeOffset.Now.AddYears(5));
-
-            // TODO => fix certificate not working!
+            var req = new CertificateRequest("cn=unittest", RSA.Create(), HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1);
+            var cert = req.CreateSelfSigned(DateTimeOffset.Now.AddDays(-1), DateTimeOffset.Now.AddYears(5));
 
             hrDataServiceHttpClient.Setup(c => c.GetCertificate())
                 .Returns(cert);
+
+            hrDataServiceHttpClient.Setup(c => c.GetHttpClient())
+                .Returns(handler.CreateClient());
 
             var hrDataservice = new Business.Kvk.HrDataservice(It.IsAny<string>(), hrDataServiceHttpClient.Object);
 
@@ -42,7 +42,8 @@ namespace CVnHR.Business.Tests.Kvk
             var result = await hrDataservice.GetInschrijvingFromKvK("12345678");
 
             // Assert
-            Assert.AreEqual("", result);
+            Assert.AreEqual("test", result, "HrDataservice result should be unmodified!");
+            // TODO: verify call, url etc.
         }
     }
 }

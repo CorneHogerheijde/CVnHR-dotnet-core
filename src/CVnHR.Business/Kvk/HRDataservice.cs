@@ -126,32 +126,9 @@ namespace CVnHR.Business.Kvk
                     writer.WriteAttributeString("xmlns", "xsi", null, "http://www.w3.org/2001/XMLSchema-instance");
                     writer.WriteAttributeString("xmlns", "xsd", null, "http://www.w3.org/2001/XMLSchema");
 
-
-                    // TODO!!!
-
-                    /*
-                     <ophalenInschrijvingRequest xmlns="http://schemas.kvk.nl/schemas/hrip/dataservice/2015/02">
-                        <klantreferentie>ACC_I_002</klantreferentie>
-                        <kvkNummer>53352009</kvkNummer>
-                     </ophalenInschrijvingRequest>
-                    */
-
-                    // your 3rd-party soap payload goes here
-                    writer.WriteStartElement("ophalenInschrijvingRequest", "http://schemas.kvk.nl/schemas/hrip/dataservice/2015/02");
-
-                    writer.WriteStartElement("klantreferentie");
-                    writer.WriteValue(_klantReferentie);
-                    writer.WriteEndElement(); // klantreferentie
-
-                    writer.WriteStartElement("kvkNummer");
-                    writer.WriteValue(kvkNummer);
-                    writer.WriteEndElement(); // kvkNummer
-
-                    writer.WriteEndElement(); // ophalenInschrijvingRequest
-
+                    WriteKvkPayload(kvkNummer, writer);
 
                     writer.WriteEndElement(); // Body
-
 
                     writer.WriteEndElement(); //Envelope
                 }
@@ -244,6 +221,29 @@ namespace CVnHR.Business.Kvk
             }
 
             return envelope;
+        }
+
+        private void WriteKvkPayload(string kvkNummer, XmlTextWriter writer)
+        {
+            /*
+             <ophalenInschrijvingRequest xmlns="http://schemas.kvk.nl/schemas/hrip/dataservice/2015/02">
+                <klantreferentie>ACC_I_002</klantreferentie>
+                <kvkNummer>53352009</kvkNummer>
+             </ophalenInschrijvingRequest>
+            */
+
+            // your 3rd-party soap payload goes here
+            writer.WriteStartElement("ophalenInschrijvingRequest", "http://schemas.kvk.nl/schemas/hrip/dataservice/2015/02");
+
+            writer.WriteStartElement("klantreferentie");
+            writer.WriteValue(_klantReferentie);
+            writer.WriteEndElement(); // klantreferentie
+
+            writer.WriteStartElement("kvkNummer");
+            writer.WriteValue(kvkNummer);
+            writer.WriteEndElement(); // kvkNummer
+
+            writer.WriteEndElement(); // ophalenInschrijvingRequest
         }
     }
 }

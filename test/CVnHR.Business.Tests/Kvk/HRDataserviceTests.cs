@@ -43,7 +43,9 @@ namespace CVnHR.Business.Tests.Kvk
 
             // Assert
             Assert.AreEqual("test", result, "HrDataservice result should be unmodified!");
-            // TODO: verify call, url etc.
+            handler.VerifyRequest("https://webservices.kvk.nl/postbus1", Times.Once());
+            // TODO: verify call, url, message etc.
+            Assert.IsTrue(false, "TODO!");
         }
     }
 }

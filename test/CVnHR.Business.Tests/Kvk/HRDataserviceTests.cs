@@ -8,9 +8,10 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using CVnHR.Business.Kvk;
-using CVnHR.Business.HrDataservice;
+using CVnHR.Business.HrDataserviceHelpers;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
+using CVnHR.Business.Services;
 
 namespace CVnHR.Business.Tests.Kvk
 {
@@ -18,7 +19,7 @@ namespace CVnHR.Business.Tests.Kvk
     public class HRDataserviceTests
     {
         [TestMethod, Description("Should correctly format the envelope to be send to the HR-Dataservice")]
-        public async Task GetInschrijvingFromKvK()
+        public async Task GetInschrijvingFromKvKStringArgument()
         {
             // Arrange
             var handler = new Mock<HttpMessageHandler>();
@@ -30,22 +31,39 @@ namespace CVnHR.Business.Tests.Kvk
             var req = new CertificateRequest("cn=unittest", RSA.Create(), HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1);
             var cert = req.CreateSelfSigned(DateTimeOffset.Now.AddDays(-1), DateTimeOffset.Now.AddYears(5));
 
-            hrDataServiceHttpClient.Setup(c => c.GetCertificate())
+            var settingsServiceMock = new Mock<ISettingsService>();
+            settingsServiceMock.Setup(c => c.GetCertificate())
                 .Returns(cert);
 
-            hrDataServiceHttpClient.Setup(c => c.GetHttpClient())
+            hrDataServiceHttpClient.Setup(c => c.GetHttpClient(It.IsAny<string>()))
                 .Returns(handler.CreateClient());
 
-            var hrDataservice = new Business.Kvk.HrDataservice(It.IsAny<string>(), hrDataServiceHttpClient.Object);
+            var expectedMessage = "message";
+
+            var hRDataserviceMessageParserMock = new Mock<IHRDataserviceMessageParser>();
+            hRDataserviceMessageParserMock.Setup(h => h.SerializeOphalenInschrijvingRequest(It.IsAny<ophalenInschrijvingRequest>()))
+                .Returns(expectedMessage);
+
+            var hrDataservice = new HrDataservice(
+                hrDataServiceHttpClient.Object, 
+                hRDataserviceMessageParserMock.Object, 
+                settingsServiceMock.Object
+            );
 
             // Act
-            var result = await hrDataservice.GetInschrijvingFromKvK("12345678");
+            var result = await hrDataservice.GetInschrijvingFromKvK("21345");
 
             // Assert
             Assert.AreEqual("test", result, "HrDataservice result should be unmodified!");
             handler.VerifyRequest("https://webservices.kvk.nl/postbus1", Times.Once());
             // TODO: verify call, url, message etc.
-            Assert.IsTrue(false, "TODO!");
+            handler.VerifyRequest(async (request) =>
+            {
+                var content = await request.Content.ReadAsStringAsync();
+                StringAssert.Contains(content, expectedMessage, "Should contain correct message!");
+                //Assert.IsTrue(content.Contains(expectedMessage));
+                return true;
+            });
         }
     }
 }

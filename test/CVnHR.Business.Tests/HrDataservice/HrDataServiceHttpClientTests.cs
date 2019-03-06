@@ -1,4 +1,4 @@
-using CVnHR.Business.HrDataservice;
+using CVnHR.Business.HrDataserviceHelpers;
 using CVnHR.Business.Services;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -14,7 +14,7 @@ namespace CVnHR.Business.Tests
         public void GetHttpClientHandlerTest()
         {
             // Arrange
-            var client = new HrDataServiceHttpClient(null, null);
+            var client = new HrDataServiceHttpClient(null);
 
             // Act
             var handler = client.GetHttpClientHandler();
@@ -25,21 +25,6 @@ namespace CVnHR.Business.Tests
             Assert.IsNotNull(handler.ServerCertificateCustomValidationCallback, "ServerCertiificateCustomValidationCallback should be set");
         }
 
-        [TestMethod, Description("Should return the certificate obtained from the settings service")]
-        public void GetCertificateTest()
-        {
-            // Arrange
-            var settingsService = new Mock<ISettingsService>();
-            settingsService.Setup(s => s.GetCertificate());
-            var client = new HrDataServiceHttpClient(null, settingsService.Object);
-
-            // Act
-            var certificate = client.GetCertificate();
-
-            // Assert
-            settingsService.Verify(s => s.GetCertificate(), Times.Once, "Expected to receive the certificate from the settingsService");
-        }
-
         [TestMethod, Description("Should create a httpClient for hrDataservice and set DefaultRequestHeaders")]
         public void GetHttpClientTest()
         {
@@ -47,10 +32,11 @@ namespace CVnHR.Business.Tests
             var httpClientFactory = new Mock<IHttpClientFactory>();
             httpClientFactory.Setup(f => f.CreateClient(It.IsAny<string>()))
                 .Returns(new HttpClient());
-            var client = new HrDataServiceHttpClient(httpClientFactory.Object, null);
+            var client = new HrDataServiceHttpClient(httpClientFactory.Object);
+            var action = "ophalenInschrijving";
 
             // Act
-            var httpClient = client.GetHttpClient();
+            var httpClient = client.GetHttpClient(action);
 
             // Assert
             httpClientFactory.Verify(f => f.CreateClient("hrDataservice"), Times.Once, "Should create a hrDataservice client");
@@ -61,7 +47,7 @@ namespace CVnHR.Business.Tests
                 "Should have a Keep-Alive connection request header added");
             Assert.IsTrue(httpClient.DefaultRequestHeaders.ExpectContinue == true, "Expect continue should be set to true");
             Assert.IsTrue(httpClient.DefaultRequestHeaders.Contains("SOAPAction"), "Should have a SOAPAction header");
-            Assert.AreEqual("\"http://es.kvk.nl/ophalenInschrijving\"", httpClient.DefaultRequestHeaders.GetValues("SOAPAction").First(),
+            Assert.AreEqual($"\"http://es.kvk.nl/{action}\"", httpClient.DefaultRequestHeaders.GetValues("SOAPAction").First(),
                 "Should have correct SOAPAction header set");
         }
     }

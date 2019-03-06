@@ -42,7 +42,25 @@ namespace CVnHR.Business.Kvk
                     klantreferentie = _settingsService.GetKlantReferentie()
                 }
             });
-            var action = "ophalenInschrijving";
+            var action = "http://es.kvk.nl/ophalenInschrijving";
+
+            return await CallHrDataservice(payload, action);
+        }
+
+        // TODO: write more and better tests.
+        public async Task<string> GetByRsinFromKvK(string rsin)
+        {
+            var payload = _hRDataserviceMessageParser.SerializeOphalenInschrijvingRequest(new ophalenInschrijvingRequest
+            {
+                ophalenInschrijvingRequest1 = new InschrijvingRequestType
+                {
+                    Item = rsin,
+                    ItemElementName = ItemChoiceType.rsin,
+                    klantreferentie = _settingsService.GetKlantReferentie()
+                }
+            });
+            var action = "http://es.kvk.nl/ophalenInschrijving";
+
             return await CallHrDataservice(payload, action);
         }
 
@@ -97,7 +115,7 @@ namespace CVnHR.Business.Kvk
                     writer.WriteStartElement("a", "Action", null);
                     writer.WriteAttributeString("s", "mustUnderstand", null, "1");
                     writer.WriteAttributeString("u", "Id", null, "_2");
-                    writer.WriteString($"http://es.kvk.nl/{action}");
+                    writer.WriteString(action);
                     writer.WriteEndElement(); //Action
 
                     //<a:MessageID u:Id="_3">uuid:baae5ec4-cf09-4241-9a28-61128fa9aeef</a:MessageID>

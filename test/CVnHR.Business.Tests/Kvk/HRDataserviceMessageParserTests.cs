@@ -12,7 +12,7 @@ namespace CVnHR.Business.Tests.Kvk
         [TestMethod, Description("Should correctly parse a message to a MaatschappelijkeActiviteitResponseType")]
         public async Task Parse()
         {
-
+            Assert.IsTrue(false, "TODO");
         }
 
         [TestMethod, Description("Should correctly serialize a ophalenInschrijvingRequest message")]

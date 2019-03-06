@@ -33,7 +33,7 @@ namespace CVnHR.Business.Tests
             httpClientFactory.Setup(f => f.CreateClient(It.IsAny<string>()))
                 .Returns(new HttpClient());
             var client = new HrDataServiceHttpClient(httpClientFactory.Object);
-            var action = "ophalenInschrijving";
+            var action = "http://es.kvk.nl/ophalenInschrijving";
 
             // Act
             var httpClient = client.GetHttpClient(action);
@@ -47,8 +47,8 @@ namespace CVnHR.Business.Tests
                 "Should have a Keep-Alive connection request header added");
             Assert.IsTrue(httpClient.DefaultRequestHeaders.ExpectContinue == true, "Expect continue should be set to true");
             Assert.IsTrue(httpClient.DefaultRequestHeaders.Contains("SOAPAction"), "Should have a SOAPAction header");
-            Assert.AreEqual($"\"http://es.kvk.nl/{action}\"", httpClient.DefaultRequestHeaders.GetValues("SOAPAction").First(),
-                "Should have correct SOAPAction header set");
+            Assert.AreEqual($"\"{action}\"", httpClient.DefaultRequestHeaders.GetValues("SOAPAction").First(),
+                "Should have correct SOAPAction header set (including surrounding quotes)");
         }
     }
 }

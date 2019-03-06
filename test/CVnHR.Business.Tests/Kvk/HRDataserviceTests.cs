@@ -18,6 +18,8 @@ namespace CVnHR.Business.Tests.Kvk
     [TestClass]
     public class HRDataserviceTests
     {
+        // TODO: more tests and refactors.
+
         [TestMethod, Description("Should correctly format the envelope to be send to the HR-Dataservice")]
         public async Task GetInschrijvingFromKvKStringArgument()
         {

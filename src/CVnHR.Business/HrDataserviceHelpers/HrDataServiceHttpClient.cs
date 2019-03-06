@@ -28,7 +28,7 @@ namespace CVnHR.Business.HrDataserviceHelpers
 
             client.DefaultRequestHeaders.Connection.Add("Keep-Alive");
             client.DefaultRequestHeaders.ExpectContinue = true;
-            client.DefaultRequestHeaders.Add("SOAPAction", $"\"http://es.kvk.nl/{action}\"");
+            client.DefaultRequestHeaders.Add("SOAPAction", $"\"{action}\"");
 
             return client;
         }

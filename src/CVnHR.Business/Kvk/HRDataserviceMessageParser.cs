@@ -54,7 +54,12 @@ namespace CVnHR.Business.Kvk
             return $@"<ophalenInschrijvingRequest xmlns=""http://schemas.kvk.nl/schemas/hrip/dataservice/2015/02"">
                 <klantreferentie>{request.ophalenInschrijvingRequest1.klantreferentie}</klantreferentie>
                 <kvkNummer>{request.ophalenInschrijvingRequest1.Item}</kvkNummer>
-             </ophalenInschrijvingRequest>";
+             </ophalenInschrijvingRequest>"
+             .Replace(Environment.NewLine, string.Empty)
+             .Replace("  ", string.Empty)
+             .Replace("  ", string.Empty)
+             .Replace("  ", string.Empty)
+             .Replace(" <", "<");
 
 
             var serializer = new XmlSerializer(request.GetType());
@@ -63,7 +68,8 @@ namespace CVnHR.Business.Kvk
             {
                 Indent = false,
                 OmitXmlDeclaration = true,
-                WriteEndDocumentOnClose = true
+                WriteEndDocumentOnClose = true,
+                NamespaceHandling = NamespaceHandling.OmitDuplicates,
             };
             using (var w = XmlWriter.Create(sb, settings))
             {

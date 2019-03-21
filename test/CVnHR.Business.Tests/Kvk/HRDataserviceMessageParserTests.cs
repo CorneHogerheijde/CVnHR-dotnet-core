@@ -1,5 +1,6 @@
 ﻿using CVnHR.Business.Kvk;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 
@@ -58,8 +59,13 @@ namespace CVnHR.Business.Tests.Kvk
             var msg = parser.SerializeOphalenInschrijvingRequest(request);
 
             //Assert
+            msg = msg
+             .Replace(Environment.NewLine, string.Empty)
+             .Replace("  ", string.Empty)
+             .Replace("  ", string.Empty)
+             .Replace("  ", string.Empty)
+             .Replace(" <", "<");
             Assert.AreEqual(expectedMessage, msg);
-            Assert.Fail("TODO: refactor the method! (make generic)");
         }
     }
 }

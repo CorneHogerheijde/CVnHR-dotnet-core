@@ -38,8 +38,8 @@ namespace CVnHR.Business.Tests.Kvk
             var result = parser.Parse("");
         }
 
-        [TestMethod, Description("Should correctly serialize a ophalenInschrijvingRequest message")]
-        public void SerializeOphalenInschrijvingRequest()
+        [TestMethod, Description("Should correctly serialize a ophalenInschrijvingRequest kvkNummer message")]
+        public void SerializeOphalenInschrijvingRequest_Kvk()
         {
             // Arrange
             var reference = "ACC_I_002";
@@ -52,6 +52,36 @@ namespace CVnHR.Business.Tests.Kvk
                     Item = kvkNumber,
                     klantreferentie = reference,
                     ItemElementName = ItemChoiceType.kvkNummer
+                }
+            );
+
+            // Act
+            var msg = parser.SerializeOphalenInschrijvingRequest(request);
+
+            //Assert
+            msg = msg
+             .Replace(Environment.NewLine, string.Empty)
+             .Replace("  ", string.Empty)
+             .Replace("  ", string.Empty)
+             .Replace("  ", string.Empty)
+             .Replace(" <", "<");
+            Assert.AreEqual(expectedMessage, msg);
+        }
+
+        [TestMethod, Description("Should correctly serialize a ophalenInschrijvingRequest rsin message")]
+        public void SerializeOphalenInschrijvingRequest_Rsin()
+        {
+            // Arrange
+            var reference = "ACC_I_002";
+            var kvkNumber = "8541214521";
+            var expectedMessage = $@"<ophalenInschrijvingRequest xmlns=""http://schemas.kvk.nl/schemas/hrip/dataservice/2015/02""><klantreferentie>{reference}</klantreferentie><rsin>{kvkNumber}</rsin></ophalenInschrijvingRequest>";
+            var parser = new HRDataserviceMessageParser();
+            var request = new ophalenInschrijvingRequest(
+                new InschrijvingRequestType()
+                {
+                    Item = kvkNumber,
+                    klantreferentie = reference,
+                    ItemElementName = ItemChoiceType.rsin
                 }
             );
 

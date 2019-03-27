@@ -38,12 +38,10 @@ namespace CVnHR.Business.Kvk
 
             // parse the request to this xml
             // Althoug it would be better to use datacontractserializer, this won't fly one way or another...
-
-            // TODO: make RSIN possible
-
+            var elementName = request.ophalenInschrijvingRequest1.ItemElementName;
             return $@"<ophalenInschrijvingRequest xmlns=""http://schemas.kvk.nl/schemas/hrip/dataservice/2015/02"">
                 <klantreferentie>{request.ophalenInschrijvingRequest1.klantreferentie}</klantreferentie>
-                <kvkNummer>{request.ophalenInschrijvingRequest1.Item}</kvkNummer>
+                <{elementName}>{request.ophalenInschrijvingRequest1.Item}</{elementName}>
              </ophalenInschrijvingRequest>";
 
             //var ophalenInschrijvingRequest1 = request.ophalenInschrijvingRequest1;

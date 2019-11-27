@@ -1,4 +1,5 @@
 using CVnHR.Business.HrDataserviceHelpers;
+using CVnHR.Business.Kvk;
 using CVnHR.Business.Kvk.Api.Entities;
 using CVnHR.Business.Services;
 using CVnHR.manage.Models;
@@ -12,11 +13,13 @@ namespace CVnHR.manage.Controllers
     {
         private KvkApiSettings _kvkApiSettings;
         private readonly ISettingsService _settingsService;
+        private HrDataserviceSettings _hrDataserviceSettings;
 
         public SettingsController(ISettingsService settingsService)
         {
             _settingsService = settingsService;
             _kvkApiSettings = _settingsService.GetSettings<KvkApiSettings>();
+            _hrDataserviceSettings = _settingsService.GetSettings<HrDataserviceSettings>();
         }
 
         [HttpGet("[action]")]
@@ -24,17 +27,27 @@ namespace CVnHR.manage.Controllers
         {
             return new CVnHRSettings() {
                 Certificate = _settingsService.GetCertificateName(),
-                KvkApiSettings = _kvkApiSettings
+                KvkApiSettings = _kvkApiSettings,
+                HRDataServiceSettings = _hrDataserviceSettings
             };
         }
 
         [HttpPut("[action]")]
         public KvkApiSettings UpdateKvkApiSettings([FromBody]KvkApiSettings kvkApiSettings)
         {
-            _settingsService.UpdateSettings(_kvkApiSettings);
+            _settingsService.UpdateSettings(kvkApiSettings);
             _kvkApiSettings = kvkApiSettings;
 
             return _kvkApiSettings;
+        }
+
+        [HttpPut("[action]")]
+        public HrDataserviceSettings UpdateHRDataServiceSettings([FromBody]HrDataserviceSettings hrDataserviceSettings)
+        {
+            _settingsService.UpdateSettings(hrDataserviceSettings);
+            _hrDataserviceSettings = hrDataserviceSettings;
+
+            return _hrDataserviceSettings;
         }
 
         [HttpPost("[action]")]
@@ -42,11 +55,7 @@ namespace CVnHR.manage.Controllers
         {
             _settingsService.UploadCertificate(certificate, password);
 
-            return new CVnHRSettings()
-            {
-                Certificate = _settingsService.GetCertificateName(),
-                KvkApiSettings = _kvkApiSettings
-            };
+            return GetSettings();
         }
     }
 }

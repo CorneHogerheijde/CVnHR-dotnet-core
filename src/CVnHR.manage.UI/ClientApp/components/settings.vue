@@ -43,6 +43,12 @@
         Kvk profile url
         <input v-model="currentSettings.kvkApiSettings.profileUrl" />
       </label>
+
+      <h3>HR Dataservice Settings</h3>
+      <label>
+        <i>Klantreferentie</i>
+        <input v-model="currentSettings.hrDataServiceSettings.klantReferentie" />
+      </label>
       <button @click="updateSettings(currentSettings)">update settings</button>
     </div>
 

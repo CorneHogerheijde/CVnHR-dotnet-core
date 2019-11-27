@@ -14,7 +14,5 @@ namespace CVnHR.Business.Services
         void UploadCertificate(IFormFile certificate, string password);
 
         X509Certificate2 GetCertificate();
-
-        string GetKlantReferentie();
     }
 }

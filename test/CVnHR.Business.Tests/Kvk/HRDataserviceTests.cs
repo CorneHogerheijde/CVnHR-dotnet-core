@@ -36,6 +36,8 @@ namespace CVnHR.Business.Tests.Kvk
             var settingsServiceMock = new Mock<ISettingsService>();
             settingsServiceMock.Setup(c => c.GetCertificate())
                 .Returns(cert);
+            settingsServiceMock.Setup(c => c.GetSettings<HrDataserviceSettings>())
+                .Returns(new HrDataserviceSettings { KlantReferentie = "abcd" });
 
             hrDataServiceHttpClient.Setup(c => c.GetHttpClient(It.IsAny<string>()))
                 .Returns(handler.CreateClient());

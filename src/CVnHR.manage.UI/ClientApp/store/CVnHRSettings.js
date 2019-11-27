@@ -21,7 +21,7 @@ const settingsMutations = {
     let settings = null
     try {
       let response = await axios.get(`/api/settings/GetSettings`)
-      settings = response.data
+        settings = response.data
     } catch (err) {
       window.alert(err)
       console.log(err)
@@ -31,6 +31,7 @@ const settingsMutations = {
   async [updateSettingsType] (state, settings) {
     try {
       await axios.put(`/api/settings/UpdateKvkApiSettings`, settings.kvkApiSettings)
+      await axios.put(`/api/settings/UpdateHRDataServiceSettings`, settings.hrDataServiceSettings)
     } catch (err) {
       window.alert(err)
       console.log(err)

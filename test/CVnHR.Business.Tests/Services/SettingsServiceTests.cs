@@ -1,7 +1,7 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using CVnHR.Business.HrDataserviceHelpers;
+using CVnHR.Business.Services;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 
 namespace CVnHR.Business.Tests.Services
 {
@@ -11,16 +11,13 @@ namespace CVnHR.Business.Tests.Services
         [TestMethod, Description("Should return the certificate obtained from the settings service")]
         public void GetCertificateTest()
         {
+            // TODO: make settings independent of file system.
+
             // Arrange
-            //var settingsService = new Mock<ISettingsService>();
-            //settingsService.Setup(s => s.GetCertificate());
-            //var client = new HrDataServiceHttpClient(null, settingsService.Object);
 
-            //// Act
-            //var certificate = client.GetCertificate();
+            // Act
 
-            //// Assert
-            //settingsService.Verify(s => s.GetCertificate(), Times.Once, "Expected to receive the certificate from the settingsService");
+            // Assert
         }
     }
 }

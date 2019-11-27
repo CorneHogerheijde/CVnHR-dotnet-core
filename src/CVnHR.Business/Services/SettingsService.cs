@@ -1,4 +1,4 @@
-﻿using CVnHR.Business.HrDataservice;
+﻿using CVnHR.Business.HrDataserviceHelpers;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
@@ -104,6 +104,12 @@ namespace CVnHR.Business.Services
                     store.Add(certificate);
                 }
             }
+        }
+
+        public string GetKlantReferentie()
+        {
+            // Set in, and get from settings...
+            return "ACC_I_002";
         }
     }
 }

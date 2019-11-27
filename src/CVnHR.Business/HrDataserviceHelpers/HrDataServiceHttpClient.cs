@@ -1,19 +1,14 @@
-﻿using CVnHR.Business.Services;
-using System.Net.Http;
-using System.Security.Cryptography.X509Certificates;
+﻿using System.Net.Http;
 
-namespace CVnHR.Business.HrDataservice
+namespace CVnHR.Business.HrDataserviceHelpers
 {
     public class HrDataServiceHttpClient : IHrDataServiceHttpClient
     {
         private readonly IHttpClientFactory _httpClientFactory;
-        private readonly ISettingsService _settingsService;
 
-        public HrDataServiceHttpClient(IHttpClientFactory httpClientFactory,
-            ISettingsService settingsService)
+        public HrDataServiceHttpClient(IHttpClientFactory httpClientFactory)
         {
             _httpClientFactory = httpClientFactory;
-            _settingsService = settingsService;
         }
 
         public HttpClientHandler GetHttpClientHandler()
@@ -27,18 +22,13 @@ namespace CVnHR.Business.HrDataservice
             return handler;
         }
 
-        public X509Certificate2 GetCertificate()
-        {
-            return _settingsService.GetCertificate();
-        }
-
-        public HttpClient GetHttpClient()
+        public HttpClient GetHttpClient(string action)
         {
             var client = _httpClientFactory.CreateClient("hrDataservice");
 
             client.DefaultRequestHeaders.Connection.Add("Keep-Alive");
             client.DefaultRequestHeaders.ExpectContinue = true;
-            client.DefaultRequestHeaders.Add("SOAPAction", "\"http://es.kvk.nl/ophalenInschrijving\"");
+            client.DefaultRequestHeaders.Add("SOAPAction", $"\"{action}\"");
 
             return client;
         }

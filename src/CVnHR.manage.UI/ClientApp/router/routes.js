@@ -1,8 +1,8 @@
-import CounterExample from 'components/counter-example'
-import FetchData from 'components/fetch-data'
+//import CounterExample from 'components/counter-example'
+//import FetchData from 'components/fetch-data'
 import HomePage from 'components/home-page'
 import Settings from 'components/settings'
-import Docs from 'components/docs'
+//import Docs from 'components/docs'
 
 export const routes = [
   { name: 'home', path: '/', component: HomePage, display: 'Home', icon: 'home' },

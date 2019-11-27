@@ -1,12 +1,15 @@
-﻿using CVnHR.Business.HrDataservice;
+﻿using CVnHR.Business.HrDataserviceHelpers;
+using CVnHR.Business.Services;
 using System;
 using System.IO;
 using System.Net.Http;
+using System.Runtime.Serialization;
 using System.Security.Cryptography.X509Certificates;
 using System.Security.Cryptography.Xml;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using System.Xml.Serialization;
 
 namespace CVnHR.Business.Kvk
 {
@@ -15,23 +18,58 @@ namespace CVnHR.Business.Kvk
 
     public class HrDataservice : IHrDataservice
     {
-        private readonly string _klantReferentie;
         private readonly IHrDataServiceHttpClient _httpClientFactory;
+        private readonly IHRDataserviceMessageParser _hRDataserviceMessageParser;
+        private readonly ISettingsService _settingsService;
 
-        public HrDataservice(string klantReferentie, IHrDataServiceHttpClient httpClientFactory)
+        public HrDataservice(IHrDataServiceHttpClient httpClientFactory,
+            IHRDataserviceMessageParser hRDataserviceMessageParser,
+            ISettingsService settingsService)
         {
-            _klantReferentie = klantReferentie;
             _httpClientFactory = httpClientFactory;
+            _hRDataserviceMessageParser = hRDataserviceMessageParser;
+            _settingsService = settingsService;
         }
 
         public async Task<string> GetInschrijvingFromKvK(string kvkNummer)
         {
-            var certificate = _httpClientFactory.GetCertificate();
+            var payload = _hRDataserviceMessageParser.SerializeOphalenInschrijvingRequest(new ophalenInschrijvingRequest
+            {
+                ophalenInschrijvingRequest1 = new InschrijvingRequestType
+                {
+                    Item = kvkNummer,
+                    ItemElementName = ItemChoiceType.kvkNummer,
+                    klantreferentie = _settingsService.GetKlantReferentie()
+                }
+            });
+            var action = "http://es.kvk.nl/ophalenInschrijving";
 
-            var responseMessage = string.Empty; 
-            var envelope = BuildEnvelope(certificate, kvkNummer);
-            
-            var client = _httpClientFactory.GetHttpClient();
+            return await CallHrDataservice(payload, action);
+        }
+
+        // TODO: write more and better tests.
+        public async Task<string> GetByRsinFromKvK(string rsin)
+        {
+            var payload = _hRDataserviceMessageParser.SerializeOphalenInschrijvingRequest(new ophalenInschrijvingRequest
+            {
+                ophalenInschrijvingRequest1 = new InschrijvingRequestType
+                {
+                    Item = rsin,
+                    ItemElementName = ItemChoiceType.rsin,
+                    klantreferentie = _settingsService.GetKlantReferentie()
+                }
+            });
+            var action = "http://es.kvk.nl/ophalenInschrijving";
+
+            return await CallHrDataservice(payload, action);
+        }
+
+        private async Task<string> CallHrDataservice(string payload, string action)
+        {
+            var certificate = _settingsService.GetCertificate();
+            var responseMessage = string.Empty;
+            var envelope = BuildEnvelope(certificate, payload, action);
+            var client = _httpClientFactory.GetHttpClient(action);
 
             var content = new StringContent(envelope, Encoding.UTF8, "text/xml");
             var response = await client.PostAsync("https://webservices.kvk.nl/postbus1", content);
@@ -44,7 +82,7 @@ namespace CVnHR.Business.Kvk
             return responseMessage;
         }
 
-        private string BuildEnvelope(X509Certificate2 certificate, string kvkNummer)
+        private string BuildEnvelope(X509Certificate2 certificate, string payload, string action)
         {
             string envelope = null;
             // note - lots of bits here specific to my thirdparty
@@ -77,7 +115,7 @@ namespace CVnHR.Business.Kvk
                     writer.WriteStartElement("a", "Action", null);
                     writer.WriteAttributeString("s", "mustUnderstand", null, "1");
                     writer.WriteAttributeString("u", "Id", null, "_2");
-                    writer.WriteString("http://es.kvk.nl/ophalenInschrijving");
+                    writer.WriteString(action);
                     writer.WriteEndElement(); //Action
 
                     //<a:MessageID u:Id="_3">uuid:baae5ec4-cf09-4241-9a28-61128fa9aeef</a:MessageID>
@@ -126,32 +164,10 @@ namespace CVnHR.Business.Kvk
                     writer.WriteAttributeString("xmlns", "xsi", null, "http://www.w3.org/2001/XMLSchema-instance");
                     writer.WriteAttributeString("xmlns", "xsd", null, "http://www.w3.org/2001/XMLSchema");
 
-
-                    // TODO!!!
-
-                    /*
-                     <ophalenInschrijvingRequest xmlns="http://schemas.kvk.nl/schemas/hrip/dataservice/2015/02">
-                        <klantreferentie>ACC_I_002</klantreferentie>
-                        <kvkNummer>53352009</kvkNummer>
-                     </ophalenInschrijvingRequest>
-                    */
-
-                    // your 3rd-party soap payload goes here
-                    writer.WriteStartElement("ophalenInschrijvingRequest", "http://schemas.kvk.nl/schemas/hrip/dataservice/2015/02");
-
-                    writer.WriteStartElement("klantreferentie");
-                    writer.WriteValue(_klantReferentie);
-                    writer.WriteEndElement(); // klantreferentie
-
-                    writer.WriteStartElement("kvkNummer");
-                    writer.WriteValue(kvkNummer);
-                    writer.WriteEndElement(); // kvkNummer
-
-                    writer.WriteEndElement(); // ophalenInschrijvingRequest
-
+                    // write the payload of the message.
+                    writer.WriteRaw(payload);
 
                     writer.WriteEndElement(); // Body
-
 
                     writer.WriteEndElement(); //Envelope
                 }
@@ -201,8 +217,6 @@ namespace CVnHR.Business.Kvk
                 signedXml.ComputeSignature();
                 var xmlDigitalSignature = signedXml.GetXml();
 
-//#error //TODO: fix this so we don't get any errors anymore.
-
                 // modify the fragment so it points at BinarySecurityToken instead
                 XmlNode info = null;
                 for (int i = 0; i < xmlDigitalSignature.ChildNodes.Count; i++)
@@ -234,10 +248,6 @@ namespace CVnHR.Business.Kvk
                 var sb = new StringBuilder();
                 var settings = new XmlWriterSettings
                 {
-                    //Indent = true,
-                    //IndentChars = "  ",
-                    //NewLineChars = "\r\n",
-                    //NewLineHandling = NewLineHandling.Replace,
                     Indent = false,
                     OmitXmlDeclaration = true,
                     WriteEndDocumentOnClose = true
@@ -247,39 +257,9 @@ namespace CVnHR.Business.Kvk
                     doc.Save(writer);
                 }
                 envelope = sb.ToString();
-
-                //envelope = doc.OuterXml;
             }
 
             return envelope;
-        }
-
-        public class SignedXmlWithId : SignedXml
-        {
-            public SignedXmlWithId(XmlDocument xml) : base(xml)
-            {
-            }
-
-            public SignedXmlWithId(XmlElement xmlElement)
-                : base(xmlElement)
-            {
-            }
-
-            public override XmlElement GetIdElement(XmlDocument doc, string id)
-            {
-                // check to see if it's a standard ID reference
-                XmlElement idElem = base.GetIdElement(doc, id);
-
-                if (idElem == null)
-                {
-                    XmlNamespaceManager nsManager = new XmlNamespaceManager(doc.NameTable);
-                    nsManager.AddNamespace("wsu", "http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd");
-
-                    idElem = doc.SelectSingleNode("//*[@wsu:Id=\"" + id + "\"]", nsManager) as XmlElement;
-                }
-
-                return idElem;
-            }
         }
     }
 }

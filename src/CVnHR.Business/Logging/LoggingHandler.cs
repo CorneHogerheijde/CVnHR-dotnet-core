@@ -5,31 +5,25 @@ using System.Threading.Tasks;
 
 namespace CVnHR.Business.Logging
 {
-#warning //TODO: remove all Console.WriteLine!
-
     public class LoggingHandler : DelegatingHandler
     {
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            Console.WriteLine("Request:");
-            Console.WriteLine(request.ToString());
+            Log($"Request: {request.ToString()}");
             if (request.Content != null)
             {
-                Console.WriteLine(await request.Content.ReadAsStringAsync());
+                Log(await request.Content.ReadAsStringAsync());
             }
-            Console.WriteLine();
 
             try
             {
-                var result = base.SendAsync(request, cancellationToken);
-                var response = await result;
+                var response = await base.SendAsync(request, cancellationToken);
 
-                Console.WriteLine($"Response statuscode: {response.StatusCode}");
+                Log($"Response statuscode: {response.StatusCode}");
                 if (response.Content != null)
                 {
-                    Console.WriteLine(await response.Content.ReadAsStringAsync());
+                    Log(await response.Content.ReadAsStringAsync());
                 }
-                Console.WriteLine();
 
                 return response;
             }
@@ -37,6 +31,12 @@ namespace CVnHR.Business.Logging
             {
                 throw ex;
             }
+        }
+
+#warning //TODO: implement better logger
+        public void Log(string content)
+        {
+            Console.WriteLine(content);
         }
     }
 }

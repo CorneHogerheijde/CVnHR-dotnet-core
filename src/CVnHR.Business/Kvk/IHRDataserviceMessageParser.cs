@@ -7,5 +7,7 @@ namespace CVnHR.Business.Kvk
     public interface IHRDataserviceMessageParser
     {
         MaatschappelijkeActiviteitResponseType Parse(string message);
+
+        string SerializeOphalenInschrijvingRequest(ophalenInschrijvingRequest request);
     }
 }

@@ -1,4 +1,4 @@
-using CVnHR.Business.HrDataservice;
+using CVnHR.Business.HrDataserviceHelpers;
 using CVnHR.Business.Kvk;
 using CVnHR.Business.Kvk.Api;
 using CVnHR.Business.Logging;
@@ -35,18 +35,16 @@ namespace CVnHR.manage.UI
             services.AddTransient<IKvkSearchApi, KvkSearchApi>();
 
             services.AddTransient<IHRDataserviceMessageParser, HRDataserviceMessageParser>();
-            // TODO: clean this
-            const string klantReferentie = "ACC_I_002"; // TODO set in config
 
             services.AddTransient<IHrDataServiceHttpClient, HrDataServiceHttpClient>();
-            services.AddTransient<IHrDataservice, HrDataservice>((serviceProvider) =>
-                new HrDataservice(klantReferentie, serviceProvider.GetService<IHrDataServiceHttpClient>()));
+            services.AddTransient<IHrDataservice, HrDataservice>();
             services.AddTransient<LoggingHandler>();
             services.AddHttpClient("hrDataservice")
                 .ConfigurePrimaryHttpMessageHandler((serviceProvider) => {
                     var hrDataService = serviceProvider.GetService<IHrDataServiceHttpClient>();
                     var handler = hrDataService.GetHttpClientHandler();
-                    var certificate = hrDataService.GetCertificate();
+                    var settingsService = serviceProvider.GetService<ISettingsService>();
+                    var certificate = settingsService.GetCertificate();
                     handler.ClientCertificates.Add(certificate);
                     return handler;
                 })

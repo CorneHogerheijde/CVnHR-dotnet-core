@@ -21,6 +21,7 @@ namespace CVnHR.Business.Kvk
         private readonly IHrDataServiceHttpClient _httpClientFactory;
         private readonly IHRDataserviceMessageParser _hRDataserviceMessageParser;
         private readonly ISettingsService _settingsService;
+        private readonly string _klantReferentie;
 
         public HrDataservice(IHrDataServiceHttpClient httpClientFactory,
             IHRDataserviceMessageParser hRDataserviceMessageParser,
@@ -29,6 +30,8 @@ namespace CVnHR.Business.Kvk
             _httpClientFactory = httpClientFactory;
             _hRDataserviceMessageParser = hRDataserviceMessageParser;
             _settingsService = settingsService;
+            _klantReferentie = _settingsService.GetSettings<HrDataserviceSettings>().KlantReferentie
+                ?? throw new Exception("Missing setting 'KlantReferentie!'");
         }
 
         public async Task<string> GetInschrijvingFromKvK(string kvkNummer)
@@ -39,7 +42,7 @@ namespace CVnHR.Business.Kvk
                 {
                     Item = kvkNummer,
                     ItemElementName = ItemChoiceType.kvkNummer,
-                    klantreferentie = _settingsService.GetKlantReferentie()
+                    klantreferentie = _klantReferentie
                 }
             });
             var action = "http://es.kvk.nl/ophalenInschrijving";
@@ -56,7 +59,7 @@ namespace CVnHR.Business.Kvk
                 {
                     Item = rsin,
                     ItemElementName = ItemChoiceType.rsin,
-                    klantreferentie = _settingsService.GetKlantReferentie()
+                    klantreferentie = _klantReferentie
                 }
             });
             var action = "http://es.kvk.nl/ophalenInschrijving";

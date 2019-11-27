@@ -109,7 +109,7 @@ namespace CVnHR.Business.Services
         public string GetKlantReferentie()
         {
             // Set in, and get from settings...
-            return "ACC_I_002";
+            return  "ACC_I_002";
         }
     }
 }

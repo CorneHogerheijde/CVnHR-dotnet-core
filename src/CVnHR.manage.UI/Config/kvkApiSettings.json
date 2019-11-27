@@ -1,6 +1,0 @@
-{
-  "ApiKey": "l7xx6752e2e19e9c4f80afc28352c2a3cec8",
-  "BaseUrl": "https://api.kvk.nl",
-  "SearchUrl": "/api/v2/search/companies",
-  "ProfileUrl": "/api/v2/profiles/companies"
-}

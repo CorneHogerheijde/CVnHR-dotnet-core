@@ -1,17 +1,14 @@
-﻿using MaxKagamine.Moq.HttpClient;
+﻿using CVnHR.Business.HrDataserviceHelpers;
+using CVnHR.Business.Kvk;
+using CVnHR.Business.Services;
+using MaxKagamine.Moq.HttpClient;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
-using System.Collections.Generic;
-using System.Net;
 using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
-using CVnHR.Business.Kvk;
-using CVnHR.Business.HrDataserviceHelpers;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
-using CVnHR.Business.Services;
+using System.Threading.Tasks;
 
 namespace CVnHR.Business.Tests.Kvk
 {

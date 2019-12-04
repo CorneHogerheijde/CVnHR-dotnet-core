@@ -59,6 +59,11 @@
         }
       }
     },
+    
+    beforeDestroy() {
+      this.resetKvkApiSearch()
+      this.currentKvkApiSearch.q = null;
+    }
   }
 </script>
 

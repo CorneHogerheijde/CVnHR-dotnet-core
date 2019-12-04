@@ -36,7 +36,7 @@
       </div>
       <div class="row">
         <div class="col-md-4">Handelsnamen:</div>
-        <div class="offset-md-4 col-md-12" v-for="h in get('manifesteertZichAls.onderneming.handeltOnder')">
+        <div class="offset-md-4 col-md-12" v-for="h in get('manifesteertZichAls.onderneming.handeltOnder')" :key='h.handelsnaam.naam'>
           {{ h.handelsnaam.naam }} (sinds: {{formatDate(get('handelsnaam.registratie.datumAanvang', h), null, 'YYYY-MM-DD')}})
         </div>
       </div>
@@ -116,7 +116,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(val, index) in  get('heeftAlsEigenaar.item.heeft')">
+          <tr v-for="(val, index) in  get('heeftAlsEigenaar.item.heeft')" :key="index">
             <td>{{get('item.functie.referentieType', val)}}</td>
             <td>{{get('item.functie.omschrijving', val)}}</td>
             <td>{{get('item.item.item.volledigeNaam', val)}}</td>
@@ -140,7 +140,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(val, index) in get('manifesteertZichAls.onderneming.sbiActiviteit')">
+          <tr v-for="(val, index) in get('manifesteertZichAls.onderneming.sbiActiviteit')" :key="index">
             <td>{{get('sbiCode.code', val)}}</td>
             <td>{{get('sbiCode.omschrijving', val)}}</td>
             <td>{{get('isHoofdactiviteit.omschrijving', val)}}</td>
@@ -167,16 +167,16 @@
         </thead>
         <tbody>
           <template v-for="(val, index) in vestigingen">
-            <tr>
+            <tr :key="index">
               <td rowspan="2">{{get('item.vestigingsnummer', val)}}</td>
               <td rowspan="2">{{get('item.eersteHandelsnaam', val)}}</td>
               <td rowspan="2">
-                <span v-for="(gegevens, index) in get('item.communicatiegegevens.communicatienummer', val)">
+                <span v-for="(gegevens, index) in get('item.communicatiegegevens.communicatienummer', val)" :key="index">
                   {{gegevens.nummer}}
                 </span>
               </td>
               <td rowspan="2">
-                <span v-for="(gegevens, index) in get('item.communicatiegegevens.emailAdres', val)">
+                <span v-for="(gegevens, index) in get('item.communicatiegegevens.emailAdres', val)" :key="index">
                   {{gegevens}}
                 </span>
               </td>
@@ -185,7 +185,7 @@
               <td>{{get('item.bezoekLocatie.volledigAdres', val)}}</td>
               <td rowspan="2"><objectTree :item="val" /></td>
             </tr>
-            <tr>
+            <tr :key="`volledigadres-${index}`">
               <td>Postadres</td>
               <td>{{get('item.bezoekLocatie.volledigAdres', val)}}</td>
             </tr>
